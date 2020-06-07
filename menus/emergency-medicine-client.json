@@ -1,0 +1,17 @@
+[
+    {
+        "label": "Patients",
+        "menu_id": "patients",
+        "url": "/PatientTraking",
+        "children": [
+        ],
+        "acl_req": [
+            "",
+            ""
+        ],
+        "global_req": 0
+    }
+]
+
+
+
