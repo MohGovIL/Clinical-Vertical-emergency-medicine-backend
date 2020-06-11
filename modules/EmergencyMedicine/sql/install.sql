@@ -127,15 +127,15 @@ INSERT INTO `codes` (`code_text`, `code_text_short`, `code`, `code_type`, `modif
 
 
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
-('lists', 'tests_and_treatments', 'Tests and Treatments', 0, 1,'רכיב פשוט'),
-('tests_and_treatments', 'dehydration', 'EGK', 10, 1,'רכיב פשוט'),
-('tests_and_treatments', 'inhalation', 'Inhalation', 20, 1,'רכיב פשוט'),
-('tests_and_treatments', 'laboratory_tests', 'Laboratory tests', 30, 1,'רכיב פשוט'),
+('lists', 'tests_and_treatments', 'Tests and Treatments', 0, 1,''),
+('tests_and_treatments', 'dehydration', 'EGK', 10, 1,''),
+('tests_and_treatments', 'inhalation', 'Inhalation', 20, 1,''),
+('tests_and_treatments', 'laboratory_tests', 'Laboratory tests', 30, 1,''),
 ('tests_and_treatments', 'bandage', 'Bandage', 40, 1,'רכיב פשוט'),
-('tests_and_treatments', 'taking_metrics', 'Taking metrics', 50, 1,'רכיב פשוט'),
-('tests_and_treatments', 'fluid_infusion', 'Fluid infusion', 60, 1,'רכיב פשוט'),
-('tests_and_treatments', 'providing_medicine', 'Providing medicine', 70, 1,'רכיב מורכב'),
-('tests_and_treatments', 'x_ray', 'X-Ray', 80, 1,'רכיב מורכב + PDF');
+('tests_and_treatments', 'taking_metrics', 'Taking metrics', 50, 1,''),
+('tests_and_treatments', 'fluid_infusion', 'Fluid infusion', 60, 1,''),
+('tests_and_treatments', 'providing_medicine', 'Providing medicine', 70, 1,''),
+('tests_and_treatments', 'x_ray', 'X-Ray', 80, 1,'');
 
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
 ('lists', 'x_ray_types', 'X-Ray Types', 0, 1,''),
