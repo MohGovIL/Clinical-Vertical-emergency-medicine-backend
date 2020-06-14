@@ -78,111 +78,71 @@ INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALU
 ('Commitment questionnaire', 'commitment_questionnaire', '1', 'encounters|notes');
 
 
-
-
-/*
-
-IMAGING DATA - CAN HELP
-
-INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
-('lists', 'clinikal_service_categories', 'Clinikal Service Categories', 0, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_service_categories', '30', 'Specialist Radiology/Imaging', 10, 0, 0, '', '', '', 0, 0, 1, '', 1);
-
+/* INSERT LISTS*/
+DELETE FROM list_options where list_id="clinikal_service_types" OR option_id="clinikal_service_types";
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
 ('lists', 'clinikal_service_types', 'Clinikal Service Types', 0, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_service_types', '1', 'Ultrasound', 10, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_service_types', '2', 'Mammography', 20, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_service_types', '3', 'X-ray', 30, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_service_types', '4', 'CT', 40, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_service_types', '5', 'MRI', 50, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_service_types', '6', 'Cardiology', 60, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_service_types', '7', 'Biopsy', 15, 0, 0, '', '', '', 0, 0, 1, '', 1);
-
-INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
-('lists', 'clinikal_reason_codes', 'Clinikal Reason Codes', 0, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '1', 'Shoulder', 10, 0, 0, '', '1', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '2', 'Ankle', 20, 0, 0, '', '1', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '3', 'Foot', 30, 0, 0, '', '1', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '4', 'Hand', 40, 0, 0, '', '1', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '5', 'Upper Abdomen', 50, 0, 0, '', '1', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '6', 'Upper And Lower Abdomen', 60, 0, 0, '', '1', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '7', 'Lower Abdomen And Kidney And Urinary Tract', 70, 0, 0, '', '1', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '8', 'Head And Neck', 80, 0, 0, '', '1', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '9', 'Breast', 90, 0, 0, '', '1', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '10', '3D Breast', 100, 0, 0, '', '1', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '11', 'Breast', 10, 0, 0, '', '7', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '12', 'Mammography', 10, 0, 0, '', '2', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '13', 'Shoulder', 10, 0, 0, '', '3', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '14', 'Ankle', 20, 0, 0, '', '3', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '15', 'Foot', 30, 0, 0, '', '3', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '16', 'Lung', 10, 0, 0, '', '4', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '17', 'Blood Vessel', 20, 0, 0, '', '4', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '18', 'Backbone', 10, 0, 0, '', '5', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '19', 'Brain', 20, 0, 0, '', '5', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '20', 'Echocardiography', 10, 0, 0, '', '6', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '21', 'Echo In Effort', 20, 0, 0, '', '6', '', 0, 0, 1, '', 1),
-('clinikal_reason_codes', '22', 'Holter Blood Pressure', 30, 0, 0, '', '6', '', 0, 0, 1, '', 1);
-
-INSERT INTO `fhir_value_sets` (`id`, `title`)
-VALUES
-('service_types', 'Service Types'),
-('encounter_statuses', 'Encounter Statuses'),
-('reason_codes_1', 'Ultrasound Reason Codes'),
-('reason_codes_2', 'Mammography Reason Codes'),
-('reason_codes_3', 'X-ray Reason Codes'),
-('reason_codes_4', 'CT Reason Codes'),
-('reason_codes_5', 'MRI Reason Codes'),
-('reason_codes_6', 'Cardiology Reason Codes'),
-('reason_codes_7', 'Biopsy Reason Codes'),
-('appointment_statuses', 'Appointment Statuses'),
-('identifier_type_list', 'Identifier Type List');
-
-INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
-VALUES
-('service_types', 'clinikal_service_types', 'All', NULL),
-('encounter_statuses', 'clinikal_enc_statuses', 'All', NULL),
-('reason_codes_1', 'clinikal_reason_codes', 'Filter', '1'),
-('reason_codes_2', 'clinikal_reason_codes', 'Filter', '2'),
-('reason_codes_3', 'clinikal_reason_codes', 'Filter', '3'),
-('reason_codes_4', 'clinikal_reason_codes', 'Filter', '4'),
-('reason_codes_5', 'clinikal_reason_codes', 'Filter', '5'),
-('reason_codes_6', 'clinikal_reason_codes', 'Filter', '6'),
-('reason_codes_7', 'clinikal_reason_codes', 'Filter', '7'),
-('appointment_statuses', 'clinikal_app_statuses', 'All', NULL),
-('identifier_type_list', 'userlist3', 'All', NULL);
+('clinikal_service_types', '1', 'Emergency Medicine', 10, 0, 0, '', '', '', 0, 0, 1, '', 1);
 
 
+DELETE FROM list_options where list_id="clinikal_service_types" OR option_id="clinikal_service_types";
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
+('lists', 'clinikal_reason_codes', 'Clinikal Reason Codes', 0, 1,'1'),
+('clinikal_reason_codes', 'dehydration', 'Dehydration', 10, 1,'1'),
+('clinikal_reason_codes', 'orthopedic_sabotage', 'Orthopedic sabotage', 20, 1,'1'),
+('clinikal_reason_codes', 'head_injury', 'head injury', 30, 1,'1'),
+('clinikal_reason_codes', 'foreign_body_penetration', 'Foreign body penetration', 40, 1,'1'),
+('clinikal_reason_codes', 'high_temperature', 'high temperature', 50, 1,'1'),
+('clinikal_reason_codes', 'cut', 'cut', 60, 1,'1'),
+('clinikal_reason_codes', 'pain', 'Pain', 70, 1,'1'),
+('clinikal_reason_codes', 'chest_pain', 'Chest pain', 80, 1,'1'),
+('clinikal_reason_codes', 'back_pain', 'Back pain', 90, 1,'1'),
+('clinikal_reason_codes', 'headache', 'Headache', 100, 1,'1'),
+('clinikal_reason_codes', 'rash', 'Rash', 110, 1,'1'),
+('clinikal_reason_codes', 'shortness_of_breath', 'Shortness of breath', 120, 1,'1'),
+('clinikal_reason_codes', 'diarrhea_and_vomiting', 'Diarrhea and vomiting', 130, 1,'1');
 
 
--- -------------------------------
-INSERT INTO `fhir_value_sets` (`id`, `title`)
-VALUES
-('patient_tracking_statuses', 'Appointment Statuses For Patients Tracking');
-
-INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`)
-VALUES
-('patient_tracking_statuses', 'clinikal_app_statuses', 'Partial');
-
-INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`)
-VALUES
-(LAST_INSERT_ID(), 'pending'),
-(LAST_INSERT_ID(), 'booked'),
-(LAST_INSERT_ID(), 'cancelled'),
-(LAST_INSERT_ID(), 'noshow');
--- -------------------------------
+INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_mask`, `ct_fee`, `ct_rel`, `ct_nofs`, `ct_diag`, `ct_active`, `ct_label`, `ct_external`, `ct_claim`, `ct_proc`, `ct_term`, `ct_problem`, `ct_drug`) VALUES
+('Sensitivities', 9920, 9920, 12, 'Sensitivities', '', 1, 0, 1, 1, 1, 'Sensitivities', 0, 1, 0, 1, 0, 0),
+('BK Diseases', 9921, 9921, 12, 'BK Diseases', '', 1, 0, 1, 0, 1, 'Background Diseases', 0, 1, 0, 1, 1, 0);
 
 
+INSERT INTO `codes` (`code_text`, `code_text_short`, `code`, `code_type`, `modifier`, `units`, `fee`, `superbill`, `related_code`, `taxrates`, `cyp_factor`, `active`, `reportable`, `financial_reporting`) VALUES
+-- Sensitivities
+('Eggs', '', '10', 9920, '', 0, '0.00', '', '', '', 0, 1, 0, 0),
+('IodineI', '', '20', 9920, '', 0, '0.00', '', '', '', 0, 1, 0, 0),
+('Lactose', '', '30', 9920, '', 0, '0.00', '', '', '', 0, 1, 0, 0),
+('Neomycin', '', '40', 9920, '', 0, '0.00', '', '', '', 0, 1, 0, 0),
+('Latex', '', '50', 9920, '', 0, '0.00', '', '', '', 0, 1, 0, 0),
+('Penicillin', '', '60', 9920, '', 0, '0.00', '', '', '', 0, 1, 0, 0),
+--  Background Diseases
+("Alzheimer's", '', '10', 9921, '', 0, '0.00', '', '', '', 0, 1, 0, 0),
+('Asthma', '', '20', 9921, '', 0, '0.00', '', '', '', 0, 1, 0, 0),
+('High blood pressure', '', '30', 9921, '', 0, '0.00', '', '', '', 0, 1, 0, 0),
+('Heart disease', '', '40', 9921, '', 0, '0.00', '', '', '', 0, 1, 0, 0),
+('Diabetes', '', '50', 9921, '', 0, '0.00', '', '', '', 0, 1, 0, 0),
+('Cancer', '', '60', 9921, '', 0, '0.00', '', '', '', 0, 1, 0, 0),
+('Tuberculosis', '', '70', 9921, '', 0, '0.00', '', '', '', 0, 1, 0, 0);
 
-INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`)
-VALUES
-('lists', 'clinikal_enc_statuses', 'Clinikal Encounter Statuses', 0, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_enc_statuses', 'planned', 'Planned', 10, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_enc_statuses', 'arrived', 'Admitted', 20, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_enc_statuses', 'triaged', 'Triaged', 30, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_enc_statuses', 'in-progress', 'In Progress', 40, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_enc_statuses', 'waiting-for-results', 'Waiting For Results', 50, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_enc_statuses', 'finished', 'Finished', 60, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_enc_statuses', 'cancelled', 'Cancelled', 15, 0, 0, '', '', '', 0, 0, 1, '', 1);
 
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
+('lists', 'tests_and_treatments', 'Tests and Treatments', 0, 1,''),
+('tests_and_treatments', 'dehydration', 'EGK', 10, 1,''),
+('tests_and_treatments', 'inhalation', 'Inhalation', 20, 1,''),
+('tests_and_treatments', 'laboratory_tests', 'Laboratory tests', 30, 1,''),
+('tests_and_treatments', 'bandage', 'Bandage', 40, 1,'רכיב פשוט'),
+('tests_and_treatments', 'taking_metrics', 'Taking metrics', 50, 1,''),
+('tests_and_treatments', 'fluid_infusion', 'Fluid infusion', 60, 1,''),
+('tests_and_treatments', 'providing_medicine', 'Providing medicine', 70, 1,''),
+('tests_and_treatments', 'x_ray', 'X-Ray', 80, 1,'');
 
-*/
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
+('lists', 'x_ray_types', 'X-Ray Types', 0, 1,''),
+('x_ray_types', 'dehydration', 'Chest', 10, 1,''),
+('x_ray_types', 'inhalation', 'Palm', 20, 1,''),
+('x_ray_types', 'laboratory_tests', 'sole', 30, 1,''),
+('x_ray_types', 'bandage', 'Shoulder', 40, 1,''),
+('x_ray_types', 'taking_metrics', 'Neck', 50, 1,''),
+('x_ray_types', 'fluid_infusion', 'Ankle', 60, 1,'');
+
