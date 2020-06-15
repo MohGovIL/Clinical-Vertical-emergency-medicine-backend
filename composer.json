@@ -1,6 +1,6 @@
 {
   "name": "clinikal/vertical-emergency-medicine-backend",
-  "description": "Backend of the Clinikal Emergency Vertical for integration in OpenEMR",
+  "description": "Emergency Vertical Backend from the Clinikal project",
   "type": "clinikal-vertical",
   "authors": [
     {
