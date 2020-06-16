@@ -89,3 +89,32 @@
 --    desc: find all MyISAM tables and convert them to InnoDB.
 --    arguments: constant_name english hebrew
 --    behavior: can take a long time.
+
+
+#IfNotTable form_medical_admission_questionnaire
+CREATE TABLE form_medical_admission_questionnaire(
+    id bigint(20) NOT NULL AUTO_INCREMENT,
+    encounter varchar(255) DEFAULT NULL,
+    form_id bigint(20) NOT NULL,
+    question_id int(11) NOT NULL,
+    answer text,
+    PRIMARY KEY (`id`)
+);
+#EndIf
+
+#IfNotRow fhir_questionnaire directory medical_admission_questionnaire
+INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALUES
+('Medical admission questionnaire', 'medical_admission_questionnaire', '1', 'encounters|notes');
+#EndIf
+
+#IfNotRow2D questionnaires_schemas form_name medical_admission_questionnaire question Pregnancy
+INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
+VALUES
+('1', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Insulation required'),
+('2', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'string', 'Insulation instructions'),
+('3', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'string', 'Nursing anamnesis'),
+('4', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Pregnancy');
+#EndIf
+
+
+
