@@ -11,7 +11,7 @@ use OpenEMR\Common\Acl\AclExtended;
 
 return $ACL_UPGRADE = array(
 
-    '0.1.0' => function () {
+    '0.2.0' => function () {
 
         $admin_write = AclExtended::getAclIdNumber('Administrators', 'write');
         $emergency_clinic_manager_write =AclExtended::addNewACL('Emergency manager', 'emergency_clinic_manager', 'write', 'Things that emergency clinic manager can modify');
