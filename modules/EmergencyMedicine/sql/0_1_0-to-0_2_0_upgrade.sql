@@ -90,6 +90,26 @@
 --    arguments: constant_name english hebrew
 --    behavior: can take a long time.
 
+-- setting for Isreali emergency medicine clinics
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew');
+
+-- setting for client side app
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_react_vertical', 0, 'emergency');
+
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_hide_appoitments', 0, '1');
+
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_pa_commitment_form', 0, '0');
+
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_pa_arrival_way', 0, '1');
+
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_pa_next_enc_status', 0, 'waiting_for_triage');
+
+
 
 #IfNotTable form_medical_admission_questionnaire
 CREATE TABLE form_medical_admission_questionnaire(

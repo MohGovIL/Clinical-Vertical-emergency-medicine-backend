@@ -1,3 +1,27 @@
+-- setting for Isreali emergency medicine clinics
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew');
+
+-- update menu for the admin user
+UPDATE `users` SET `main_menu_role` = 'clinikal.json' WHERE `users`.`id` = 1;
+
+-- setting for client side app
+INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_react_vertical', 0, 'emergency');
+
+INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_hide_appoitments', 0, '1');
+
+INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_pa_commitment_form', 0, '0');
+
+
+INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_pa_arrival_way', 0, '1');
+
+INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_pa_next_enc_status', 0, 'waiting_for_triage');
+
+
 
 -- GENERIC SQL NEED TO MOVE TO CLINIKALAPI MODULE
 REPLACE INTO `facility` (`id`, `name`, `phone`, `fax`, `street`, `city`, `state`, `postal_code`, `country_code`, `federal_ein`, `website`, `email`, `service_location`, `billing_location`, `accepts_assignment`, `pos_code`, `x12_sender_id`, `attn`, `domain_identifier`, `facility_npi`, `tax_id_type`, `color`, `primary_business_entity`, `facility_code`, `extra_validation`, `facility_taxonomy`, `mail_street`, `mail_street2`, `mail_city`, `mail_state`, `mail_zip`, `oid`, `iban`, `info`, `active`)
