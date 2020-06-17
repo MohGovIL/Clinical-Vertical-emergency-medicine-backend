@@ -29,6 +29,7 @@ return $ACL_UPGRADE = array(
         AclExtended::addObjectAcl('client_app', 'Client Application', 'SummaryLetter','Summary Letter');
         AclExtended::addObjectAcl('client_app', 'Client Application', 'EncountersReport','Encounters Report');
         AclExtended::addObjectAcl('client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient');
+        AclExtended::addObjectAcl('client_app', 'Client Application', 'PatientTrackingWaitingForRelease','Patient Tracking Waiting for Release');
 
         //Emergency manager ACL
         // client app ACL
