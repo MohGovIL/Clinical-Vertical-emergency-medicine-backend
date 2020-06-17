@@ -182,3 +182,26 @@ INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`
 ('x_ray_types', 'taking_metrics', 'Neck', 50, 1,''),
 ('x_ray_types', 'fluid_infusion', 'Ankle', 60, 1,'');
 
+
+
+INSERT INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`,`component_name`)
+VALUES
+('Medical Admission', 1, 'medical_admission', 1, 1, '2020-03-14 00:00:00', 1, 'React form', '', 0, 0, 'client_app|MedicalAdmissionForm','MedicalAdmissionForm'),
+('Tests and Treatments', 1, 'tests_and_treatments', 1, 1, '2020-03-14 00:00:00', 2, 'React form', '', 0, 0, 'client_app|TestsandTreatmentsForm','MedicalAdmissionForm'),
+('Diagnosis and Recommendations', 1, 'diagnosis_and_recommendations', 1, 1, '2020-03-14 00:00:00', 3, 'React form', '', 0, 0, 'client_app|DiagnosisandRecommendationsForm','MedicalAdmissionForm');
+
+
+INSERT INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
+SELECT id,'service_type','1'
+FROM registry
+WHERE directory = 'medical_admission';
+
+INSERT INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
+SELECT id,'service_type','1'
+FROM registry
+WHERE directory = 'tests_and_treatments';
+
+INSERT INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
+SELECT id,'service_type','1'
+FROM registry
+WHERE directory = 'diagnosis_and_recommendations';
