@@ -146,6 +146,65 @@ INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
 
 #EndIf
 
+-- default FHIR statuses for non-block development
+#IfNotRow2D list_options list_id clinikal_enc_statuses option_id planned
+DELETE FROM `list_options` WHERE `list_id` = 'clinikal_enc_statuses';
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
+('clinikal_enc_statuses', 'planned', 'Planned', 10, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_enc_statuses', 'arrived', 'Admitted', 20, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_enc_statuses', 'triaged', 'Triaged', 30, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_enc_statuses', 'in-progress', 'In Progress', 40, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_enc_statuses', 'finished', 'Finished', 60, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_enc_statuses', 'cancelled', 'Cancelled', 15, 0, 0, '', '', '', 0, 0, 1, '', 1);
+#EndIf
+
+
+#IfNotRow fhir_value_sets id encounter_statuses
+INSERT INTO `fhir_value_sets` (`id`, `title`) VALUES
+ ('encounter_statuses', 'Encounter Statuses');
+#EndIf
+
+#IfNotRow2D fhir_value_set_systems vs_id encounter_statuses system clinikal_enc_statuses
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`) VALUES
+('encounter_statuses', 'clinikal_enc_statuses', 'All');
+#EndIf
+
+#IfNotRow2D list_options list_id lists option_id clinikal_app_statuses
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
+('lists', 'clinikal_app_statuses', 'Clinikal Appointment Statuses', 0, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_app_statuses', '1', 'Pending', 10, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_app_statuses', '2', 'Booked', 20, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_app_statuses', '3', 'Arrived', 30, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_app_statuses', '4', 'Cancelled', 40, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_app_statuses', '5', 'No Show', 50, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_app_statuses', '6', 'Waitlisted', 60, 0, 0, '', '', '', 0, 0, 1, '', 1);
+#EndIf
+
+#IfNotRow fhir_value_sets id appointment_statuses
+INSERT INTO `fhir_value_sets` (`id`, `title`) VALUES
+('appointment_statuses', 'Appointment Statuses');
+#EndI
+
+#IfNotRow2D fhir_value_set_systems vs_id appointment_statuses system clinikal_app_statuses
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`) VALUES
+('appointment_statuses', 'clinikal_app_statuses', 'All');
+#EndIf
+
+#IfNotRow2D list_options list_id lists option_id clinikal_service_types
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
+('lists', 'clinikal_service_types', 'Clinikal Service Types', 0, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_service_types', '1', 'Emergency Medicine', 10, 0, 0, '', '', '', 0, 0, 1, '', 1);
+#EndIf
+
+#IfNotRow fhir_value_sets id service_types
+INSERT INTO `fhir_value_sets` (`id`, `title`) VALUES
+('service_types', 'Service Types');
+#EndIf
+
+#IfNotRow2D fhir_value_set_systems vs_id service_types system clinikal_service_types
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`) VALUES
+('service_types', 'clinikal_service_types', 'All');
+#EndIf
 
 
 #IfNotTable form_medical_admission_questionnaire
@@ -174,8 +233,6 @@ VALUES
 #EndIf
 
 
-
-
 #IfNotRow registry directory medical_admission
 INSERT INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`,`component_name`)
 VALUES
@@ -185,7 +242,6 @@ REPLACE INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
 SELECT id,'service_type','1'
 FROM registry
 WHERE directory = 'medical_admission';
-
 #EndIf
 
 #IfNotRow registry directory tests_and_treatments
@@ -197,7 +253,6 @@ REPLACE INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
 SELECT id,'service_type','1'
 FROM registry
 WHERE directory = 'tests_and_treatments';
-
 #EndIf
 
 #IfNotRow registry directory diagnosis_and_recommendations
@@ -209,13 +264,5 @@ REPLACE INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
 SELECT id,'service_type','1'
 FROM registry
 WHERE directory = 'diagnosis_and_recommendations';
-
 #EndIf
-
-
-
-
-
-
-
 
