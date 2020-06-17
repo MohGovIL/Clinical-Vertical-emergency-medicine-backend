@@ -43,19 +43,7 @@ VALUES
 
 ALTER TABLE facility AUTO_INCREMENT = 17;
 
-INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALUES
-('Commitment questionnaire', 'commitment_questionnaire', '1', 'encounters|notes');
 
-INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
-VALUES
-('1', 'commitment_questionnaire','form_commitment_questionnaire', 'integer', 'Commitment number'),
-('2', 'commitment_questionnaire','form_commitment_questionnaire', 'date', 'Commitment date'),
-('3', 'commitment_questionnaire','form_commitment_questionnaire', 'date', 'Commitment expiration date'),
-('4', 'commitment_questionnaire','form_commitment_questionnaire', 'string', 'Signing doctor'),
-('5', 'commitment_questionnaire','form_commitment_questionnaire', 'integer', 'doctor license number'),
-('6', 'commitment_questionnaire','form_commitment_questionnaire', 'string', 'Payment amount'),
-('7', 'commitment_questionnaire','form_commitment_questionnaire', 'string', 'Payment method'),
-('8', 'commitment_questionnaire','form_commitment_questionnaire', 'string', 'Receipt number');
 
 -- --------------------------------------------------------
 
