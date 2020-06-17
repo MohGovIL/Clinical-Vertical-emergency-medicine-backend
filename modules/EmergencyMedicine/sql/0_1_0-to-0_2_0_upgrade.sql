@@ -111,6 +111,43 @@ REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
 
 
 
+
+#IfNotRow fhir_value_sets id identifier_type_list
+INSERT INTO fhir_value_sets (id, title, status) VALUES
+('identifier_type_list', 'Identifier Type List', 'active');
+#EndIf
+
+#IfNotRow fhir_value_set_systems vs_id identifier_type_list
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`, `filter`)
+VALUES
+('identifier_type_list', 'userlist3', 'All', NULL);
+#EndIf
+
+
+#IfNotRow fhir_value_sets id gender
+INSERT INTO fhir_value_sets (id, title, status) VALUES
+('gender', 'Gender', 'active');
+#EndIf
+
+
+#IfNotRow fhir_value_set_systems vs_id gender
+-- replace LAST_INSERT_ID()
+DELETE FROM `fhir_value_set_systems` WHERE `fhir_value_set_systems`.`vs_id` = "gender";
+DELETE FROM `fhir_value_set_codes` WHERE `fhir_value_set_codes`.`code` IN('other','male','female');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`, `filter`)
+VALUES
+('gender', 'sex', 'Partial', NULL);
+
+INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'gender' AND type = 'Partial'), 'female'),
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'gender' AND type = 'Partial'), 'male'),
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'gender' AND type = 'Partial'), 'other');
+
+#EndIf
+
+
+
 #IfNotTable form_medical_admission_questionnaire
 CREATE TABLE form_medical_admission_questionnaire(
     id bigint(20) NOT NULL AUTO_INCREMENT,
