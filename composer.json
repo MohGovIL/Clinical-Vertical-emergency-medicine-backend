@@ -1,6 +1,6 @@
 {
   "name": "clinikal/vertical-emergency-medicine-backend",
-  "description": "React app for OpenEMR",
+  "description": "Backend functionality of emergency verticals for use in OpenEMR",
   "type": "clinikal-vertical",
   "authors": [
     {

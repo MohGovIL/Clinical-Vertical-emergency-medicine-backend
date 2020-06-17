@@ -90,6 +90,55 @@
 --    arguments: constant_name english hebrew
 --    behavior: can take a long time.
 
+-- setting for Isreali emergency medicine clinics
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew');
+
+-- setting for client side app
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_react_vertical', 0, 'emergency');
+
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_hide_appoitments', 0, '1');
+
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_pa_commitment_form', 0, '0');
+
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_pa_arrival_way', 0, '1');
+
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
+('clinikal_pa_next_enc_status', 0, 'waiting_for_triage');
+
+
+
+#IfNotTable form_medical_admission_questionnaire
+CREATE TABLE form_medical_admission_questionnaire(
+    id bigint(20) NOT NULL AUTO_INCREMENT,
+    encounter varchar(255) DEFAULT NULL,
+    form_id bigint(20) NOT NULL,
+    question_id int(11) NOT NULL,
+    answer text,
+    PRIMARY KEY (`id`)
+);
+#EndIf
+
+#IfNotRow fhir_questionnaire directory medical_admission_questionnaire
+INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALUES
+('Medical admission questionnaire', 'medical_admission_questionnaire', '1', 'encounters|notes');
+#EndIf
+
+#IfNotRow2D questionnaires_schemas form_name medical_admission_questionnaire question Pregnancy
+INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
+VALUES
+('1', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Insulation required'),
+('2', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'string', 'Insulation instructions'),
+('3', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'string', 'Nursing anamnesis'),
+('4', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Pregnancy');
+#EndIf
+
+
+
+
 #IfNotRow registry directory medical_admission
 INSERT INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`)
 VALUES
