@@ -30,22 +30,6 @@ INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`, `filter`)
 VALUES
 ('identifier_type_list', 'userlist3', 'All', NULL);
 
-
-INSERT INTO fhir_value_sets (id, title, status) VALUES
-('gender', 'Gender', 'active');
-
-DELETE FROM `fhir_value_set_systems` WHERE `fhir_value_set_systems`.`vs_id` = "gender";
-DELETE FROM `fhir_value_set_codes` WHERE `fhir_value_set_codes`.`code` IN('other','male','female');
-
-INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`, `filter`)
-VALUES
-('gender', 'sex', 'Partial', NULL);
-
-INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
-((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'gender' AND type = 'Partial'), 'female'),
-((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'gender' AND type = 'Partial'), 'male'),
-((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'gender' AND type = 'Partial'), 'other');
-
 -- default FHIR statuses for non-block development
 DELETE FROM `list_options` WHERE `list_id` = 'clinikal_enc_statuses';
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
