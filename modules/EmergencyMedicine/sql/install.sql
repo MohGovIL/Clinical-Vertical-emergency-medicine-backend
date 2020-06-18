@@ -23,6 +23,62 @@ INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
 
 
 
+INSERT INTO fhir_value_sets (id, title, status) VALUES
+('identifier_type_list', 'Identifier Type List', 'active');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`, `filter`)
+VALUES
+('identifier_type_list', 'userlist3', 'All', NULL);
+
+
+INSERT INTO fhir_value_sets (id, title, status) VALUES
+('gender', 'Gender', 'active');
+
+DELETE FROM `fhir_value_set_systems` WHERE `fhir_value_set_systems`.`vs_id` = "gender";
+DELETE FROM `fhir_value_set_codes` WHERE `fhir_value_set_codes`.`code` IN('other','male','female');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`, `filter`)
+VALUES
+('gender', 'sex', 'Partial', NULL);
+
+INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'gender' AND type = 'Partial'), 'female'),
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'gender' AND type = 'Partial'), 'male'),
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'gender' AND type = 'Partial'), 'other');
+
+-- default FHIR statuses for non-block development
+DELETE FROM `list_options` WHERE `list_id` = 'clinikal_enc_statuses';
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
+('clinikal_enc_statuses', 'planned', 'Planned', 10, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_enc_statuses', 'arrived', 'Admitted', 20, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_enc_statuses', 'triaged', 'Triaged', 30, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_enc_statuses', 'in-progress', 'In Progress', 40, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_enc_statuses', 'finished', 'Finished', 60, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_enc_statuses', 'cancelled', 'Cancelled', 15, 0, 0, '', '', '', 0, 0, 1, '', 1);
+
+INSERT INTO `fhir_value_sets` (`id`, `title`) VALUES
+ ('encounter_statuses', 'Encounter Statuses');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`) VALUES
+('encounter_statuses', 'clinikal_enc_statuses', 'All');
+
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
+('lists', 'clinikal_app_statuses', 'Clinikal Appointment Statuses', 0, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_app_statuses', '1', 'Pending', 10, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_app_statuses', '2', 'Booked', 20, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_app_statuses', '3', 'Arrived', 30, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_app_statuses', '4', 'Cancelled', 40, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_app_statuses', '5', 'No Show', 50, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_app_statuses', '6', 'Waitlisted', 60, 0, 0, '', '', '', 0, 0, 1, '', 1);
+
+INSERT INTO `fhir_value_sets` (`id`, `title`) VALUES
+('appointment_statuses', 'Appointment Statuses');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`) VALUES
+('appointment_statuses', 'clinikal_app_statuses', 'All');
+
+
+
 -- GENERIC SQL NEED TO MOVE TO CLINIKALAPI MODULE
 REPLACE INTO `facility` (`id`, `name`, `phone`, `fax`, `street`, `city`, `state`, `postal_code`, `country_code`, `federal_ein`, `website`, `email`, `service_location`, `billing_location`, `accepts_assignment`, `pos_code`, `x12_sender_id`, `attn`, `domain_identifier`, `facility_npi`, `tax_id_type`, `color`, `primary_business_entity`, `facility_code`, `extra_validation`, `facility_taxonomy`, `mail_street`, `mail_street2`, `mail_city`, `mail_state`, `mail_zip`, `oid`, `iban`, `info`, `active`)
 VALUES
@@ -119,6 +175,12 @@ DELETE FROM list_options where list_id="clinikal_service_types" OR option_id="cl
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
 ('lists', 'clinikal_service_types', 'Clinikal Service Types', 0, 0, 0, '', '', '', 0, 0, 1, '', 1),
 ('clinikal_service_types', '1', 'Emergency Medicine', 10, 0, 0, '', '', '', 0, 0, 1, '', 1);
+
+INSERT INTO `fhir_value_sets` (`id`, `title`) VALUES
+('service_types', 'Service Types');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`) VALUES
+('service_types', 'clinikal_service_types', 'All');
 
 
 DELETE FROM list_options where list_id="clinikal_service_types" OR option_id="clinikal_service_types";
