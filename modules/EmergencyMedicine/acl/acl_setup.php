@@ -28,9 +28,11 @@ AclExtended::addObjectAcl('client_app', 'Client Application', 'EncountersReport'
 AclExtended::addObjectAcl('client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient');
 AclExtended::addObjectAcl('client_app', 'Client Application', 'PatientTrackingWaitingForRelease','Patient Tracking Waiting for Release');
 
+// client app ACL
+//Admin
+AclExtended::updateAcl($admin_write, 'Administrators', 'client_app', 'Client Application', 'SuperUser','Super User', 'write');
 
 //Emergency manager ACL
-// client app ACL
 AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'PatientTrackingInvited','Patient Tracking Invited', 'write');
 AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'PatientTrackingWaitingForExamination','Patient Tracking Waiting for Examination', 'write');
 AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'PatientTrackingWaitingForDecoding','Patient Tracking Waiting for Decoding', 'write');
