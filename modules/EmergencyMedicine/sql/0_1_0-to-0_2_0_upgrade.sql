@@ -107,7 +107,7 @@ REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
 ('clinikal_pa_arrival_way', 0, '1');
 
 REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
-('clinikal_pa_next_enc_status', 0, 'waiting_for_triage');
+('clinikal_pa_next_enc_status', 0, 'arrived');
 
 
 
