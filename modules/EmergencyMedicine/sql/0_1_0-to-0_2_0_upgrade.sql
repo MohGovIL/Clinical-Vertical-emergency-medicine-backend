@@ -266,3 +266,13 @@ FROM registry
 WHERE directory = 'diagnosis_and_recommendations';
 #EndIf
 
+#IfNotRow fhir_value_sets id reason_codes_1
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('reason_codes_1', 'Ultrasound Reason Codes');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id reason_codes_1 system clinikal_reason_codes type Filter
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('reason_codes_1', 'clinikal_reason_codes', 'Filter', '1');
+#EndIf
+
