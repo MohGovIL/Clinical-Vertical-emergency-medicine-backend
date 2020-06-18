@@ -155,7 +155,6 @@ INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`) VALUES
 ('service_types', 'clinikal_service_types', 'All');
 
 
-DELETE FROM list_options where list_id="clinikal_service_types" OR option_id="clinikal_service_types";
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
 ('lists', 'clinikal_reason_codes', 'Clinikal Reason Codes', 0, 1,'1'),
 ('clinikal_reason_codes', 'dehydration', 'Dehydration', 10, 1,'1'),

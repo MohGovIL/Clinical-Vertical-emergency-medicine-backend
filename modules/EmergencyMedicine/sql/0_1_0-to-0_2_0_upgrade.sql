@@ -206,6 +206,23 @@ INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`) VALUES
 ('service_types', 'clinikal_service_types', 'All');
 #EndIf
 
+#IfNotRow2D list_options list_id lists option_id clinikal_reason_codes
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
+('lists', 'clinikal_reason_codes', 'Clinikal Reason Codes', 0, 1,'1'),
+('clinikal_reason_codes', 'dehydration', 'Dehydration', 10, 1,'1'),
+('clinikal_reason_codes', 'orthopedic_sabotage', 'Orthopedic sabotage', 20, 1,'1'),
+('clinikal_reason_codes', 'head_injury', 'head injury', 30, 1,'1'),
+('clinikal_reason_codes', 'foreign_body_penetration', 'Foreign body penetration', 40, 1,'1'),
+('clinikal_reason_codes', 'high_temperature', 'high temperature', 50, 1,'1'),
+('clinikal_reason_codes', 'cut', 'cut', 60, 1,'1'),
+('clinikal_reason_codes', 'pain', 'Pain', 70, 1,'1'),
+('clinikal_reason_codes', 'chest_pain', 'Chest pain', 80, 1,'1'),
+('clinikal_reason_codes', 'back_pain', 'Back pain', 90, 1,'1'),
+('clinikal_reason_codes', 'headache', 'Headache', 100, 1,'1'),
+('clinikal_reason_codes', 'rash', 'Rash', 110, 1,'1'),
+('clinikal_reason_codes', 'shortness_of_breath', 'Shortness of breath', 120, 1,'1'),
+('clinikal_reason_codes', 'diarrhea_and_vomiting', 'Diarrhea and vomiting', 130, 1,'1');
+#EndIf
 
 #IfNotTable form_medical_admission_questionnaire
 CREATE TABLE form_medical_admission_questionnaire(
