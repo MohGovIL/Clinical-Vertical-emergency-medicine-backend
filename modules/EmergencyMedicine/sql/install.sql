@@ -267,3 +267,12 @@ INSERT INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
 SELECT id,'service_type','1'
 FROM registry
 WHERE directory = 'diagnosis_and_recommendations';
+
+-- ValueSets
+
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('reason_codes_1', 'Ultrasound Reason Codes');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('reason_codes_1', 'clinikal_reason_codes', 'Filter', '1');
+
