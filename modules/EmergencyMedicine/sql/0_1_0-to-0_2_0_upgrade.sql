@@ -250,10 +250,10 @@ VALUES
 #EndIf
 
 
-#IfNotRow2D registry directory medical_admission component_name MedicalAdmissionForm
+#IfNotRow2D registry directory medical_admission component_name MedicalAdmission
 REPLACE INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`,`component_name`)
 VALUES
-('Medical Admission', 1, 'medical_admission', 1, 1, '2020-03-14 00:00:00', 1, 'React form', '', 0, 0, 'client_app|MedicalAdmissionForm','MedicalAdmissionForm');
+('Medical Admission', 1, 'medical_admission', 1, 1, '2020-03-14 00:00:00', 1, 'React form', '', 0, 0, 'client_app|MedicalAdmissionForm','MedicalAdmission');
 
 REPLACE INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
 SELECT id,'service_type','1'
@@ -261,10 +261,10 @@ FROM registry
 WHERE directory = 'medical_admission';
 #EndIf
 
-#IfNotRow2D registry directory tests_and_treatments component_name TestsAndTreatmentsForm
+#IfNotRow2D registry directory tests_and_treatments component_name TestsAndTreatments
 REPLACE INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`,`component_name`)
 VALUES
-('Tests and Treatments', 1, 'tests_and_treatments', 1, 1, '2020-03-14 00:00:00', 2, 'React form', '', 0, 0, 'client_app|TestsAndTreatmentsForm','TestsAndTreatmentsForm');
+('Tests and Treatments', 1, 'tests_and_treatments', 1, 1, '2020-03-14 00:00:00', 2, 'React form', '', 0, 0, 'client_app|TestsAndTreatmentsForm','TestsAndTreatments');
 
 REPLACE INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
 SELECT id,'service_type','1'
@@ -272,10 +272,10 @@ FROM registry
 WHERE directory = 'tests_and_treatments';
 #EndIf``
 
-#IfNotRow2D registry directory diagnosis_and_recommendations component_name DiagnosisAndRecommendationsForm
+#IfNotRow2D registry directory diagnosis_and_recommendations component_name DiagnosisAndRecommendations
 REPLACE INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`,`component_name`)
 VALUES
-('Diagnosis and Recommendations', 1, 'diagnosis_and_recommendations', 1, 1, '2020-03-14 00:00:00', 3, 'React form', '', 0, 0, 'client_app|DiagnosisAndRecommendationsForm','DiagnosisAndRecommendationsForm');
+('Diagnosis and Recommendations', 1, 'diagnosis_and_recommendations', 1, 1, '2020-03-14 00:00:00', 3, 'React form', '', 0, 0, 'client_app|DiagnosisAndRecommendationsForm','DiagnosisAndRecommendations');
 
 REPLACE INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
 SELECT id,'service_type','1'
