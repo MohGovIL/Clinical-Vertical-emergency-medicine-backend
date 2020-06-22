@@ -256,9 +256,7 @@ VALUES
 ('Medical Admission', 1, 'medical_admission', 1, 1, '2020-03-14 00:00:00', 1, 'React form', '', 0, 0, 'client_app|MedicalAdmissionForm','MedicalAdmission');
 
 REPLACE INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
-SELECT id,'service_type','1'
-FROM registry
-WHERE directory = 'medical_admission';
+SELECT id,'service_type','1' FROM registry WHERE directory = 'medical_admission';
 #EndIf
 
 #IfNotRow2D registry directory tests_and_treatments component_name TestsAndTreatments
@@ -267,9 +265,7 @@ VALUES
 ('Tests and Treatments', 1, 'tests_and_treatments', 1, 1, '2020-03-14 00:00:00', 2, 'React form', '', 0, 0, 'client_app|TestsAndTreatmentsForm','TestsAndTreatments');
 
 REPLACE INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
-SELECT id,'service_type','1'
-FROM registry
-WHERE directory = 'tests_and_treatments';
+SELECT id,'service_type','1' FROM registry WHERE directory = 'tests_and_treatments';
 #EndIf``
 
 #IfNotRow2D registry directory diagnosis_and_recommendations component_name DiagnosisAndRecommendations
@@ -278,9 +274,7 @@ VALUES
 ('Diagnosis and Recommendations', 1, 'diagnosis_and_recommendations', 1, 1, '2020-03-14 00:00:00', 3, 'React form', '', 0, 0, 'client_app|DiagnosisAndRecommendationsForm','DiagnosisAndRecommendations');
 
 REPLACE INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
-SELECT id,'service_type','1'
-FROM registry
-WHERE directory = 'diagnosis_and_recommendations';
+SELECT id,'service_type','1' FROM registry WHERE directory = 'diagnosis_and_recommendations';
 #EndIf
 
 #IfNotRow fhir_value_sets id reason_codes_1
