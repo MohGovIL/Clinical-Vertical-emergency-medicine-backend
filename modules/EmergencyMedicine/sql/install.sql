@@ -247,3 +247,28 @@ VALUES ('reason_codes_1', 'Emergency Medicine Reason Codes');
 INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('reason_codes_1', 'clinikal_reason_codes', 'Filter', '1');
 
+ALTER TABLE `fhir_value_set_systems` MODIFY COLUMN `type` ENUM('All', 'Partial', 'Exclude', 'Filter', 'Codes') NOT NULL AFTER `system`;
+
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('sensitivities', 'Sensitivities');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('sensitivities', '9920', 'Codes', NULL);
+
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('bk_diseases', 'BK Diseases');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('bk_diseases', '9921', 'Codes', NULL);
+
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('tests_and_treatments', 'Tests And Treatments');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('tests_and_treatments', 'tests_and_treatments', 'All', NULL);
+
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('x_ray_types', 'Xray Types');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('x_ray_types', 'x_ray_types', 'All', NULL);

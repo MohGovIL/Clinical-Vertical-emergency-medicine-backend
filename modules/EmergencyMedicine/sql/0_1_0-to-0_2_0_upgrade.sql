@@ -293,3 +293,44 @@ INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('reason_codes_1', 'clinikal_reason_codes', 'Filter', '1');
 #EndIf
 
+ALTER TABLE `fhir_value_set_systems` MODIFY COLUMN `type` ENUM('All', 'Partial', 'Exclude', 'Filter', 'Codes') NOT NULL AFTER `system`;
+
+#IfNotRow fhir_value_sets id sensitivities
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('sensitivities', 'Sensitivities');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id sensitivities system 9920 type Codes
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('sensitivities', '9920', 'Codes', NULL);
+#EndIf
+
+#IfNotRow fhir_value_sets id bk_diseases
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('bk_diseases', 'BK Diseases');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id bk_diseases system 9921 type Codes
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('bk_diseases', '9921', 'Codes', NULL);
+#EndIf
+
+#IfNotRow fhir_value_sets id tests_and_treatments
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('tests_and_treatments', 'Tests And Treatments');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id tests_and_treatments system tests_and_treatments type All
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('tests_and_treatments', 'tests_and_treatments', 'All', NULL);
+#EndIf
+
+#IfNotRow fhir_value_sets id x_ray_types
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('x_ray_types', 'Xray Types');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id x_ray_types system x_ray_types type All
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('x_ray_types', 'x_ray_types', 'All', NULL);
+#EndIf
