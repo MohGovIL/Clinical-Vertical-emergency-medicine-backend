@@ -250,37 +250,31 @@ VALUES
 #EndIf
 
 
-#IfNotRow registry directory medical_admission
-INSERT INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`,`component_name`)
+#IfNotRow2D registry directory medical_admission component_name MedicalAdmission
+REPLACE INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`,`component_name`)
 VALUES
-('Medical Admission', 1, 'medical_admission', 1, 1, '2020-03-14 00:00:00', 1, 'React form', '', 0, 0, 'client_app|MedicalAdmissionForm','MedicalAdmissionForm');
+('Medical Admission', 1, 'medical_admission', 1, 1, '2020-03-14 00:00:00', 1, 'React form', '', 0, 0, 'client_app|MedicalAdmissionForm','MedicalAdmission');
 
 REPLACE INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
-SELECT id,'service_type','1'
-FROM registry
-WHERE directory = 'medical_admission';
+SELECT id,'service_type','1' FROM registry WHERE directory = 'medical_admission';
 #EndIf
 
-#IfNotRow registry directory tests_and_treatments
-INSERT INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`,`component_name`)
+#IfNotRow2D registry directory tests_and_treatments component_name TestsAndTreatments
+REPLACE INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`,`component_name`)
 VALUES
-('Tests and Treatments', 1, 'tests_and_treatments', 1, 1, '2020-03-14 00:00:00', 2, 'React form', '', 0, 0, 'client_app|TestsandTreatmentsForm','TestsandTreatmentsForm');
+('Tests and Treatments', 1, 'tests_and_treatments', 1, 1, '2020-03-14 00:00:00', 2, 'React form', '', 0, 0, 'client_app|TestsAndTreatmentsForm','TestsAndTreatments');
 
 REPLACE INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
-SELECT id,'service_type','1'
-FROM registry
-WHERE directory = 'tests_and_treatments';
-#EndIf
+SELECT id,'service_type','1' FROM registry WHERE directory = 'tests_and_treatments';
+#EndIf``
 
-#IfNotRow registry directory diagnosis_and_recommendations
-INSERT INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`,`component_name`)
+#IfNotRow2D registry directory diagnosis_and_recommendations component_name DiagnosisAndRecommendations
+REPLACE INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`,`component_name`)
 VALUES
-('Diagnosis and Recommendations', 1, 'diagnosis_and_recommendations', 1, 1, '2020-03-14 00:00:00', 3, 'React form', '', 0, 0, 'client_app|DiagnosisandRecommendationsForm','DiagnosisandRecommendationsForm');
+('Diagnosis and Recommendations', 1, 'diagnosis_and_recommendations', 1, 1, '2020-03-14 00:00:00', 3, 'React form', '', 0, 0, 'client_app|DiagnosisAndRecommendationsForm','DiagnosisAndRecommendations');
 
 REPLACE INTO `form_context_map` (`form_id`, `context_type`, `context_id`)
-SELECT id,'service_type','1'
-FROM registry
-WHERE directory = 'diagnosis_and_recommendations';
+SELECT id,'service_type','1' FROM registry WHERE directory = 'diagnosis_and_recommendations';
 #EndIf
 
 #IfNotRow fhir_value_sets id reason_codes_1
@@ -333,4 +327,14 @@ VALUES ('x_ray_types', 'Xray Types');
 #IfNotRow3D fhir_value_set_systems vs_id x_ray_types system x_ray_types type All
 INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('x_ray_types', 'x_ray_types', 'All', NULL);
+
+
+
+#IfNotRow2D list_options list_id clinikal_app_secondary_statuses option_id waiting_for_nurse
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`)
+VALUES
+('clinikal_app_secondary_statuses', 'waiting_for_nurse', 'Waiting for Nurse', 10, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1),
+('clinikal_app_secondary_statuses', 'waiting_for_doctor', 'Waiting for Doctor', 20, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1),
+('clinikal_app_secondary_statuses', 'waiting_for_xray', 'Waiting for X-ray', 30, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1),
+('clinikal_app_secondary_statuses', 'waiting_for_release', 'Waiting for Release', 40, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1);
 #EndIf
