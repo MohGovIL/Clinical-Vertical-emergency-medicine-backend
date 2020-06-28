@@ -297,3 +297,31 @@ VALUES
 ('clinikal_enc_secondary_statuses', 'waiting_for_release', 'Waiting for Release', 40, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1);
 #EndIf
 
+
+#IfNotTable form_diagnosis_and_recommendations_questionnaire
+CREATE TABLE form_diagnosis_and_recommendations_questionnaire(
+    id bigint(20) NOT NULL AUTO_INCREMENT,
+    encounter varchar(255) DEFAULT NULL,
+    form_id bigint(20) NOT NULL,
+    question_id int(11) NOT NULL,
+    answer text,
+    PRIMARY KEY (`id`)
+);
+#EndIf
+
+#IfNotRow fhir_questionnaire directory form_diagnosis_and_recommendations_questionnaire
+INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALUES
+('Diagnosis and recommendations questionnaire', 'diagnosis_and_recommendations_questionnaire', '1', 'encounters|notes');
+#EndIf
+
+#IfNotRow2D questionnaires_schemas form_name form_diagnosis_and_recommendations_questionnaire question Decision
+INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
+VALUES
+('1', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Findings details'),
+('2', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Diagnosis details'),
+('3', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Treatment details'),
+('4', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Instructions for further treatment'),
+('5', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Decision'),
+('6', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Evacuation way'),
+('7', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Sick leave');
+#EndIf
