@@ -297,7 +297,7 @@ VALUES
 ('clinikal_enc_secondary_statuses', 'waiting_for_release', 'Waiting for Release', 40, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1);
 #EndIf
 
-#IfRow list_options list_id clinikal_app_secondary_statuses
+#IfRow2D list_options list_id lists option_id clinikal_app_secondary_statuses
 
 DELETE FROM list_options WHERE list_id = "clinikal_app_secondary_statuses" OR option_id ="clinikal_app_secondary_statuses";
 
