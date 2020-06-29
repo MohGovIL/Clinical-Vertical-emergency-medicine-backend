@@ -253,7 +253,7 @@ INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALU
 ('Diagnosis and recommendations questionnaire', 'diagnosis_and_recommendations_questionnaire', '1', 'encounters|notes');
 #EndIf
 
-INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
+INSERT INTO `` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
 VALUES
 ('1', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Findings details'),
 ('2', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Diagnosis details'),
@@ -261,4 +261,4 @@ VALUES
 ('4', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Instructions for further treatment'),
 ('5', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Decision'),
 ('6', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Evacuation way'),
-('7', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Sick leave');
+('7', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'integer', 'Sick leave');
