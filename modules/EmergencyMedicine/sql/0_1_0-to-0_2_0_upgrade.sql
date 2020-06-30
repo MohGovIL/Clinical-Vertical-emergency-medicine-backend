@@ -287,6 +287,48 @@ INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('reason_codes_1', 'clinikal_reason_codes', 'Filter', '1');
 #EndIf
 
+ALTER TABLE `fhir_value_set_systems` MODIFY COLUMN `type` ENUM('All', 'Partial', 'Exclude', 'Filter', 'Codes') NOT NULL AFTER `system`;
+
+#IfNotRow fhir_value_sets id sensitivities
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('sensitivities', 'Sensitivities');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id sensitivities system 9920 type Codes
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('sensitivities', '9920', 'Codes', NULL);
+#EndIf
+
+#IfNotRow fhir_value_sets id bk_diseases
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('bk_diseases', 'BK Diseases');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id bk_diseases system 9921 type Codes
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('bk_diseases', '9921', 'Codes', NULL);
+#EndIf
+
+#IfNotRow fhir_value_sets id tests_and_treatments
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('tests_and_treatments', 'Tests And Treatments');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id tests_and_treatments system tests_and_treatments type All
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('tests_and_treatments', 'tests_and_treatments', 'All', NULL);
+#EndIf
+
+#IfNotRow fhir_value_sets id x_ray_types
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('x_ray_types', 'Xray Types');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id x_ray_types system x_ray_types type All
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('x_ray_types', 'x_ray_types', 'All', NULL);
+
+
 
 #IfNotRow2D list_options list_id clinikal_enc_secondary_statuses option_id waiting_for_nurse
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`)
@@ -324,4 +366,50 @@ VALUES
 ('5', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Decision'),
 ('6', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Evacuation way'),
 ('7', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'integer', 'Sick leave');
+#EndIf
+
+#IfNotRow fhir_value_sets id encounter_secondary_statuses
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('encounter_secondary_statuses', 'Encounter Secondary Statuses');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id encounter_secondary_statuses system clinikal_enc_secondary_statuses type All
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('encounter_secondary_statuses', 'clinikal_enc_secondary_statuses', 'All', NULL);
+#EndIf
+
+#IfNotRow fhir_value_sets id waiting_for_xray_statuses
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('waiting_for_xray_statuses', 'Waiting For Xray Statuses');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id waiting_for_xray_statuses system clinikal_enc_secondary_statuses type Partial
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('waiting_for_xray_statuses', 'clinikal_enc_secondary_statuses', 'Partial', NULL);
+
+INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'waiting_for_xray_statuses' AND system = 'clinikal_enc_secondary_statuses' AND type = 'Partial'), 'waiting_for_nurse'),
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'waiting_for_xray_statuses' AND system = 'clinikal_enc_secondary_statuses' AND type = 'Partial'), 'waiting_for_doctor'),
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'waiting_for_xray_statuses' AND system = 'clinikal_enc_secondary_statuses' AND type = 'Partial'), 'waiting_for_xray');
+#EndIf
+
+#IfNotRow fhir_value_sets id waiting_for_release_statuses
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('waiting_for_release_statuses', 'Waiting For Release Statuses');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id waiting_for_release_statuses system clinikal_enc_secondary_statuses type Partial
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('waiting_for_release_statuses', 'clinikal_enc_secondary_statuses', 'Partial', NULL);
+
+INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'waiting_for_release_statuses' AND system = 'clinikal_enc_secondary_statuses' AND type = 'Partial'), 'waiting_for_release');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id waiting_for_release_statuses system clinikal_enc_statuses type Partial
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('waiting_for_release_statuses', 'clinikal_enc_statuses', 'Partial', NULL);
+
+INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'waiting_for_release_statuses' AND system = 'clinikal_enc_statuses' AND type = 'Partial'), 'finished');
 #EndIf

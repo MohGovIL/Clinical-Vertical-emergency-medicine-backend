@@ -231,6 +231,33 @@ VALUES ('reason_codes_1', 'Emergency Medicine Reason Codes');
 INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('reason_codes_1', 'clinikal_reason_codes', 'Filter', '1');
 
+ALTER TABLE `fhir_value_set_systems` MODIFY COLUMN `type` ENUM('All', 'Partial', 'Exclude', 'Filter', 'Codes') NOT NULL AFTER `system`;
+
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('sensitivities', 'Sensitivities');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('sensitivities', '9920', 'Codes', NULL);
+
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('bk_diseases', 'BK Diseases');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('bk_diseases', '9921', 'Codes', NULL);
+
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('tests_and_treatments', 'Tests And Treatments');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('tests_and_treatments', 'tests_and_treatments', 'All', NULL);
+
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('x_ray_types', 'Xray Types');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('x_ray_types', 'x_ray_types', 'All', NULL);
+
+
 
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`)
 VALUES
@@ -238,6 +265,43 @@ VALUES
 ('clinikal_enc_secondary_statuses', 'waiting_for_doctor', 'Waiting for Doctor', 20, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1),
 ('clinikal_enc_secondary_statuses', 'waiting_for_xray', 'Waiting for X-ray', 30, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1),
 ('clinikal_enc_secondary_statuses', 'waiting_for_release', 'Waiting for Release', 40, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1);
+
+
+-- More Valuesets
+
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('encounter_secondary_statuses', 'Encounter Secondary Statuses');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('encounter_secondary_statuses', 'clinikal_enc_secondary_statuses', 'All', NULL);
+
+
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('waiting_for_xray_statuses', 'Waiting For Xray Statuses');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('waiting_for_xray_statuses', 'clinikal_enc_secondary_statuses', 'Partial', NULL);
+
+INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'waiting_for_xray_statuses' AND system = 'clinikal_enc_secondary_statuses' AND type = 'Partial'), 'waiting_for_nurse'),
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'waiting_for_xray_statuses' AND system = 'clinikal_enc_secondary_statuses' AND type = 'Partial'), 'waiting_for_doctor'),
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'waiting_for_xray_statuses' AND system = 'clinikal_enc_secondary_statuses' AND type = 'Partial'), 'waiting_for_xray');
+
+
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('waiting_for_release_statuses', 'Waiting For Release Statuses');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('waiting_for_release_statuses', 'clinikal_enc_secondary_statuses', 'Partial', NULL);
+
+INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'waiting_for_release_statuses' AND system = 'clinikal_enc_secondary_statuses' AND type = 'Partial'), 'waiting_for_release');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('waiting_for_release_statuses', 'clinikal_enc_statuses', 'Partial', NULL);
+
+INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
+((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'waiting_for_release_statuses' AND system = 'clinikal_enc_statuses' AND type = 'Partial'), 'finished');
 
 
 CREATE TABLE form_diagnosis_and_recommendations_questionnaire(
