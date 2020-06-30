@@ -302,3 +302,27 @@ VALUES ('waiting_for_release_statuses', 'clinikal_enc_statuses', 'Partial', NULL
 
 INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
 ((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'waiting_for_release_statuses' AND system = 'clinikal_enc_statuses' AND type = 'Partial'), 'finished');
+
+
+CREATE TABLE form_diagnosis_and_recommendations_questionnaire(
+    id bigint(20) NOT NULL AUTO_INCREMENT,
+    encounter varchar(255) DEFAULT NULL,
+    form_id bigint(20) NOT NULL,
+    question_id int(11) NOT NULL,
+    answer text,
+    PRIMARY KEY (`id`)
+);
+
+INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALUES
+('Diagnosis and recommendations questionnaire', 'diagnosis_and_recommendations_questionnaire', '1', 'encounters|notes');
+#EndIf
+
+INSERT INTO `` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
+VALUES
+('1', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Findings details'),
+('2', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Diagnosis details'),
+('3', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Treatment details'),
+('4', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Instructions for further treatment'),
+('5', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Decision'),
+('6', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Evacuation way'),
+('7', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'integer', 'Sick leave');
