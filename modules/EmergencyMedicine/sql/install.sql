@@ -141,19 +141,19 @@ INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`) VALUES
 
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
 ('lists', 'clinikal_reason_codes', 'Clinikal Reason Codes', 0, 1,'1'),
-('clinikal_reason_codes', 'dehydration', 'Dehydration', 10, 1,'1'),
-('clinikal_reason_codes', 'orthopedic_sabotage', 'Orthopedic sabotage', 20, 1,'1'),
-('clinikal_reason_codes', 'head_injury', 'head injury', 30, 1,'1'),
-('clinikal_reason_codes', 'foreign_body_penetration', 'Foreign body penetration', 40, 1,'1'),
-('clinikal_reason_codes', 'high_temperature', 'high temperature', 50, 1,'1'),
-('clinikal_reason_codes', 'cut', 'cut', 60, 1,'1'),
-('clinikal_reason_codes', 'pain', 'Pain', 70, 1,'1'),
-('clinikal_reason_codes', 'chest_pain', 'Chest pain', 80, 1,'1'),
-('clinikal_reason_codes', 'back_pain', 'Back pain', 90, 1,'1'),
-('clinikal_reason_codes', 'headache', 'Headache', 100, 1,'1'),
-('clinikal_reason_codes', 'rash', 'Rash', 110, 1,'1'),
-('clinikal_reason_codes', 'shortness_of_breath', 'Shortness of breath', 120, 1,'1'),
-('clinikal_reason_codes', 'diarrhea_and_vomiting', 'Diarrhea and vomiting', 130, 1,'1');
+('clinikal_reason_codes', '1', 'Dehydration', 10, 1,'1'),
+('clinikal_reason_codes', '2', 'Orthopedic sabotage', 20, 1,'1'),
+('clinikal_reason_codes', '3', 'head injury', 30, 1,'1'),
+('clinikal_reason_codes', '4', 'Foreign body penetration', 40, 1,'1'),
+('clinikal_reason_codes', '5', 'high temperature', 50, 1,'1'),
+('clinikal_reason_codes', '6', 'cut', 60, 1,'1'),
+('clinikal_reason_codes', '7', 'Pain', 70, 1,'1'),
+('clinikal_reason_codes', '8', 'Chest pain', 80, 1,'1'),
+('clinikal_reason_codes', '9', 'Back pain', 90, 1,'1'),
+('clinikal_reason_codes', '10', 'Headache', 100, 1,'1'),
+('clinikal_reason_codes', '11', 'Rash', 110, 1,'1'),
+('clinikal_reason_codes', '12', 'Shortness of breath', 120, 1,'1'),
+('clinikal_reason_codes', '13', 'Diarrhea and vomiting', 130, 1,'1');
 
 
 INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_mask`, `ct_fee`, `ct_rel`, `ct_nofs`, `ct_diag`, `ct_active`, `ct_label`, `ct_external`, `ct_claim`, `ct_proc`, `ct_term`, `ct_problem`, `ct_drug`) VALUES
