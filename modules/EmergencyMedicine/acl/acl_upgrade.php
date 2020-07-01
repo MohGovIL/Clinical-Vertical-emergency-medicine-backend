@@ -29,7 +29,12 @@ return $ACL_UPGRADE = array(
         AclExtended::addObjectAcl('client_app', 'Client Application', 'SummaryLetter','Summary Letter');
         AclExtended::addObjectAcl('client_app', 'Client Application', 'EncountersReport','Encounters Report');
         AclExtended::addObjectAcl('client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient');
+
+        AclExtended::addObjectAcl('client_app', 'Client Application', 'PatientTrackingWaitingForNurse','Patient Tracking Waiting for Nurse');
+        AclExtended::addObjectAcl('client_app', 'Client Application', 'PatientTrackingWaitingForDoctor','Patient Tracking Waiting for Doctor');
+        AclExtended::addObjectAcl('client_app', 'Client Application', 'PatientTrackingWaitingForXray','Patient Tracking Waiting for Xray');
         AclExtended::addObjectAcl('client_app', 'Client Application', 'PatientTrackingWaitingForRelease','Patient Tracking Waiting for Release');
+        AclExtended::addObjectAcl('client_app', 'Client Application', 'PatientTrackingFinishedVisit','Patient Tracking Finished visit');
 
         // client app ACL
 
@@ -37,11 +42,11 @@ return $ACL_UPGRADE = array(
         AclExtended::updateAcl($admin_write, 'Administrators', 'client_app', 'Client Application', 'SuperUser','Super User', 'write');
 
         //Emergency manager ACL
-        AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'PatientTrackingInvited','Patient Tracking Invited', 'write');
-        AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'PatientTrackingWaitingForExamination','Patient Tracking Waiting for Examination', 'write');
-        AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'PatientTrackingWaitingForDecoding','Patient Tracking Waiting for Decoding', 'write');
+        AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'PatientTrackingWaitingForNurse','Patient Tracking Waiting for Nurse', 'write');
+        AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'PatientTrackingWaitingForDoctor','Patient Tracking Waiting for Doctor', 'write');
+        AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'PatientTrackingWaitingForXray','Patient Tracking Waiting for Xray', 'write');
         AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'PatientTrackingWaitingForRelease','Patient Tracking Waiting for Release', 'write');
-        AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'PatientTrackingFinished','Patient Tracking Finished', 'write');
+        AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'PatientTrackingFinishedVisit','Patient Tracking Finished visit', 'write');
         AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'client_app', 'Client Application', 'SearchPatient','Search Patient', 'view');
         AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'AddPatient','Add Patient', 'write');
         AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'PatientAdmission','Patient Admission', 'write');
@@ -54,6 +59,10 @@ return $ACL_UPGRADE = array(
         AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'client_app', 'Client Application', 'SummaryLetter','Summary Letter', 'view');
         AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'client_app', 'Client Application', 'EncountersReport','Encounters Report', 'view');
         AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient', 'write');
+
+        AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'client_app', 'Client Application', 'general_settings','General settings', 'view');
+        AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'client_app', 'Client Application', 'lists','Lists', 'view');
+
 
         // FHIR ACL
         AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'fhir_api', 'FHIR API', 'patient','Patient', 'write');
@@ -74,11 +83,11 @@ return $ACL_UPGRADE = array(
 
         //Emergency receptionist ACL
         // client app ACL
-        AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'client_app', 'Client Application', 'PatientTrackingInvited','Patient Tracking Invited', 'write');
-        AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'client_app', 'Client Application', 'PatientTrackingWaitingForExamination','Patient Tracking Waiting for Examination', 'write');
-        AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'client_app', 'Client Application', 'PatientTrackingWaitingForDecoding','Patient Tracking Waiting for Decoding', 'write');
+        AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'client_app', 'Client Application', 'PatientTrackingWaitingForNurse','Patient Tracking Waiting for Nurse', 'write');
+        AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'client_app', 'Client Application', 'PatientTrackingWaitingForDoctor','Patient Tracking Waiting for Doctor', 'write');
+        AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'client_app', 'Client Application', 'PatientTrackingWaitingForXray','Patient Tracking Waiting for Xray', 'write');
         AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'client_app', 'Client Application', 'PatientTrackingWaitingForRelease','Patient Tracking Waiting for Release', 'write');
-        AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'client_app', 'Client Application', 'PatientTrackingFinished','Patient Tracking Finished', 'write');
+        AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'client_app', 'Client Application', 'PatientTrackingFinishedVisit','Patient Tracking Finished visit', 'write');
         AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'client_app', 'Client Application', 'SearchPatient','Search Patient', 'view');
         AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'client_app', 'Client Application', 'AddPatient','Add Patient', 'write');
         AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'client_app', 'Client Application', 'PatientAdmission','Patient Admission', 'write');
@@ -91,6 +100,9 @@ return $ACL_UPGRADE = array(
         AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'client_app', 'Client Application', 'SummaryLetter','Summary Letter', 'view');
         AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'client_app', 'Client Application', 'EncountersReport','Encounters Report', 'view');
         AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient', 'write');
+
+        AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'client_app', 'Client Application', 'general_settings','General settings', 'view');
+        AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'client_app', 'Client Application', 'lists','Lists', 'view');
 
         // FHIR ACL
         AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'patient','Patient', 'write');
@@ -110,11 +122,11 @@ return $ACL_UPGRADE = array(
 
         //Emergency nurse ACL
         // client app ACL
-        AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'client_app', 'Client Application', 'PatientTrackingInvited','Patient Tracking Invited', 'write');
-        AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'client_app', 'Client Application', 'PatientTrackingWaitingForExamination','Patient Tracking Waiting for Examination', 'write');
-        AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'client_app', 'Client Application', 'PatientTrackingWaitingForDecoding','Patient Tracking Waiting for Decoding', 'write');
+        AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'client_app', 'Client Application', 'PatientTrackingWaitingForNurse','Patient Tracking Waiting for Nurse', 'write');
+        AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'client_app', 'Client Application', 'PatientTrackingWaitingForDoctor','Patient Tracking Waiting for Doctor', 'write');
+        AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'client_app', 'Client Application', 'PatientTrackingWaitingForXray','Patient Tracking Waiting for Xray', 'write');
         AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'client_app', 'Client Application', 'PatientTrackingWaitingForRelease','Patient Tracking Waiting for Release', 'write');
-        AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'client_app', 'Client Application', 'PatientTrackingFinished','Patient Tracking Finished', 'write');
+        AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'client_app', 'Client Application', 'PatientTrackingFinishedVisit','Patient Tracking Finished visit', 'write');
         AclExtended::updateAcl($emergency_nurse_view, 'Emergency nurse', 'client_app', 'Client Application', 'SearchPatient','Search Patient', 'view');
         //AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'client_app', 'Client Application', 'AddPatient','Add Patient', 'write');
         //AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'client_app', 'Client Application', 'PatientAdmission','Patient Admission', 'write');
@@ -127,6 +139,11 @@ return $ACL_UPGRADE = array(
         AclExtended::updateAcl($emergency_nurse_view, 'Emergency nurse', 'client_app', 'Client Application', 'SummaryLetter','Summary Letter', 'view');
         AclExtended::updateAcl($emergency_nurse_view, 'Emergency nurse', 'client_app', 'Client Application', 'EncountersReport','Encounters Report', 'view');
         AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient', 'write');
+
+        AclExtended::updateAcl($emergency_nurse_view, 'Emergency nurse', 'client_app', 'Client Application', 'general_settings','General settings', 'view');
+        AclExtended::updateAcl($emergency_nurse_view, 'Emergency nurse', 'client_app', 'Client Application', 'lists','Lists', 'view');
+
+
         // FHIR ACL
         AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'fhir_api', 'FHIR API', 'patient','Patient', 'write');
         AclExtended::updateAcl($emergency_nurse_view, 'Emergency nurse', 'fhir_api', 'FHIR API', 'appointment','Appointment', 'view');
@@ -145,11 +162,11 @@ return $ACL_UPGRADE = array(
 
         //Emergency doctor ACL
         // client app ACL
-        AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'PatientTrackingInvited','Patient Tracking Invited', 'write');
-        AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'PatientTrackingWaitingForExamination','Patient Tracking Waiting for Examination', 'write');
-        AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'PatientTrackingWaitingForDecoding','Patient Tracking Waiting for Decoding', 'write');
+        AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'PatientTrackingWaitingForNurse','Patient Tracking Waiting for Nurse', 'write');
+        AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'PatientTrackingWaitingForDoctor','Patient Tracking Waiting for Doctor', 'write');
+        AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'PatientTrackingWaitingForXray','Patient Tracking Waiting for Xray', 'write');
         AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'PatientTrackingWaitingForRelease','Patient Tracking Waiting for Release', 'write');
-        AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'PatientTrackingFinished','Patient Tracking Finished', 'write');
+        AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'PatientTrackingFinishedVisit','Patient Tracking Finished visit', 'write');
         AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'client_app', 'Client Application', 'SearchPatient','Search Patient', 'view');
         //AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'AddPatient','Add Patient', 'write');
         //AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'PatientAdmission','Patient Admission', 'write');
@@ -162,6 +179,10 @@ return $ACL_UPGRADE = array(
         AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'client_app', 'Client Application', 'SummaryLetter','Summary Letter', 'view');
         AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'client_app', 'Client Application', 'EncountersReport','Encounters Report', 'view');
         AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient', 'write');
+
+        AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'client_app', 'Client Application', 'general_settings','General settings', 'view');
+        AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'client_app', 'Client Application', 'lists','Lists', 'view');
+
         // FHIR ACL
         AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'fhir_api', 'FHIR API', 'patient','Patient', 'write');
         AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'fhir_api', 'FHIR API', 'appointment','Appointment', 'view');
@@ -177,7 +198,7 @@ return $ACL_UPGRADE = array(
         AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'fhir_api', 'FHIR API', 'condition','Condition', 'write');
         AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'fhir_api', 'FHIR API', 'medicationstatement','Medication Statement Response', 'write');
         AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'fhir_api', 'FHIR API', 'observation','Observation', 'write');
-
+        
     }
 );
 
