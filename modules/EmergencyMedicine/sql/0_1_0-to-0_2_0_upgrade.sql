@@ -359,7 +359,7 @@ INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALU
 ('Diagnosis and recommendations questionnaire', 'diagnosis_and_recommendations_questionnaire', '1', 'encounters|notes');
 #EndIf
 
-#IfNotRow2D questionnaires_schemas form_name form_diagnosis_and_recommendations_questionnaire question Decision
+#IfNotRow2D questionnaires_schemas form_name diagnosis_and_recommendations_questionnaire question Decision
 INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
 VALUES
 ('1', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Findings details'),

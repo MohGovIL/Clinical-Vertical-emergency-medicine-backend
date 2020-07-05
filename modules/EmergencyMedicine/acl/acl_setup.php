@@ -55,8 +55,8 @@ AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'cli
 AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'client_app', 'Client Application', 'EncountersReport','Encounters Report', 'view');
 AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient', 'write');
 
-AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'client_app', 'Client Application', 'general_settings','General settings', 'view');
-AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'client_app', 'Client Application', 'lists','Lists', 'view');
+AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'clinikal_api', 'Clinikal API', 'general_settings','General settings', 'view');
+AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'clinikal_api', 'Clinikal API', 'lists','Lists', 'view');
 
 
 
@@ -98,8 +98,8 @@ AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', '
 AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'client_app', 'Client Application', 'EncountersReport','Encounters Report', 'view');
 AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient', 'write');
 
-AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'client_app', 'Client Application', 'general_settings','General settings', 'view');
-AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'client_app', 'Client Application', 'lists','Lists', 'view');
+AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'clinikal_api', 'Clinikal API', 'general_settings','General settings', 'view');
+AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'clinikal_api', 'Clinikal API', 'lists','Lists', 'view');
 
 // FHIR ACL
 AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'patient','Patient', 'write');
@@ -137,8 +137,8 @@ AclExtended::updateAcl($emergency_nurse_view, 'Emergency nurse', 'client_app', '
 AclExtended::updateAcl($emergency_nurse_view, 'Emergency nurse', 'client_app', 'Client Application', 'EncountersReport','Encounters Report', 'view');
 AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient', 'write');
 
-AclExtended::updateAcl($emergency_nurse_view, 'Emergency nurse', 'client_app', 'Client Application', 'general_settings','General settings', 'view');
-AclExtended::updateAcl($emergency_nurse_view, 'Emergency nurse', 'client_app', 'Client Application', 'lists','Lists', 'view');
+AclExtended::updateAcl($emergency_nurse_view, 'Emergency nurse', 'clinikal_api', 'Clinikal API', 'general_settings','General settings', 'view');
+AclExtended::updateAcl($emergency_nurse_view, 'Emergency nurse', 'clinikal_api', 'Clinikal API', 'lists','Lists', 'view');
 
 // FHIR ACL
 AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'fhir_api', 'FHIR API', 'patient','Patient', 'write');
@@ -176,8 +176,8 @@ AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'client_app',
 AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'client_app', 'Client Application', 'EncountersReport','Encounters Report', 'view');
 AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient', 'write');
 
-AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'client_app', 'Client Application', 'general_settings','General settings', 'view');
-AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'client_app', 'Client Application', 'lists','Lists', 'view');
+AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'clinikal_api', 'Clinikal API', 'general_settings','General settings', 'view');
+AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'clinikal_api', 'Clinikal API', 'lists','Lists', 'view');
 
 // FHIR ACL
 AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'fhir_api', 'FHIR API', 'patient','Patient', 'write');
