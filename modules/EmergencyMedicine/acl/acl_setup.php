@@ -76,6 +76,7 @@ AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'fhi
 AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'fhir_api', 'FHIR API', 'condition','Condition', 'view');
 AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'fhir_api', 'FHIR API', 'medicationstatement','Medication Statement Response', 'view');
 AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'fhir_api', 'FHIR API', 'observation','Observation', 'view');
+AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'fhir_api', 'FHIR API', 'medicationrequest','MedicationRequest', 'view');
 
 
 //Emergency receptionist ACL
@@ -116,6 +117,7 @@ AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', '
 AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'condition','Condition', 'view');
 AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'medicationstatement','Medication Statement Response', 'view');
 AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'observation','Observation', 'view');
+AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'medicationrequest','MedicationRequest', 'view');
 
 //Emergency nurse ACL
 // client app ACL
@@ -155,6 +157,7 @@ AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'fhir_api', 'F
 AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'fhir_api', 'FHIR API', 'condition','Condition', 'write');
 AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'fhir_api', 'FHIR API', 'medicationstatement','Medication Statement Response', 'write');
 AclExtended::updateAcl($emergency_nurse_write, 'Emergency nurse', 'fhir_api', 'FHIR API', 'observation','Observation', 'write');
+AclExtended::updateAcl($emergency_nurse_view, 'Emergency nurse', 'fhir_api', 'FHIR API', 'medicationrequest','MedicationRequest', 'view');
 
 //Emergency doctor ACL
 // client app ACL
@@ -194,6 +197,7 @@ AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'fhir_api', 
 AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'fhir_api', 'FHIR API', 'condition','Condition', 'write');
 AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'fhir_api', 'FHIR API', 'medicationstatement','Medication Statement Response', 'write');
 AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'fhir_api', 'FHIR API', 'observation','Observation', 'write');
+AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'fhir_api', 'FHIR API', 'medicationrequest','MedicationRequest', 'write');
 
 
 
