@@ -1,5 +1,6 @@
 
 -- list of statements
+DELETE FROM  list_options WHERE list_id = 'clinikal_templates';
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
 ('clinikal_templates', '1', 'טקסט 1 לשדה אנמנזה סיעודית בהתייבשות', 1, 0, 0, '', '', '', 0, 0, 1, '', 1),
 ('clinikal_templates', '2', 'טקסט 2 לשדה אנמנזה סיעודית בהתייבשות', 2, 0, 0, '', '', '', 0, 0, 1, '', 1),
@@ -38,9 +39,9 @@ INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`
 ('clinikal_templates', '402', 'יש להימנע מחשיפה לשמש', 402, 0, 0, '', '', '', 0, 0, 1, '', 1);
 
 
+DELETE FROM  clinikal_templates_map;
 
 INSERT INTO `clinikal_templates_map` (`form_id`, `form_field`, `service_type`, `reason_code`, `message_id`, `seq`) VALUES
-('medical_admission', 'nursing_anamnesis ', '1', '1', '1', 1),
 ('medical_admission', 'nursing_anamnesis ', '1', '1', '1', 1),
 ('medical_admission', 'nursing_anamnesis ', '1', '1', '2', 2),
 ('medical_admission', 'nursing_anamnesis ', '1', '3', '6', 6),
