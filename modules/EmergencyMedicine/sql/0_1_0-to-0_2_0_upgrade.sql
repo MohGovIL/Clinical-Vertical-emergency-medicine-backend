@@ -322,14 +322,53 @@ INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('tests_and_treatments', 'tests_and_treatments', 'All', NULL);
 #EndIf
 
-#IfNotRow fhir_value_sets id x_ray_types
-INSERT INTO `fhir_value_sets` (`id`, `title`)
-VALUES ('x_ray_types', 'Xray Types');
+
+#IfRow2D fhir_value_sets id x_ray_types title Xray Types
+DELETE FROM fhir_value_sets WHERE id ="x_ray_types";
 #EndIf
 
-#IfNotRow3D fhir_value_set_systems vs_id x_ray_types system x_ray_types type All
+#IfRow3D fhir_value_set_systems vs_id x_ray_types system x_ray_types type All
+DELETE FROM fhir_value_set_systems WHERE vs_id ="x_ray_types";
+#EndIf
+
+#IfNotRow fhir_value_sets id details_x_ray
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('details_x_ray', 'Xray Type');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id details_x_ray system details_x_ray type All
 INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
-VALUES ('x_ray_types', 'x_ray_types', 'All', NULL);
+VALUES ('details_x_ray', 'details_x_ray', 'All', NULL);
+#EndIf
+
+
+
+#IfNotRow2D list_options list_id lists option_id details_x_ray
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
+('lists', 'details_x_ray', 'Xray Type', 0, 1,''),
+('details_x_ray', 'dehydration', 'Chest', 10, 1,''),
+('details_x_ray', 'inhalation', 'Palm', 20, 1,''),
+('details_x_ray', 'laboratory_tests', 'sole', 30, 1,''),
+('details_x_ray', 'bandage', 'Shoulder', 40, 1,''),
+('details_x_ray', 'taking_metrics', 'Neck', 50, 1,''),
+('details_x_ray', 'fluid_infusion', 'Ankle', 60, 1,'');
+#EndIf
+
+
+#IfNotRow2D list_options list_id lists option_id tests_and_treatments
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
+('lists', 'tests_and_treatments', 'Tests and Treatments', 0, 1,''),
+('tests_and_treatments', 'dehydration', 'EGK', 10, 1,''),
+('tests_and_treatments', 'inhalation', 'Inhalation', 20, 1,''),
+('tests_and_treatments', 'laboratory_tests', 'Laboratory tests', 30, 1,''),
+('tests_and_treatments', 'bandage', 'Bandage', 40, 1,'רכיב פשוט'),
+('tests_and_treatments', 'taking_metrics', 'Taking metrics', 50, 1,''),
+('tests_and_treatments', 'fluid_infusion', 'Fluid infusion', 60, 1,''),
+('tests_and_treatments', 'providing_medicine', 'Providing medicine', 70, 1,''),
+('tests_and_treatments', 'x_ray', 'X-Ray', 80, 1,'');
+#EndIf
+
+
 
 
 
