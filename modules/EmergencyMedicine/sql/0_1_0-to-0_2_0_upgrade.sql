@@ -208,7 +208,7 @@ INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`) VALUES
 
 #IfNotRow2D list_options list_id clinikal_reason_codes option_id 7
 
-DELETE FROM list_options WHERE list_id='clinikal_reason_codes' OR option_id="clinikal_reason_codes";
+DELETE FROM `list_options` WHERE list_id='clinikal_reason_codes' OR option_id="clinikal_reason_codes";
 
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
 ('lists', 'clinikal_reason_codes', 'Clinikal Reason Codes', 0, 1,'1'),
@@ -341,7 +341,11 @@ INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('details_x_ray', 'details_x_ray', 'All', NULL);
 #EndIf
 
+#IfRow2D list_options list_id lists option_id x_ray_types
 
+DELETE FROM list_options WHERE list_id="x_ray_types" OR option_id="x_ray_types"
+
+#EndIf
 
 #IfNotRow2D list_options list_id lists option_id details_x_ray
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
