@@ -184,7 +184,7 @@ INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`
 ('tests_and_treatments', 'dehydration', 'EGK', 10, 1,''),
 ('tests_and_treatments', 'inhalation', 'Inhalation', 20, 1,''),
 ('tests_and_treatments', 'laboratory_tests', 'Laboratory tests', 30, 1,''),
-('tests_and_treatments', 'bandage', 'Bandage', 40, 1,'רכיב פשוט'),
+('tests_and_treatments', 'bandage', 'Bandage', 40, 1,''),
 ('tests_and_treatments', 'taking_metrics', 'Taking metrics', 50, 1,''),
 ('tests_and_treatments', 'fluid_infusion', 'Fluid infusion', 60, 1,''),
 ('tests_and_treatments', 'providing_medicine', 'Providing medicine', 70, 1,''),
@@ -256,6 +256,12 @@ VALUES ('details_x_ray', 'Xray Type');
 
 INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('details_x_ray', 'details_x_ray', 'All', NULL);
+
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('details_providing_medicine', 'Drug name');
+
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('details_providing_medicine', '9911', 'Codes', NULL);
 
 
 

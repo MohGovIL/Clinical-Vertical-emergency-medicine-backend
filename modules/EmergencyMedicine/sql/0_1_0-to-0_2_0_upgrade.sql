@@ -361,15 +361,12 @@ INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`
 ('tests_and_treatments', 'dehydration', 'EGK', 10, 1,''),
 ('tests_and_treatments', 'inhalation', 'Inhalation', 20, 1,''),
 ('tests_and_treatments', 'laboratory_tests', 'Laboratory tests', 30, 1,''),
-('tests_and_treatments', 'bandage', 'Bandage', 40, 1,'רכיב פשוט'),
+('tests_and_treatments', 'bandage', 'Bandage', 40, 1,''),
 ('tests_and_treatments', 'taking_metrics', 'Taking metrics', 50, 1,''),
 ('tests_and_treatments', 'fluid_infusion', 'Fluid infusion', 60, 1,''),
 ('tests_and_treatments', 'providing_medicine', 'Providing medicine', 70, 1,''),
 ('tests_and_treatments', 'x_ray', 'X-Ray', 80, 1,'');
 #EndIf
-
-
-
 
 
 #IfNotRow2D list_options list_id clinikal_enc_secondary_statuses option_id waiting_for_nurse
@@ -455,3 +452,18 @@ VALUES ('waiting_for_release_statuses', 'clinikal_enc_statuses', 'Partial', NULL
 INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
 ((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'waiting_for_release_statuses' AND system = 'clinikal_enc_statuses' AND type = 'Partial'), 'finished');
 #EndIf
+
+
+#IfNotRow fhir_value_sets id details_providing_medicine
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('details_providing_medicine', 'Drug name');
+#EndIf
+
+
+#IfNotRow fhir_value_set_systems vs_id details_providing_medicine
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('details_providing_medicine', '9911', 'Codes', NULL);
+#EndIf
+
+
+
