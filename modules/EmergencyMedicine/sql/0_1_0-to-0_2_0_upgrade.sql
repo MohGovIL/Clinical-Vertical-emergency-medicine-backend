@@ -336,16 +336,11 @@ INSERT INTO `fhir_value_sets` (`id`, `title`)
 VALUES ('details_x_ray', 'Xray Type');
 #EndIf
 
-#IfNotRow3D fhir_value_set_systems vs_id details_x_ray system details_x_ray type All
+#IfNotRow3D fhir_value_set_systems vs_id details_x_ray system x_ray_types type All
 INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('details_x_ray', 'x_ray_types', 'All', NULL);
 #EndIf
 
-#IfRow2D list_options list_id lists option_id x_ray_types
-
-DELETE FROM list_options WHERE list_id="x_ray_types" OR option_id="x_ray_types"
-
-#EndIf
 
 #IfNotRow2D list_options list_id lists option_id x_ray_types
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
