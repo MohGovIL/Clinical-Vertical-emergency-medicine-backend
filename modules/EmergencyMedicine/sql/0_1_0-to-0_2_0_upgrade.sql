@@ -208,7 +208,7 @@ INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`) VALUES
 
 #IfNotRow2D list_options list_id clinikal_reason_codes option_id 7
 
-DELETE FROM list_options WHERE list_id='clinikal_reason_codes' OR option_id="clinikal_reason_codes";
+DELETE FROM `list_options` WHERE list_id='clinikal_reason_codes' OR option_id="clinikal_reason_codes";
 
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
 ('lists', 'clinikal_reason_codes', 'Clinikal Reason Codes', 0, 1,'1'),
@@ -322,15 +322,50 @@ INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('tests_and_treatments', 'tests_and_treatments', 'All', NULL);
 #EndIf
 
-#IfNotRow fhir_value_sets id x_ray_types
-INSERT INTO `fhir_value_sets` (`id`, `title`)
-VALUES ('x_ray_types', 'Xray Types');
+
+#IfRow2D fhir_value_sets id x_ray_types title Xray Types
+DELETE FROM fhir_value_sets WHERE id ="x_ray_types";
 #EndIf
 
-#IfNotRow3D fhir_value_set_systems vs_id x_ray_types system x_ray_types type All
-INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
-VALUES ('x_ray_types', 'x_ray_types', 'All', NULL);
+#IfRow3D fhir_value_set_systems vs_id x_ray_types system x_ray_types type All
+DELETE FROM fhir_value_set_systems WHERE vs_id ="x_ray_types";
+#EndIf
 
+#IfNotRow fhir_value_sets id details_x_ray
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('details_x_ray', 'Xray Type');
+#EndIf
+
+#IfNotRow3D fhir_value_set_systems vs_id details_x_ray system x_ray_types type All
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('details_x_ray', 'x_ray_types', 'All', NULL);
+#EndIf
+
+
+#IfNotRow2D list_options list_id lists option_id x_ray_types
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
+('lists', 'x_ray_types', 'X-Ray Types', 0, 1,''),
+('x_ray_types', 'dehydration', 'Chest', 10, 1,''),
+('x_ray_types', 'inhalation', 'Palm', 20, 1,''),
+('x_ray_types', 'laboratory_tests', 'sole', 30, 1,''),
+('x_ray_types', 'bandage', 'Shoulder', 40, 1,''),
+('x_ray_types', 'taking_metrics', 'Neck', 50, 1,''),
+('x_ray_types', 'fluid_infusion', 'Ankle', 60, 1,'');
+#EndIf
+
+
+#IfNotRow2D list_options list_id lists option_id tests_and_treatments
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
+('lists', 'tests_and_treatments', 'Tests and Treatments', 0, 1,''),
+('tests_and_treatments', 'dehydration', 'EGK', 10, 1,''),
+('tests_and_treatments', 'inhalation', 'Inhalation', 20, 1,''),
+('tests_and_treatments', 'laboratory_tests', 'Laboratory tests', 30, 1,''),
+('tests_and_treatments', 'bandage', 'Bandage', 40, 1,''),
+('tests_and_treatments', 'taking_metrics', 'Taking metrics', 50, 1,''),
+('tests_and_treatments', 'fluid_infusion', 'Fluid infusion', 60, 1,''),
+('tests_and_treatments', 'providing_medicine', 'Providing medicine', 70, 1,''),
+('tests_and_treatments', 'x_ray', 'X-Ray', 80, 1,'');
+#EndIf
 
 
 #IfNotRow2D list_options list_id clinikal_enc_secondary_statuses option_id waiting_for_nurse
@@ -416,3 +451,18 @@ VALUES ('waiting_for_release_statuses', 'clinikal_enc_statuses', 'Partial', NULL
 INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
 ((SELECT id FROM fhir_value_set_systems WHERE vs_id = 'waiting_for_release_statuses' AND system = 'clinikal_enc_statuses' AND type = 'Partial'), 'finished');
 #EndIf
+
+
+#IfNotRow fhir_value_sets id details_providing_medicine
+INSERT INTO `fhir_value_sets` (`id`, `title`)
+VALUES ('details_providing_medicine', 'Drug name');
+#EndIf
+
+
+#IfNotRow fhir_value_set_systems vs_id details_providing_medicine
+INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
+VALUES ('details_providing_medicine', '9911', 'Codes', NULL);
+#EndIf
+
+
+
