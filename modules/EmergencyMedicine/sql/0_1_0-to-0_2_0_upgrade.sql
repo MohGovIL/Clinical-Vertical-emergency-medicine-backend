@@ -338,7 +338,7 @@ VALUES ('details_x_ray', 'Xray Type');
 
 #IfNotRow3D fhir_value_set_systems vs_id details_x_ray system details_x_ray type All
 INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
-VALUES ('details_x_ray', 'details_x_ray', 'All', NULL);
+VALUES ('details_x_ray', 'x_ray_types', 'All', NULL);
 #EndIf
 
 #IfRow2D list_options list_id lists option_id x_ray_types
@@ -347,15 +347,15 @@ DELETE FROM list_options WHERE list_id="x_ray_types" OR option_id="x_ray_types"
 
 #EndIf
 
-#IfNotRow2D list_options list_id lists option_id details_x_ray
+#IfNotRow2D list_options list_id lists option_id x_ray_types
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
-('lists', 'details_x_ray', 'Xray Type', 0, 1,''),
-('details_x_ray', 'dehydration', 'Chest', 10, 1,''),
-('details_x_ray', 'inhalation', 'Palm', 20, 1,''),
-('details_x_ray', 'laboratory_tests', 'sole', 30, 1,''),
-('details_x_ray', 'bandage', 'Shoulder', 40, 1,''),
-('details_x_ray', 'taking_metrics', 'Neck', 50, 1,''),
-('details_x_ray', 'fluid_infusion', 'Ankle', 60, 1,'');
+('lists', 'x_ray_types', 'X-Ray Types', 0, 1,''),
+('x_ray_types', 'dehydration', 'Chest', 10, 1,''),
+('x_ray_types', 'inhalation', 'Palm', 20, 1,''),
+('x_ray_types', 'laboratory_tests', 'sole', 30, 1,''),
+('x_ray_types', 'bandage', 'Shoulder', 40, 1,''),
+('x_ray_types', 'taking_metrics', 'Neck', 50, 1,''),
+('x_ray_types', 'fluid_infusion', 'Ankle', 60, 1,'');
 #EndIf
 
 
