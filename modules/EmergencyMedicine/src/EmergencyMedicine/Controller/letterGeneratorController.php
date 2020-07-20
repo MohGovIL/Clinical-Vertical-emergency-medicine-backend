@@ -3,7 +3,7 @@
 namespace EmergencyMedicine\Controller;
 /**
  *
- * This is a template class for develop and testing 
+ * This is a template class for develop and testing
  *
  */
 class letterGeneratorController extends BaseController
@@ -19,8 +19,13 @@ class letterGeneratorController extends BaseController
         }
         */
 
+        $data=array();
+        $facility=$this->getFacilityInfo(17);
+        $data=array_merge($data,$facility);
+
+
         $this->getPdfService()->fileName('stam' . date("Y_m_d"));
-        $this->getPdfService()->setCustomHeaderFooter(self::HEADER_PATH,self::FOOTER_PATH,"datetime");
+        $this->getPdfService()->setCustomHeaderFooter(self::HEADER_PATH,self::FOOTER_PATH,$data,"datetime");
         $this->getPdfService()->body('emergency-medicine/letter-generator/letter-generator', array(
             'patient' => 1,
         ));
