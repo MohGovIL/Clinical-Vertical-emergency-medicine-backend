@@ -17,6 +17,7 @@
  *
  */
 
+use EmergencyMedicine\Controller\letterGeneratorController;
 use Interop\Container\ContainerInterface;
 
 return array(
@@ -25,23 +26,45 @@ return array(
 
     'controllers' => array(
         'factories' => [
-
-
+            letterGeneratorController::class => function (ContainerInterface $container, $requestedName) {
+                return new letterGeneratorController($container);
+            },
         ],
-
     ),
 
     /**
      * routing configuration.
-     * for more option and details - http://zf2.readthedocs.io/en/latest/in-depth-guide/understanding-routing.html?highlight=routing
      */
     'router' => array(
         'routes' => array(
+            'letter_generator' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/letter-generator[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'method'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => letterGeneratorController::class,
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
         ),
     ),
 
 
     'view_manager' => array(
+        'template_path_stack' => array(
+            'EmergencyMedicine' => __DIR__ . '/../view',
+        ),
+        /*
+        'template_map' => array(
+            'PatientVaccines/layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
+            'PatientVaccines/layout/print' => __DIR__ . '/../view/layout/print.phtml',
+        )
+        */
 
-    )
+    ),
 );
