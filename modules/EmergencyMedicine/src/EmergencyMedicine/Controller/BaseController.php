@@ -4,10 +4,12 @@ namespace EmergencyMedicine\Controller;
 
 use GenericTools\Controller\BaseController as GenericBaseController;
 use Interop\Container\ContainerInterface;
-
+use GenericTools\Traits\saveDocToServer;
 
 class BaseController extends GenericBaseController
 {
+    use saveDocToServer;
+
     CONST HEADER_PATH= 'emergency-medicine/letter-generator/letter-generator-header';
     CONST FOOTER_PATH= 'emergency-medicine/letter-generator/letter-generator-footer';
 
@@ -36,6 +38,18 @@ class BaseController extends GenericBaseController
         }else{
             return array();
         }
+    }
+
+    /**
+     *
+     */
+    public function saveDoc($data)
+    {
+        $dataToSave=array();
+        $dataToSave['storage']['data']= base64_encode($data);
+        $arr['documents']['date']=date('Y-m-d H:i:s');
+        $rez=$this->uploadToStorage($dataToSave);
+        return $rez;
     }
 
 }

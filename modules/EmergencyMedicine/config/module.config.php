@@ -18,6 +18,7 @@
  */
 
 use EmergencyMedicine\Controller\letterGeneratorController;
+use EmergencyMedicine\Controller\xrayLetterController;
 use Interop\Container\ContainerInterface;
 
 return array(
@@ -29,6 +30,10 @@ return array(
             letterGeneratorController::class => function (ContainerInterface $container, $requestedName) {
                 return new letterGeneratorController($container);
             },
+
+            xrayLetterController::class => function (ContainerInterface $container, $requestedName) {
+                return new xrayLetterController($container);
+            },
         ],
     ),
 
@@ -37,6 +42,8 @@ return array(
      */
     'router' => array(
         'routes' => array(
+
+            /****************************************************************/
             'letter_generator' => array(
                 'type'    => 'segment',
                 'options' => array(
@@ -51,6 +58,27 @@ return array(
                     ),
                 ),
             ),
+            /****************************************************************/
+            'xray_letter' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/xray-letter[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'method'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => xrayLetterController::class,
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+
+
+
+            /****************************************************************/
+
+
         ),
     ),
 
