@@ -2,7 +2,10 @@
 
 namespace EmergencyMedicine\Controller;
 
+use FhirAPI\FhirRestApiBuilder\Parts\ErrorCodes;
 use GenericTools\Controller\BaseController as GenericBaseController;
+use GenericTools\Model\DocumentsCategoriesTable;
+use GenericTools\Model\DocumentsTable;
 use Interop\Container\ContainerInterface;
 use GenericTools\Traits\saveDocToServer;
 
@@ -43,13 +46,22 @@ class BaseController extends GenericBaseController
     /**
      *
      */
-    public function saveDoc($data)
+    public function saveDoc($data,$fileName,$date)
     {
         $dataToSave=array();
-        $dataToSave['storage']['data']= base64_encode($data);
-        $arr['documents']['date']=date('Y-m-d H:i:s');
+        $dataToSave['storage']['data']= $data;
+        $dataToSave['documents']['date']=$date;
+        $dataToSave['documents']['url']=$fileName;
         $rez=$this->uploadToStorage($dataToSave);
         return $rez;
     }
+
+    public function saveAsDocumentReference($savedata,$postData,$fileName,$date)
+    {
+        $documentsTable = $this->container->get(DocumentsTable::class);
+        $documentsCategoriesTable = $this->container->get(DocumentsCategoriesTable::class);
+
+    }
+
 
 }
