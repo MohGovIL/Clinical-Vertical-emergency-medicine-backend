@@ -74,8 +74,8 @@ return $ACL_UPGRADE = array(
         AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'fhir_api', 'FHIR API', 'valueset','Value Set', 'view');
         AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'fhir_api', 'FHIR API', 'relatedperson','Related Person', 'write');
         AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'fhir_api', 'FHIR API', 'documentreference','Document Reference', 'write');
-        AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'fhir_api', 'FHIR API', 'questionnaire','Questionnaire', 'view');
-        AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'fhir_api', 'FHIR API', 'questionnaireresponse','Questionnaire Response', 'view');
+        AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'fhir_api', 'FHIR API', 'questionnaire','Questionnaire', 'write');
+        AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'fhir_api', 'FHIR API', 'questionnaireresponse','Questionnaire Response', 'write');
         AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'fhir_api', 'FHIR API', 'condition','Condition', 'view');
         AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'fhir_api', 'FHIR API', 'medicationstatement','Medication Statement Response', 'view');
         AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'fhir_api', 'FHIR API', 'observation','Observation', 'view');
@@ -116,8 +116,8 @@ return $ACL_UPGRADE = array(
         AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'valueset','Value Set', 'view');
         AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'relatedperson','Related Person', 'write');
         AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'documentreference','Document Reference', 'write');
-        AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'questionnaire','Questionnaire', 'view');
-        AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'questionnaireresponse','Questionnaire Response', 'view');
+        AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'questionnaire','Questionnaire', 'write');
+        AclExtended::updateAcl($emergency_receptionist_write, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'questionnaireresponse','Questionnaire Response', 'write');
         AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'condition','Condition', 'view');
         AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'medicationstatement','Medication Statement Response', 'view');
         AclExtended::updateAcl($emergency_receptionist_view, 'Emergency receptionist', 'fhir_api', 'FHIR API', 'observation','Observation', 'view');
