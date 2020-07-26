@@ -7,7 +7,10 @@ use Interop\Container\ContainerInterface;
 
 class xrayLetterController extends BaseController
 {
+    CONST CATEGORY = "2";
+
     private $postData=array();
+
     public $container = null;
 
     public function __construct(ContainerInterface $container , array $post=array())
@@ -29,12 +32,19 @@ class xrayLetterController extends BaseController
 
     public function pdfAction()
     {
-        $data=$this->getPostData();
-        if(empty($data['facility'])){
-            ErrorCodes::http_response_code('500', 'facility missing');
+
+        $postData = $this->getPostData();
+
+        $configData = $this->createConfigData($postData,self::PDF_MINE_TYPE,self::CATEGORY);
+
+        if(empty($configData)){
+            ErrorCodes::http_response_code('500', 'facility or encounter missing');
+            return array();
         }
-        $facilityInfo=$this->getFacilityInfo($data['facility']);
-        $data=array_merge($data,$facilityInfo);
+
+        $facilityInfo=$this->getFacilityInfo($postData['facility']);
+
+        $data=array_merge($postData,$facilityInfo);
         $date=date('Y-m-d H:i:s');
         $fileName= strtotime($date)."_".'xray';
         $this->getPdfService()->fileName($fileName);
@@ -45,20 +55,10 @@ class xrayLetterController extends BaseController
         $this->getPdfService()->returnBinaryString();
         $binary=$this->getPdfService()->render();
         $pdfEncoded= base64_encode($binary);
-        $rez=$this->saveDoc($pdfEncoded,'xray',$date);  //timestamp is added later
 
-        if($rez['id']){
-            return  array(
-                "id"=>$rez['id'],
-                "url"=>$rez['url'],
-                "rev"=>$rez['rev'],
-                "base64_data"=>$pdfEncoded
-            );
-        }else{
-            ErrorCodes::http_response_code('500', 'failed to save document');
-            return  array();
-        }
+        $storageSave=$this->saveDocToStorage($pdfEncoded,'xray',$date);  //timestamp is added later
 
+        return $this->saveDocInfoToDb($storageSave,$configData,$pdfEncoded);         //save doc info to db
 
     }
 

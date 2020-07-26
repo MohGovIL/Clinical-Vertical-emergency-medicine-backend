@@ -464,5 +464,7 @@ INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('details_providing_medicine', '9911', 'Codes', NULL);
 #EndIf
 
-
-
+#IfNotRow manage_templates_letters letter_name xray
+INSERT INTO `manage_templates_letters` (`id`, `letter_name`, `letter_class`, `letter_class_action`, `active`, `letter_post_json`) VALUES
+(1, 'xray', 'EmergencyMedicine\\Controller\\xrayLetterController', 'pdf', 1, '\n{"facility": "required","encounter": "required","owner": "optional","patient": "optional"}');
+#EndIf
