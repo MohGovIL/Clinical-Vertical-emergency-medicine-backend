@@ -4,10 +4,6 @@ namespace EmergencyMedicine\Controller;
 
 use FhirAPI\FhirRestApiBuilder\Parts\ErrorCodes;
 use GenericTools\Controller\BaseController as GenericBaseController;
-use GenericTools\Model\DocumentsCategoriesTable;
-use GenericTools\Model\DocumentsTable;
-use GenericTools\Service\CouchdbService;
-use GenericTools\Service\S3Service;
 use Interop\Container\ContainerInterface;
 use GenericTools\Traits\saveDocToServer;
 
@@ -111,65 +107,15 @@ class BaseController extends GenericBaseController
         return $configData;
     }
 
-
-    public function buildArrToDb($data)
+    public function createBase64Pdf($fileName,$headerPath, $footerPath,$headerData,$bodyData)
     {
-        if (empty($data['category']) || empty($data['encounter']) || empty($data['mimetype'])) {
-            return array();
-        }
+        $this->getPdfService()->fileName($fileName);
+        $this->getPdfService()->setCustomHeaderFooter($headerPath,$footerPath,$headerData,"datetime");
+        $this->getPdfService()->body('emergency-medicine/xray-letter/xray-letter', $bodyData);
+        $this->getPdfService()->returnBinaryString();
+        $binary=$this->getPdfService()->render();
+        $pdfEncoded= base64_encode($binary);
 
-        $dbStructuredData = array(
-            'documents' => array(
-                'id' => null,     //will be filled later
-                'type' => self::DOC_TYPE,
-                'storagemethod' => $GLOBALS['clinikal_storage_method'],
-                'mimetype' => $data['mimetype'],
-                'owner' => (empty($data['owner'])) ? $_SESSION['authUserID'] : $data['owner'],
-                'foreign_id' => (empty($data['patient'])) ? null : $data['patient'],      //patient
-                'encounter_id' => $data['encounter'],
-                'date' => date('Y-m-d H:i:s'),
-            ),
-            'categories_to_documents' => array(
-                'document_id' => null,   //will be filled later
-                'category_id' => $data['category'],
-            )
-        );
-
-        if($GLOBALS['clinikal_storage_method'] == S3Service::STORAGE_METHOD_CODE) {
-            $dbStructuredData['documents']['url'] = $data['url'];
-            $dbStructuredData['documents']['couch_docid'] = null;
-            $dbStructuredData['documents']['couch_revid'] = null;
-        }
-        elseif($GLOBALS['clinikal_storage_method'] == CouchdbService::STORAGE_METHOD_CODE) {
-            $dbStructuredData['documents']['couch_docid'] = $data['id'];
-            $dbStructuredData['documents']['couch_revid'] = $data['rev'];
-        }
-
-        return $dbStructuredData;
-    }
-
-    public function saveDocToDb($dbStructuredData)
-    {
-        $documentsTable = $this->container->get(DocumentsTable::class);
-        $documentsCategoriesTable = $this->container->get(DocumentsCategoriesTable::class);
-
-        $id= $documentsTable->lastId() + 1;
-
-        $dbStructuredData['documents']['id'] = $id;
-        $dbStructuredData['categories_to_documents']['document_id']= $id;
-
-        // save to documents table
-        $insertInfo = $documentsTable->insert($dbStructuredData['documents']);
-        if ($insertInfo == false) {
-            return false;
-        }
-
-        // save to categories_to_documents table
-        $insertCategory = $documentsCategoriesTable->insert($dbStructuredData['categories_to_documents']);
-        if ($insertCategory == false) {
-            return false;
-        }
-
-        return $id;
+        return $pdfEncoded;
     }
 }

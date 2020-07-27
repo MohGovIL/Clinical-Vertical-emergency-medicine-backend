@@ -7,13 +7,13 @@ use Interop\Container\ContainerInterface;
 
 class xrayLetterController extends BaseController
 {
-    CONST CATEGORY = "2";
+    const CATEGORY = "2";
 
-    private $postData=array();
+    private $postData = array();
 
     public $container = null;
 
-    public function __construct(ContainerInterface $container , array $post=array())
+    public function __construct(ContainerInterface $container, array $post = array())
     {
         parent::__construct($container);
         $this->container = $container;
@@ -35,30 +35,30 @@ class xrayLetterController extends BaseController
 
         $postData = $this->getPostData();
 
-        $configData = $this->createConfigData($postData,self::PDF_MINE_TYPE,self::CATEGORY);
+        $configData = $this->createConfigData($postData, self::PDF_MINE_TYPE, self::CATEGORY);
 
-        if(empty($configData)){
+        if (empty($configData)) {
             ErrorCodes::http_response_code('500', 'facility or encounter missing');
             return array();
         }
 
-        $facilityInfo=$this->getFacilityInfo($postData['facility']);
+        $facilityInfo = $this->getFacilityInfo($postData['facility']);
 
-        $data=array_merge($postData,$facilityInfo);
-        $date=date('Y-m-d H:i:s');
-        $fileName= strtotime($date)."_".'xray';
-        $this->getPdfService()->fileName($fileName);
-        $this->getPdfService()->setCustomHeaderFooter(self::HEADER_PATH,self::FOOTER_PATH,$data,"datetime");
-        $this->getPdfService()->body('emergency-medicine/xray-letter/xray-letter', array(
+        $headerData = array_merge($postData, $facilityInfo);
+
+        $date = date('Y-m-d H:i:s');
+
+        $pdfBodyData = array(
             'somedata' => 1,
-        ));
-        $this->getPdfService()->returnBinaryString();
-        $binary=$this->getPdfService()->render();
-        $pdfEncoded= base64_encode($binary);
+        );
 
-        $storageSave=$this->saveDocToStorage($pdfEncoded,'xray',$date);  //timestamp is added later
+        $fileName = strtotime($date) . "_" . 'xray';
 
-        return $this->saveDocInfoToDb($storageSave,$configData,$pdfEncoded);         //save doc info to db
+        $pdfEncoded = $this->createBase64Pdf($fileName, self::HEADER_PATH, self::FOOTER_PATH, $headerData, $pdfBodyData);
+
+        $storageSave = $this->saveDocToStorage($pdfEncoded, 'xray', $date);  //timestamp is added later
+
+        return $this->saveDocInfoToDb($storageSave, $configData, $pdfEncoded);         //save doc info to db
 
     }
 
