@@ -57,6 +57,61 @@ class BaseController extends GenericBaseController
         return $rez;
     }
 
+    public function saveDocInfoToDb($storageSave, $configData,$pdfEncoded)
+    {
+
+        if ($storageSave['id']) {
+
+            $configData = array_merge($configData, $storageSave);
+
+            $dbStructuredData = $this->buildArrToDb($configData);
+
+            if (empty($dbStructuredData)) {
+                ErrorCodes::http_response_code('500', 'failed to build data to db');
+                return array();
+            } else {
+
+                $save = $this->saveDocToDb($dbStructuredData);
+
+                if($save){
+                    return array(
+                        "id" => $save,
+                        "base64_data" => $pdfEncoded
+                    );
+                }else{
+                    ErrorCodes::http_response_code('500', 'failed to build data to db');
+                    return array();
+                }
+            }
+        } else {
+            ErrorCodes::http_response_code('500', 'failed to save document');
+            return array();
+        }
+    }
+
+    public function createConfigData($postData,$mimetype, $category)
+    {
+        if (empty($postData['facility']) || empty($postData['encounter'])) {
+            return array();
+        }
+
+        $configData = array(
+            'mimetype' => $mimetype,
+            'category' => $category,
+            'encounter' => $postData['encounter']
+        );
+
+        if (empty($postData['owner'])) {
+            $configData['owner'] = $postData['owner'];
+        }
+
+        if (empty($postData['patient'])) {
+            $configData['patient'] = $postData['patient'];
+        }
+        return $configData;
+    }
+
+
     public function buildArrToDb($data)
     {
         if (empty($data['category']) || empty($data['encounter']) || empty($data['mimetype'])) {
@@ -116,59 +171,5 @@ class BaseController extends GenericBaseController
         }
 
         return $id;
-    }
-
-    public function saveDocInfoToDb($storageSave, $configData,$pdfEncoded)
-    {
-
-        if ($storageSave['id']) {
-
-            $configData = array_merge($configData, $storageSave);
-
-            $dbStructuredData = $this->buildArrToDb($configData);
-
-            if (empty($dbStructuredData)) {
-                ErrorCodes::http_response_code('500', 'failed to build data to db');
-                return array();
-            } else {
-
-                $save = $this->saveDocToDb($dbStructuredData);
-
-                if($save){
-                    return array(
-                        "id" => $save,
-                        "base64_data" => $pdfEncoded
-                    );
-                }else{
-                    ErrorCodes::http_response_code('500', 'failed to build data to db');
-                    return array();
-                }
-            }
-        } else {
-            ErrorCodes::http_response_code('500', 'failed to save document');
-            return array();
-        }
-    }
-
-    public function createConfigData($postData,$mimetype, $category)
-    {
-        if (empty($postData['facility']) || empty($postData['encounter'])) {
-            return array();
-        }
-
-        $configData = array(
-            'mimetype' => $mimetype,
-            'category' => $category,
-            'encounter' => $postData['encounter']
-        );
-
-        if (empty($postData['owner'])) {
-            $configData['owner'] = $postData['owner'];
-        }
-
-        if (empty($postData['patient'])) {
-            $configData['patient'] = $postData['patient'];
-        }
-        return $configData;
     }
 }
