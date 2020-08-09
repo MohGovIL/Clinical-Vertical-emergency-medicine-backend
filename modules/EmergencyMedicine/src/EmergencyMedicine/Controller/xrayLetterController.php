@@ -8,6 +8,7 @@ use Interop\Container\ContainerInterface;
 class xrayLetterController extends BaseController
 {
     const CATEGORY = "2";
+    const BODY_PATH = 'emergency-medicine/xray-letter/xray-letter';
 
     private $postData = array();
 
@@ -54,7 +55,7 @@ class xrayLetterController extends BaseController
 
         $fileName = strtotime($date) . "_" . 'xray';
 
-        $pdfEncoded = $this->createBase64Pdf($fileName, self::HEADER_PATH, self::FOOTER_PATH, $headerData, $pdfBodyData);
+        $pdfEncoded = $this->createBase64Pdf($fileName,self::BODY_PATH, self::HEADER_PATH, self::FOOTER_PATH, $headerData, $pdfBodyData);
 
         $storageSave = $this->saveDocToStorage($pdfEncoded, 'xray', $date);  //timestamp is added later
 

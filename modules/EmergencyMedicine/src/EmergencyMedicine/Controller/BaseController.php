@@ -107,11 +107,11 @@ class BaseController extends GenericBaseController
         return $configData;
     }
 
-    public function createBase64Pdf($fileName,$headerPath, $footerPath,$headerData,$bodyData)
+    public function createBase64Pdf($fileName,$bodyPath,$headerPath, $footerPath,$headerData,$bodyData)
     {
         $this->getPdfService()->fileName($fileName);
         $this->getPdfService()->setCustomHeaderFooter($headerPath,$footerPath,$headerData,"datetime");
-        $this->getPdfService()->body('emergency-medicine/xray-letter/xray-letter', $bodyData);
+        $this->getPdfService()->body($bodyPath, $bodyData);
         $this->getPdfService()->returnBinaryString();
         $binary=$this->getPdfService()->render();
         $pdfEncoded= base64_encode($binary);
