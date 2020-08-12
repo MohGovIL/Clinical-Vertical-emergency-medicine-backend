@@ -17,6 +17,7 @@
  *
  */
 
+use EmergencyMedicine\Controller\xrayLetterController;
 use Interop\Container\ContainerInterface;
 
 return array(
@@ -25,23 +26,53 @@ return array(
 
     'controllers' => array(
         'factories' => [
-
-
+            xrayLetterController::class => function (ContainerInterface $container, $requestedName) {
+                return new xrayLetterController($container);
+            },
         ],
-
     ),
 
     /**
      * routing configuration.
-     * for more option and details - http://zf2.readthedocs.io/en/latest/in-depth-guide/understanding-routing.html?highlight=routing
      */
     'router' => array(
         'routes' => array(
+
+            /****************************************************************/
+            'xray_letter' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/xray-letter[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'method'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => xrayLetterController::class,
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+
+
+
+            /****************************************************************/
+
+
         ),
     ),
 
 
     'view_manager' => array(
+        'template_path_stack' => array(
+            'EmergencyMedicine' => __DIR__ . '/../view',
+        ),
+        /*
+        'template_map' => array(
+            'PatientVaccines/layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
+            'PatientVaccines/layout/print' => __DIR__ . '/../view/layout/print.phtml',
+        )
+        */
 
-    )
+    ),
 );
