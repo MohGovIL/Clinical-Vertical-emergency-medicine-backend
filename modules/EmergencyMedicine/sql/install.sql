@@ -2,7 +2,7 @@
 REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew');
 
 -- update menu for the admin user
-UPDATE `users` SET `main_menu_role` = 'clinikal' WHERE `users`.`id` = 1;
+UPDATE `users` SET `main_menu_role` = 'clinikal.json' WHERE `users`.`id` = 1;
 
 -- setting for client side app
 INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
