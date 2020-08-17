@@ -2,7 +2,7 @@
 REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew');
 
 -- update menu for the admin user
-UPDATE `users` SET `main_menu_role` = 'clinikal' WHERE `users`.`id` = 1;
+UPDATE `users` SET `main_menu_role` = 'clinikal.json' WHERE `users`.`id` = 1;
 
 -- setting for client side app
 INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
@@ -332,3 +332,7 @@ VALUES
 ('5', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Decision'),
 ('6', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Evacuation way'),
 ('7', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'integer', 'Sick leave');
+
+
+INSERT INTO `manage_templates_letters` (`id`, `letter_name`, `letter_class`, `letter_class_action`, `active`, `letter_post_json`) VALUES
+(1, 'letter_x_ray', 'EmergencyMedicine\\Controller\\xrayLetterController', 'pdf', 1, '\n{"facility": "required","encounter": "required","owner": "optional","patient": "optional"}');

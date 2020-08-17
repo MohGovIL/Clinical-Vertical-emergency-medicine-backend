@@ -464,12 +464,19 @@ INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('details_providing_medicine', '9911', 'Codes', NULL);
 #EndIf
 
+#IfNotRow manage_templates_letters letter_name letter_x_ray
+INSERT INTO `manage_templates_letters` (`id`, `letter_name`, `letter_class`, `letter_class_action`, `active`, `letter_post_json`) VALUES
+(1, 'letter_x_ray', 'EmergencyMedicine\\Controller\\xrayLetterController', 'pdf', 1, '\n{"facility": "required","encounter": "required","owner": "optional","patient": "optional"}');
+#EndIf
 #IfNotRow2D code_types ct_key Sensitivities ct_id 9920
 DELETE FROM `code_types` WHERE  ct_id="9920";
 INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_mask`, `ct_fee`, `ct_rel`, `ct_nofs`, `ct_diag`, `ct_active`, `ct_label`, `ct_external`, `ct_claim`, `ct_proc`, `ct_term`, `ct_problem`, `ct_drug`) VALUES
 ('Sensitivities', 9920, 9920, 12, 'Sensitivities', '', 1, 0, 1, 1, 1, 'Sensitivities', 0, 1, 0, 1, 0, 0);
 #EndIf
 
+#IfRow2D manage_templates_letters letter_name xray letter_class_action pdf
+UPDATE manage_templates_letters SET letter_name = 'letter_x_ray' WHERE letter_name = 'xray';
+#EndIf
 #IfNotRow2D code_types ct_key bk_diseases ct_id 9921
 DELETE FROM `code_types` WHERE  ct_id="9921";
 INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_mask`, `ct_fee`, `ct_rel`, `ct_nofs`, `ct_diag`, `ct_active`, `ct_label`, `ct_external`, `ct_claim`, `ct_proc`, `ct_term`, `ct_problem`, `ct_drug`) VALUES
