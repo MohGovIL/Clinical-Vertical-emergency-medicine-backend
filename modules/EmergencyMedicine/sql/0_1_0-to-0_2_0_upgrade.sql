@@ -479,9 +479,9 @@ INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_
 UPDATE manage_templates_letters SET letter_name = 'letter_x_ray' WHERE letter_name = 'xray';
 #EndIf
 
-#IfNotRow2D code_types ct_key bk_diseases ct_id 9921
+#IfNotRow2D code_types ct_key BK Diseases ct_id 9921
 DELETE FROM `code_types` WHERE  ct_id="9921";
 INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_mask`, `ct_fee`, `ct_rel`, `ct_nofs`, `ct_diag`, `ct_active`, `ct_label`, `ct_external`, `ct_claim`, `ct_proc`, `ct_term`, `ct_problem`, `ct_drug`) VALUES
-('bk_diseases', 9921, 9921, 12, 'BK Diseases', '', 1, 0, 1, 0, 1, 'Background Diseases', 0, 1, 0, 1, 1, 0);
+('BK Diseases', 9921, 9921, 12, 'BK Diseases', '', 1, 0, 1, 0, 1, 'Background Diseases', 0, 1, 0, 1, 1, 0);
 #EndIf
 
