@@ -17,7 +17,7 @@
  *
  */
 
-use EmergencyMedicine\Controller\xrayLetterController;
+use EmergencyMedicine\Controller\XrayLetterController;
 use EmergencyMedicine\Controller\EncounterReportContrller;
 use Interop\Container\ContainerInterface;
 
@@ -27,8 +27,8 @@ return array(
 
     'controllers' => array(
         'factories' => [
-            xrayLetterController::class => function (ContainerInterface $container, $requestedName) {
-                return new xrayLetterController($container);
+            XrayLetterController::class => function (ContainerInterface $container, $requestedName) {
+                return new XrayLetterController($container);
             },
             EncounterReportContrller::class => function (ContainerInterface $container, $requestedName) {
                 return new EncounterReportContrller($container);
@@ -51,7 +51,7 @@ return array(
                         'method'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
-                        'controller' => xrayLetterController::class,
+                        'controller' => XrayLetterController::class,
                         'action'     => 'index',
                     ),
                 ),
