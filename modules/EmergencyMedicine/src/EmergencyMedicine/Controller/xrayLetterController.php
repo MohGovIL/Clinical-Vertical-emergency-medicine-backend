@@ -45,13 +45,17 @@ class xrayLetterController extends PdfBaseController
         }
 
         $facilityInfo = $this->getFacilityInfo($postData['facility']);
-
+        $letterName = $postData['name_of_letter'];
         $headerData = array_merge($postData, $facilityInfo);
 
         $date = date('Y-m-d H:i:s');
 
+        $patientData=$this->getPatientInfo($postData['patient']);
+        $doctorData=[];
         $pdfBodyData = array(
-            'somedata' => 1,
+            'clientReqData' => $postData,
+            'patientData'=>$patientData,
+            'doctorData'=>$doctorData
         );
 
         $fileName = strtotime($date) . "_" . 'xray';

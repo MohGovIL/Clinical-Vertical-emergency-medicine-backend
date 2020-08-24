@@ -1,6 +1,46 @@
 <style>
+    .letterName {
+        text-align: center;
+    }
+    .Rectangle-Copy-3 {
+        width: 160px;
+        height: 2px;
+        border-radius: 1px;
+        background-color: #ececec;
+        margin:0 38% 0 38%;
+    }
+    .Active-text-label-Copy-4 {
+        width: 142px;
+        height: 24px;
+        font-family: OpenSansHebrew;
+        font-size: 18px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: #000b40;
+    }
 </style>
 <main>
+    <?php if ($clientReqData['name_of_letter'] && $clientReqData['name_of_letter']!==""):?>
+    <div class="letterName" dir="<?php echo text($langDir); ?>" lang="<?php echo text($langCode); ?>">
+        <br/>
+        <span class="Active-text-label-Copy-4 "><?php echo xl($clientReqData['name_of_letter']);?> </span>
+        <br/>
+        <p  class ="Rectangle-Copy-3">  </p>
+        <br/>
+    </div>
+    <?php endif;?>
+    <?php
+            $patientData["langDir"]=$langDir;
+            $patientData["langCode"]=$langCode;
+            $doctorData["langDir"]=$langDir;
+            $doctorData["langCode"]=$langCode;
+            echo $this->render('clinikal-api/pdf/patient-details.phtml',$patientData);
+            echo $this->render('clinikal-api/pdf/doctor-signature.phtml',$doctorData);
+            ?>
 
 
 </main>
