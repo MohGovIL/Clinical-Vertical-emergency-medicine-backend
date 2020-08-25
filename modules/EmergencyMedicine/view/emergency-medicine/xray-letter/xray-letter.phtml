@@ -22,6 +22,52 @@
         text-align: center;
         color: #000b40;
     }
+    .Label-Text {
+        width: 48px;
+        height: 18px;
+        opacity: 0.6;
+        font-family: OpenSansHebrew;
+        font-size: 10px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.8;
+        letter-spacing: normal;
+        text-align: right;
+        color: #1e2132;
+        margin-left:<?php echo $langDir === "rtl"?'100px':'0'?>;
+        margin-right:<?php echo $langDir === "rtl"?'0':'100px'?>;
+    }
+    }
+    .Input-text {
+        width: 104px;
+        height: 18px;
+        font-family: OpenSansHebrew;
+        font-size: 12px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.5;
+        letter-spacing: normal;
+        text-align: right;
+        color: #000b40;
+        margin-left:<?php echo $langDir === "rtl"?'100px':'0'?>;
+        margin-right:<?php echo $langDir === "rtl"?'0':'100px'?>;
+    }
+    .position_content{
+    <?php echo $langDir==="rtl"?'margin-left:34%;':''?>;
+    <?php echo $langDir!=="rtl"?'margin-right:34%;':''?>;
+    }
+    .tdLabel{
+        min-width: 20%;
+        max-width: 20%;
+
+    .tdContext{
+
+        min-width:60%;
+        max-width:60%;
+
+    }
 </style>
 <main>
     <?php if ($clientReqData['name_of_letter'] && $clientReqData['name_of_letter']!==""):?>
@@ -36,11 +82,49 @@
     <?php
             $patientData["langDir"]=$langDir;
             $patientData["langCode"]=$langCode;
+            echo $this->render('clinikal-api/pdf/patient-details.phtml',$patientData);
+    ?>
+    <br/>
+    <br/>
+    <table  style="page-break-inside:avoid;width:434px;"  class="position_content" dir="<?php echo text($langDir); ?>" lang="<?php echo text($langCode); ?>">
+    <tbody>
+    <tr>
+        <td class="tdLabel Label-Text">
+            <?php echo xl("Reason for refferal");?>
+        </td>
+        <td class="tdContext Input-text">
+            <?php echo $bodyData['pregnant'] ;?>
+        </td>
+    </tr>
+    <tr> <td class="tdLabel Label-Text">
+            <?php echo xl("Pregnancy");?>
+        </td>
+        <td class="tdContext Input-text">
+            <?php echo $bodyData['pregnant'] ;?>
+        </td>
+    </tr>
+    <tr> <td class="tdLabel Label-Text">
+            <?php echo xl("Findings");?>
+        </td>
+        <td class="tdContext Input-text">
+            <?php echo $bodyData['findings'] ;?>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdLabel Label-Text">
+            <?php echo xl("Diagnosis");?>
+        </td>
+        <td class="tdContext Input-text">
+            <?php echo $bodyData['diagnostics'] ;?>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+    <?php
             $doctorData["langDir"]=$langDir;
             $doctorData["langCode"]=$langCode;
-            echo $this->render('clinikal-api/pdf/patient-details.phtml',$patientData);
             echo $this->render('clinikal-api/pdf/doctor-signature.phtml',$doctorData);
-            ?>
+    ?>
 
 
 </main>

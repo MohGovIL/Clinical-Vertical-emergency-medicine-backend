@@ -2,6 +2,8 @@
 
 namespace EmergencyMedicine\Controller;
 
+use ClinikalAPI\Model\FormDiagnosisAndRecommendationsQuestionnaireMapTable;
+use ClinikalAPI\Model\GetTemplatesServiceTable;
 use FhirAPI\FhirRestApiBuilder\Parts\ErrorCodes;
 use Interop\Container\ContainerInterface;
 use ClinikalAPI\Controller\PdfBaseController;
@@ -14,6 +16,39 @@ class xrayLetterController extends PdfBaseController
     private $postData = array();
 
     public $container = null;
+
+    private function getMedicalAdmissionQData($qid){
+        $FormMedicalAdmissionQTable= $this->container->get(FormDiagnosisAndRecommendationsQuestionnaireMapTable::class);
+        $dbData=$FormMedicalAdmissionQTable->getLastQuestionnaireAnswer($this->postData['encounter'],$qid);
+        return $dbData['answer'];
+    }
+    private function getPregnancyState(){
+        //form_medical_admission_questionnaire.answer
+        //where form_id =  encounter = <ENC_ID>, qid = 4 )
+       return $this->getMedicalAdmissionQData(4);
+    }
+
+    private function getFindings(){
+        //form_medical_admission_questionnaire.answer
+        //where form_id =  encounter = <ENC_ID>, qid = 2 )
+        return $this->getMedicalAdmissionQData(2);
+    }
+
+    private function getDiagnostics(){
+        //form_diagnosis_and_recommendations_questionnaire.answer
+        //where encounter = <ENC_ID>, qid = 1 )
+        return $this->getMedicalAdmissionQData(1);
+    }
+    private function getServiceTypeAndReasonCode(){
+        //from encounter
+    }
+    private function getEmergencyXrayLetterData(){
+        $data = [];
+        $data['pregnant'] = $this->getPregnancyState();
+        $data['findings'] = $this->getFindings();
+        $data['diagnostics'] = $this->getDiagnostics();
+        return $data;
+    }
 
     public function __construct(ContainerInterface $container, array $post = array())
     {
@@ -51,11 +86,13 @@ class xrayLetterController extends PdfBaseController
         $date = date('Y-m-d H:i:s');
 
         $patientData=$this->getPatientInfo($postData['patient']);
-        $doctorData=[];
+        $doctorData=$this->getUserInfo($postData['owner']);
+        $bodyData = $this->getEmergencyXrayLetterData();
         $pdfBodyData = array(
             'clientReqData' => $postData,
             'patientData'=>$patientData,
-            'doctorData'=>$doctorData
+            'doctorData'=>$doctorData,
+            'bodyData'=>$bodyData
         );
 
         $fileName = strtotime($date) . "_" . 'xray';
