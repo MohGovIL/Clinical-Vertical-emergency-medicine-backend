@@ -486,6 +486,6 @@ INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_
 #EndIf
 
 
-#IfRow2D list_options list_id clinikal_enc_statuses list_options arrived
+#IfRow2D list_options list_id clinikal_enc_statuses option_id arrived
 UPDATE `list_options` SET `title` = 'Arrived' WHERE `list_options`.`list_id` = 'clinikal_enc_statuses' AND `list_options`.`option_id` = 'arrived';
 #EndIf
