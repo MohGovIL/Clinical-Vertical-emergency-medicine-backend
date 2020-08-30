@@ -25,6 +25,23 @@ class xrayLetterController extends PdfBaseController
 
 
     public $container = null;
+    public function getPregnancyState(){
+        //form_medical_admission_questionnaire.answer
+        //where form_id =  encounter = <ENC_ID>, qid = 4 )
+        return $this->getQData(4,'FormMedicalAdmissionQuestionnaireMapTable');
+    }
+
+    public function getFindings(){
+        //form_medical_admission_questionnaire.answer
+        //where form_id =  encounter = <ENC_ID>, qid = 2 )
+        return $this->getQData(2,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
+    }
+
+    public function getDiagnostics(){
+        //form_diagnosis_and_recommendations_questionnaire.answer
+        //where encounter = <ENC_ID>, qid = 1 )
+        return $this->getQData(1,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
+    }
 
     private function getEmergencyXrayLetterData(){
         $data = [];
