@@ -20,13 +20,15 @@ namespace EmergencyMedicine;
 
 
 use Interop\Container\ContainerInterface;
+use Laminas\Db\ResultSet\ResultSet;
+use Laminas\Db\TableGateway\TableGateway as ZendTableGateway;
 use OpenEMR\Events\RestApiExtend\RestApiCreateEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
-
-
+use ClinikalAPI\Model\QuestionnaireMap;
+use ClinikalAPI\Model\QuestionnaireMapTable;
 
 class Module {
 
@@ -59,7 +61,32 @@ class Module {
     {
         return array(
             'factories' => array(
+                'FormDiagnosisAndRecommendationsQuestionnaireMapTable' =>  function(ContainerInterface $container) {
+                    $dbAdapter = $container->get(\Laminas\Db\Adapter\Adapter::class);
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new QuestionnaireMap());
+                    $tableGateway = new ZendTableGateway('form_diagnosis_and_recommendations_questionnaire', $dbAdapter, null, $resultSetPrototype);
+                    $table = new QuestionnaireMapTable($tableGateway);
+                    return $table;
+                },
 
+                'FormMedicalAdmissionQuestionnaireMapTable'  =>  function(ContainerInterface $container) {
+                    $dbAdapter = $container->get(\Laminas\Db\Adapter\Adapter::class);
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new QuestionnaireMap());
+                    $tableGateway = new ZendTableGateway('form_medical_admission_questionnaire', $dbAdapter, null, $resultSetPrototype);
+                    $table = new QuestionnaireMapTable($tableGateway);
+                    return $table;
+                },
+
+                'FormCommitmentQuestionnaireMapTable' =>  function(ContainerInterface $container) {
+                    $dbAdapter = $container->get(\Laminas\Db\Adapter\Adapter::class);
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new QuestionnaireMap());
+                    $tableGateway = new ZendTableGateway('form_commitment_questionnaire', $dbAdapter, null, $resultSetPrototype);
+                    $table = new QuestionnaireMapTable($tableGateway);
+                    return $table;
+                },
             ),
         );
     }

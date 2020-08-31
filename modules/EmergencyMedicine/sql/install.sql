@@ -231,8 +231,6 @@ VALUES ('reason_codes_1', 'Emergency Medicine Reason Codes');
 INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('reason_codes_1', 'clinikal_reason_codes', 'Filter', '1');
 
-ALTER TABLE `fhir_value_set_systems` MODIFY COLUMN `type` ENUM('All', 'Partial', 'Exclude', 'Filter', 'Codes') NOT NULL AFTER `system`;
-
 INSERT INTO `fhir_value_sets` (`id`, `title`)
 VALUES ('sensitivities', 'Sensitivities');
 
