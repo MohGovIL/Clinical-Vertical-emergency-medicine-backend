@@ -34,7 +34,7 @@ VALUES
 DELETE FROM `list_options` WHERE `list_id` = 'clinikal_enc_statuses';
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
 ('clinikal_enc_statuses', 'planned', 'Planned', 10, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_enc_statuses', 'arrived', 'Admitted', 20, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_enc_statuses', 'arrived', 'Arrived', 20, 0, 0, '', '', '', 0, 0, 1, '', 1),
 ('clinikal_enc_statuses', 'triaged', 'Triaged', 30, 0, 0, '', '', '', 0, 0, 1, '', 1),
 ('clinikal_enc_statuses', 'in-progress', 'In Progress', 40, 0, 0, '', '', '', 0, 0, 1, '', 1),
 ('clinikal_enc_statuses', 'finished', 'Finished', 60, 0, 0, '', '', '', 0, 0, 1, '', 1),
@@ -230,8 +230,6 @@ VALUES ('reason_codes_1', 'Emergency Medicine Reason Codes');
 
 INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('reason_codes_1', 'clinikal_reason_codes', 'Filter', '1');
-
-ALTER TABLE `fhir_value_set_systems` MODIFY COLUMN `type` ENUM('All', 'Partial', 'Exclude', 'Filter', 'Codes') NOT NULL AFTER `system`;
 
 INSERT INTO `fhir_value_sets` (`id`, `title`)
 VALUES ('sensitivities', 'Sensitivities');

@@ -151,7 +151,7 @@ INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
 DELETE FROM `list_options` WHERE `list_id` = 'clinikal_enc_statuses';
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
 ('clinikal_enc_statuses', 'planned', 'Planned', 10, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_enc_statuses', 'arrived', 'Admitted', 20, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_enc_statuses', 'arrived', 'Arrived', 20, 0, 0, '', '', '', 0, 0, 1, '', 1),
 ('clinikal_enc_statuses', 'triaged', 'Triaged', 30, 0, 0, '', '', '', 0, 0, 1, '', 1),
 ('clinikal_enc_statuses', 'in-progress', 'In Progress', 40, 0, 0, '', '', '', 0, 0, 1, '', 1),
 ('clinikal_enc_statuses', 'finished', 'Finished', 60, 0, 0, '', '', '', 0, 0, 1, '', 1),
@@ -497,3 +497,7 @@ end $$
 DELIMITER ;
 
 #endSpecialSql
+
+#IfRow2D list_options list_id clinikal_enc_statuses option_id arrived
+UPDATE `list_options` SET `title` = 'Arrived' WHERE `list_options`.`list_id` = 'clinikal_enc_statuses' AND `list_options`.`option_id` = 'arrived';
+#EndIf
