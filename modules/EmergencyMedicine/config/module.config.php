@@ -27,8 +27,8 @@ return array(
 
     'controllers' => array(
         'factories' => [
-            XrayLetterController::class => function (ContainerInterface $container, $requestedName) {
-                return new XrayLetterController($container);
+            xrayLetterController::class => function (ContainerInterface $container, $requestedName) {
+                return new xrayLetterController($container);
             },
             EncounterReportContrller::class => function (ContainerInterface $container, $requestedName) {
                 return new EncounterReportContrller($container);
@@ -51,7 +51,7 @@ return array(
                         'method'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
-                        'controller' => XrayLetterController::class,
+                        'controller' => xrayLetterController::class,
                         'action'     => 'index',
                     ),
                 ),
