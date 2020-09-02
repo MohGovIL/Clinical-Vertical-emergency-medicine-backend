@@ -17,7 +17,7 @@
  *
  */
 
-use EmergencyMedicine\Controller\XrayLetterController;
+use EmergencyMedicine\Controller\xrayLetterController;
 use EmergencyMedicine\Controller\EncounterReportContrller;
 use Interop\Container\ContainerInterface;
 
