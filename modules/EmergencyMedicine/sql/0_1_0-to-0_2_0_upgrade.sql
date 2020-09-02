@@ -489,3 +489,17 @@ INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_
 #IfRow2D list_options list_id clinikal_enc_statuses option_id arrived
 UPDATE `list_options` SET `title` = 'Arrived' WHERE `list_options`.`list_id` = 'clinikal_enc_statuses' AND `list_options`.`option_id` = 'arrived';
 #EndIf
+
+#IfNotRow2D categories name Referral id 3
+DELETE FROM categories WHERE id > 1;
+INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`, `aco_spec`) VALUES
+('2', 'Commitment', '', '1', '1', '2', 'patients|docs'),
+('3', 'Referral', '', '1', '3', '4', 'patients|docs'),
+('4', 'Referral for X-ray', '', '1', '5', '10', 'patients|docs'),
+('5', 'Summary letter', '', '1', '6', '7', 'patients|docs'),
+('6', 'Other', '', '1', '11', '18', 'patients|docs'),
+('7', 'Patient Photo', '', '1', '12', '13', 'patients|docs');
+
+DELETE FROM `categories_seq`;
+INSERT INTO `categories_seq` (`id`) VALUES('8');
+#EndIf

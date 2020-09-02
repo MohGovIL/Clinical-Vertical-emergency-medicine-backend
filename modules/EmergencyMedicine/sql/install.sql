@@ -70,40 +70,17 @@ ALTER TABLE facility AUTO_INCREMENT = 17;
 
 
 -- --------------------------------------------------------
+DELETE FROM categories WHERE id > 1;
+INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`, `aco_spec`) VALUES
+('2', 'Commitment', '', '1', '1', '2', 'patients|docs'),
+('3', 'Referral', '', '1', '3', '4', 'patients|docs'),
+('4', 'Referral for X-ray', '', '1', '5', '10', 'patients|docs'),
+('5', 'Summary letter', '', '1', '6', '7', 'patients|docs'),
+('6', 'Other', '', '1', '11', '18', 'patients|docs'),
+('7', 'Patient Photo', '', '1', '12', '13', 'patients|docs');
 
-UPDATE `categories` SET `name` = 'HPatient Photograph', `lft` = '105', `rght` = '106' WHERE `id` = '4';
-UPDATE `categories` SET `name` = 'EMedical Record', `lft` = '101', `rght` = '102' WHERE `id` = '2';
-UPDATE `categories` SET `rght` = '271' WHERE `id` = '1';
-UPDATE `categories` SET `name` = 'FLab Report', `lft` = '103', `rght` = '104' WHERE `id` = '3';
-
-DELETE FROM `categories` WHERE `id` = '19';
-DELETE FROM `categories` WHERE `id` = '22';
-DELETE FROM `categories` WHERE `id` = '15';
-DELETE FROM `categories` WHERE `id` = '14';
-DELETE FROM `categories` WHERE `id` = '11';
-DELETE FROM `categories` WHERE `id` = '21';
-DELETE FROM `categories` WHERE `id` = '25';
-DELETE FROM `categories` WHERE `id` = '20';
-DELETE FROM `categories` WHERE `id` = '27';
-DELETE FROM `categories` WHERE `id` = '6';
-DELETE FROM `categories` WHERE `id` = '12';
-DELETE FROM `categories` WHERE `id` = '24';
-DELETE FROM `categories` WHERE `id` = '9';
-DELETE FROM `categories` WHERE `id` = '10';
-DELETE FROM `categories` WHERE `id` = '5';
-DELETE FROM `categories` WHERE `id` = '8';
-DELETE FROM `categories` WHERE `id` = '16';
-DELETE FROM `categories` WHERE `id` = '17';
-DELETE FROM `categories` WHERE `id` = '18';
-DELETE FROM `categories` WHERE `id` = '13';
-DELETE FROM `categories` WHERE `id` = '28';
-DELETE FROM `categories` WHERE `id` = '7';
-DELETE FROM `categories` WHERE `id` = '29';
-DELETE FROM `categories` WHERE `id` = '26';
-DELETE FROM `categories` WHERE `id` = '23';
-
-DELETE FROM `categories_seq` WHERE `id` = '29';
-INSERT INTO `categories_seq` (`id`) VALUES('9');
+DELETE FROM `categories_seq`;
+INSERT INTO `categories_seq` (`id`) VALUES('8');
 
 CREATE TABLE form_medical_admission_questionnaire(
     id bigint(20) NOT NULL AUTO_INCREMENT,
