@@ -6,7 +6,7 @@ use FhirAPI\FhirRestApiBuilder\Parts\ErrorCodes;
 use Interop\Container\ContainerInterface;
 use ClinikalAPI\Controller\PdfBaseController;
 
-class XrayLetterController extends PdfBaseController
+class xrayLetterController extends PdfBaseController
 {
     const CATEGORY = "2";
     const BODY_PATH = 'emergency-medicine/xray-letter/xray-letter';
