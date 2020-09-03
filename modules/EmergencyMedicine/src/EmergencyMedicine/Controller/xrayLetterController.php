@@ -104,13 +104,13 @@ class xrayLetterController extends PdfBaseController
             'bodyData'=>$bodyData
         );
 
-        $fileName = strtotime($date) . "_" . 'xray';
+        $fileName = "x_ray_patient_{$postData['patient']}_$date.pdf";
 
         $pdfEncoded = $this->createBase64Pdf($fileName,self::BODY_PATH, self::HEADER_PATH, self::FOOTER_PATH, $headerData, $pdfBodyData);
 
-        $storageSave = $this->saveDocToStorage($pdfEncoded, 'xray', $date);  //timestamp is added later
+        $storageSave = $this->saveDocToStorage($pdfEncoded, $fileName, $date);  //timestamp is added later
 
-        return $this->saveDocInfoToDb($storageSave, $configData, $pdfEncoded);         //save doc info to db
+        return $this->saveDocInfoToDb($storageSave, $configData, $pdfEncoded, $fileName);         //save doc info to db
 
     }
 
