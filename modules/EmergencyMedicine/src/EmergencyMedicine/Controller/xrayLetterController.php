@@ -19,7 +19,7 @@ class xrayLetterController extends PdfBaseController
         FormDiagnosisAndRecommendationsQuestionnaireMapTable
         FormCommitmentQuestionnaireMapTable
         FormMedicalAdmissionQuestionnaireMapTable*/
-    const CATEGORY = "2";
+    const CATEGORY = "4"; //Referral for X-ray
     const BODY_PATH = 'emergency-medicine/xray-letter/xray-letter';
 
 
