@@ -485,6 +485,18 @@ INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_
 ('BK Diseases', 9921, 9921, 12, 'BK Diseases', '', 1, 0, 1, 0, 1, 'Background Diseases', 0, 1, 0, 1, 1, 0);
 #EndIf
 
+#specialSql
+
+delimiter $$
+
+drop procedure if exists `EncounterReport` $$
+create procedure EncounterReport()
+begin
+end $$
+
+DELIMITER ;
+
+#endSpecialSql
 
 #IfRow2D list_options list_id clinikal_enc_statuses option_id arrived
 UPDATE `list_options` SET `title` = 'Arrived' WHERE `list_options`.`list_id` = 'clinikal_enc_statuses' AND `list_options`.`option_id` = 'arrived';

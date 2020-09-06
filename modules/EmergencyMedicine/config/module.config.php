@@ -18,6 +18,7 @@
  */
 
 use EmergencyMedicine\Controller\xrayLetterController;
+use EmergencyMedicine\Controller\EncounterReportContrller;
 use Interop\Container\ContainerInterface;
 
 return array(
@@ -29,6 +30,9 @@ return array(
             xrayLetterController::class => function (ContainerInterface $container, $requestedName) {
                 return new xrayLetterController($container);
             },
+            EncounterReportContrller::class => function (ContainerInterface $container, $requestedName) {
+                return new EncounterReportContrller($container);
+            },
         ],
     ),
 
@@ -37,7 +41,6 @@ return array(
      */
     'router' => array(
         'routes' => array(
-
             /****************************************************************/
             'xray_letter' => array(
                 'type'    => 'segment',
@@ -54,7 +57,20 @@ return array(
                 ),
             ),
 
-
+            'encounter_report' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/encounter-report[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'method'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => EncounterReportContrller::class,
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
 
             /****************************************************************/
 
