@@ -1,0 +1,153 @@
+<style>
+    .letterName {
+        text-align: center;
+    }
+    .Rectangle-Copy-3 {
+        width: 160px;
+        height: 2px;
+        border-radius: 1px;
+        background-color: #ececec;
+        margin:0 38% 0 38%;
+    }
+    .Active-text-label-Copy-4 {
+        width: 142px;
+        height: 24px;
+        font-family: OpenSansHebrew;
+        font-size: 18px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: #000b40;
+    }
+    .Label-Text {
+
+        opacity: 0.6;
+        font-family: OpenSansHebrew;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.8;
+        letter-spacing: normal;
+        text-align: right;
+        color: #1e2132;
+        margin-left:<?php echo $langDir === "rtl"?'100px':'0'?>;
+        margin-right:<?php echo $langDir === "rtl"?'0':'100px'?>;
+        vertical-align: top;
+    }
+    }
+    .Input-text {
+        font-family: OpenSansHebrew;
+        font-size: 16px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.5;
+        letter-spacing: normal;
+        text-align: right;
+        color: #000b40;
+        margin-left:<?php echo $langDir === "rtl"?'100px':'0'?>;
+        margin-right:<?php echo $langDir === "rtl"?'0':'100px'?>;
+
+    }
+    .position_content{
+    <?php echo $langDir==="rtl"?'margin-left:34%;':''?>;
+    <?php echo $langDir!=="rtl"?'margin-right:34%;':''?>;
+    }
+    .tdLabel{
+        min-width: 20%;
+        max-width: 20%;
+
+    .tdContext{
+
+        min-width:30%;
+        max-width:30%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+
+    }
+    .position{
+        position:absolute;
+        margin-left:<?php echo $langDir==="rtl"?'0':'70%'?>;
+        margin-right:<?php echo $langDir==="rtl"?'70%':'0'?>;
+    }
+</style>
+<main>
+    <?php if ($clientReqData['name_of_letter'] && $clientReqData['name_of_letter']!==""):?>
+    <div class="letterName" dir="<?php echo text($langDir); ?>" lang="<?php echo text($langCode); ?>">
+        <br/>
+        <span class="Active-text-label-Copy-4 "><?php echo xl($clientReqData['name_of_letter']);?> </span>
+        <br/>
+        <p  class ="Rectangle-Copy-3">  </p>
+        <br/>
+    </div>
+    <?php endif;?>
+    <?php
+            $patientData["langDir"]=$langDir;
+            $patientData["langCode"]=$langCode;
+            echo $this->render('clinikal-api/pdf/patient-details.phtml',$patientData);
+    ?>
+    <br/>
+    <br/>
+    <table  style="page-break-inside:avoid;width:434px;"  class="position_content" dir="<?php echo text($langDir); ?>" lang="<?php echo text($langCode); ?>">
+    <tbody>
+    <tr>
+        <td class="tdLabel Label-Text">
+            <?php echo xl("Reason for refferal");?>
+        </td>
+        <td class="tdContext Input-text">
+            <?php echo xl($bodyData['reason_for_refferal']) ;?>
+        </td>
+    </tr>
+    <tr> <td class="tdLabel Label-Text">
+            <?php echo xl("Pregnancy");?>
+        </td>
+        <td class="tdContext Input-text">
+            <?php echo xl($bodyData['pregnant']) ;?>
+        </td>
+    </tr>
+    <tr> <td class="tdLabel Label-Text">
+            <?php echo xl("Findings");?>
+        </td>
+        <td class="tdContext Input-text">
+            <?php echo $bodyData['findings'] ;?>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdLabel Label-Text">
+            <?php echo xl("Diagnosis");?>
+        </td>
+        <td class="tdContext Input-text">
+            <?php echo $bodyData['diagnostics'] ;?>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdLabel Label-Text">
+            <?php echo xl("X-Ray Type");?>
+        </td>
+        <td class="tdContext Input-text">
+            <?php echo xl($clientReqData['x_ray_type']) ;?>
+        </td>
+    </tr>
+    <tr dir="<?php echo text($langDir); ?>" lang="<?php echo text($langCode); ?>">
+        <td class="tdLabel Label-Text">
+
+        </td>
+        <td class="tdContext Input-text">
+           <?php echo str_replace("\n","<br/>",str_replace("\r\n","<br/>",$clientReqData['instructions']));?>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+    <div class="position">
+    <?php
+            $doctorData["langDir"]=$langDir;
+            $doctorData["langCode"]=$langCode;
+            echo $this->render('clinikal-api/pdf/doctor-signature.phtml',$doctorData);
+    ?>
+    </div>
+
+</main>

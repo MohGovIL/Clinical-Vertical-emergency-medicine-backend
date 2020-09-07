@@ -18,6 +18,8 @@
  */
 
 use EmergencyMedicine\Controller\xrayLetterController;
+use EmergencyMedicine\Controller\summaryLetterController;
+use EmergencyMedicine\Controller\prescriptionLetterController;
 use Interop\Container\ContainerInterface;
 
 return array(
@@ -28,6 +30,12 @@ return array(
         'factories' => [
             xrayLetterController::class => function (ContainerInterface $container, $requestedName) {
                 return new xrayLetterController($container);
+            },
+            summaryLetterController::class => function (ContainerInterface $container, $requestedName) {
+                return new summaryLetterController($container);
+            },
+            prescriptionLetterController::class => function (ContainerInterface $container, $requestedName) {
+                return new prescriptionLetterController($container);
             },
         ],
     ),
@@ -53,8 +61,34 @@ return array(
                     ),
                 ),
             ),
-
-
+            'summary_letter' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/summary-letter[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'method'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' =>  summaryLetterController::class,
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'prescription_letter' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/prescription-letter[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'method'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => prescriptionLetterController::class,
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
 
             /****************************************************************/
 
