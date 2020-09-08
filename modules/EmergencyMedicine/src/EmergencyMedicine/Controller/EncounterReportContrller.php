@@ -44,7 +44,7 @@ class EncounterReportContrller extends BaseController implements ReportInterface
         $data[self::LISTS] = array();
 
         $this->layout()->setVariable("title", xlt("Encounter Report"));
-        return $this->renderReport('reports_draw_table', $data, 'encounter-report');
+        return $this->renderReport('reports_draw_table', $data, 'encounter-report','emergency-medicine/encounter-report/');
     }
 
     public function getDataAjaxAction()
