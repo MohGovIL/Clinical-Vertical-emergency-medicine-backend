@@ -5,12 +5,12 @@ namespace EmergencyMedicine\Controller;
 use FhirAPI\FhirRestApiBuilder\Parts\ErrorCodes;
 use Interop\Container\ContainerInterface;
 use ClinikalAPI\Controller\PdfBaseController;
-
-use ReportTool\Controller\BaseController;
 use ReportTool\Controller\ReportInterface;
 use ReportTool\Model\CustomDB;
 use GenericTools\Controller\GenericToolsController;
 use GenericTools\Model\RegistryTable;
+
+use ReportTool\Controller\BaseController;
 
 class EncounterReportContrller extends BaseController implements ReportInterface
 {

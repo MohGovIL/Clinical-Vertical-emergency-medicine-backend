@@ -57,10 +57,10 @@ return array(
                 ),
             ),
 
-            'encounter_report' => array(
+            'EncounterReport' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/encounter-report[/:action][/:id]',
+                    'route'    => '/EncounterReport[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'method'     => '[a-zA-Z][a-zA-Z0-9_-]*',
