@@ -1,4 +1,8 @@
 <style>
+    .leftO{
+        float:left;
+        text-align:left;
+    }
     .letterName {
         text-align: center;
     }
@@ -88,9 +92,10 @@
         width: (100/8)%;
 
     }
-    LabeTableBody-text{
+    .LableTableBody-text {
         font-family: OpenSansHebrew;
-        font-size: 11px;
+        font-size: 12px;
+        color: #000b40;
         width: (100/8)%;
     }
     .RectangleTwo {
@@ -189,12 +194,7 @@
 
     </tr>
 
-    <tr>
-        <td class="tdLabel Label-Text"><?php echo xl("Variable indicators");?></td>
-        <td class="tdContext ">
 
-        </td>
-    </tr>
     <tr>
         <td class="tdLabel Label-Text"><?php echo xl("Variable indicators");?></td>
         <td class="tdContext ">
@@ -206,12 +206,12 @@
                 </tr>
                 <tr>
                     <?php foreach($bodyData['variable_indicators']['rows'] as $row):?>
-                        <tr>
+                        <tr >
 
                             <?php foreach($row as $k=>$col):?>
-                            <td  class="LabeTableBody-text" dir="ltr">
-                                <center>
-                                <?php switch($k):
+                            <td  dir="ltr">
+                                <center ><span class="LableTableBody-text">
+                                    <?php switch($k):
                                     case "date":?>
                                         <?php echo $col[1];?>
                                         <?php break;?>
@@ -223,6 +223,7 @@
 
                                     <?php endswitch;?>
                                 <?php endforeach;?>
+                                        </span>
                                 </center>
                             </td>
                         </tr>
@@ -233,7 +234,8 @@
     </tr>
 
 
-    <tr> <td class="tdLabel Label-Text">
+    <tr>
+        <td class="tdLabel Label-Text">
             <?php echo xl("Findings");?>
         </td>
         <td class="tdContext Input-text">
@@ -264,8 +266,74 @@
             <?php echo $bodyData['recommendations_on_release'] ;?>
         </td>
     </tr>
+    <tr>
+        <td class="tdLabel Label-Text">
+            <?php echo xl("Recommendations for medications");?>
+        </td>
+        <td dir='ltr'  class="leftO tdContext Input-text">
+            <ul>
+                <?php foreach( $bodyData['recommendations_for_medications'] as $drug):?>
+                    <li   ><?php echo $drug['drug'];?></li>
+                <?php endforeach;?>
+            </ul>
+        </td>
+    </tr>
 
+    <tr>
+        <td class="tdLabel Label-Text">
+            <?php echo xl("Decision on release");?>
+        </td>
+        <td class="tdContext Input-text">
+            <?php echo xl($bodyData['decision_on_release']);?>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdLabel Label-Text">
+            <?php echo xl("Release date");?>
+        </td>
+    <td>
+        <table>
+            <tbody>
 
+    <tr>
+
+        <td  dir='ltr' class="tdContext Input-text">
+            <?php echo xl("Date") ;?>
+        </td>
+        <td  dir='ltr' class="tdContext Input-text">
+            <?php echo $bodyData['release_date']['day'] ;?>
+        </td>
+    </tr>
+    <tr>
+
+        <td  dir='ltr' class="tdContext Input-text">
+            <?php echo xl("Hour") ;?>
+        </td>
+        <td  dir='ltr' class="tdContext Input-text">
+            <?php echo $bodyData['release_date']['hour'] ;?>
+        </td>
+    </tr>
+
+            </tbody>
+        </table>
+    </td>
+    </tr>
+    <tr>
+        <td class="tdLabel Label-Text">
+            <?php echo xl("Evacuation way");?>
+        </td>
+        <td class="tdContext Input-text">
+            <?php echo xl($bodyData['evacuation_way']) ;?>
+        </td>
+    </tr>
+    <tr>
+        <td class="tdLabel Label-Text">
+            <?php echo xl("Sick leave");?>
+        </td>
+        <td class="tdContext Input-text">
+            <?php echo $bodyData['sick_leave']. " ". xl("Days") ;?>
+        </td>
+    </tr>
     </tbody>
     </table>
     <div style="page-break-inside:avoid;" >

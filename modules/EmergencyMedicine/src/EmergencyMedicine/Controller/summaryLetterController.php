@@ -65,6 +65,21 @@ class summaryLetterController extends PdfBaseController
         //where encounter = <ENC_ID>, qid = 1 )
         return $this->getQData(4,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
     }
+    public function getDecisionOnRelease(){
+        return $this->getQData(5,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
+    }
+
+    public function getReleaseDate(){
+        return  ['day'=>date('Y-m-d'),"hour"=>date('H:i')];
+    }
+
+    public function getEvacuationWay(){
+        return $this->getQData(6,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
+    }
+
+    public function getSickLeave(){
+        return $this->getQData(7,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
+    }
 
 
 
@@ -89,7 +104,16 @@ class summaryLetterController extends PdfBaseController
         $data['recommendations_on_release'] =str_replace("\n","<br/>",
             str_replace("\r\n","<br/>",$this->getRecommendationsOnRelease()));
         $data['service_requests']=$this->getServiceRequest($this->postData['encounter'],$this->postData['patient'],'completed',$this->postData['x_ray_type']);
-        $data['prescriptions']=$this->getPrescriptions($this->postData['encounter'],$this->postData['patient']);
+        $data['recommendations_for_medications']=$this->getPrescriptions($this->postData['encounter'],$this->postData['patient']);
+        $data['decision_on_release']=str_replace("\n","<br/>",
+            str_replace("\r\n","<br/>",$this->getDecisionOnRelease()));;
+        $data['release_date']=str_replace("\n","<br/>",
+            str_replace("\r\n","<br/>",$this->getReleaseDate()));;
+        $data['evacuation_way']=str_replace("\n","<br/>",
+            str_replace("\r\n","<br/>",$this->getEvacuationWay()));;
+        $data['sick_leave']=str_replace("\n","<br/>",
+            str_replace("\r\n","<br/>",$this->getSickLeave()));;
+
         return $data;
     }
 
@@ -145,13 +169,14 @@ class summaryLetterController extends PdfBaseController
             'bodyData'=>$bodyData
         );
 
+
         $pdfPrescriptionBodyData = array(
             'clientReqData' => $postData,
             'patientData'=>$patientData,
             'doctorData'=>$doctorData,
             'bodyData'=>$bodyData
         );
-
+        $pdfPrescriptionBodyData['clientReqData']['name_of_letter'] = "Prescription";
         $fileName = "x_ray_patient_{$postData['patient']}_$date.pdf";
 
         //create multi paged pdf usinf letter creator.
