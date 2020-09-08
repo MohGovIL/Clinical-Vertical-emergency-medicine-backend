@@ -33,6 +33,7 @@ class EncounterReportContrller extends BaseController implements ReportInterface
 
     public function indexAction()
     {
+        $this->renderHeader(xl(self::REPORT_TITLE), array());
         $data = [];
 
         //processFilters must be exactly as name of columns define below
@@ -43,6 +44,7 @@ class EncounterReportContrller extends BaseController implements ReportInterface
         $data[self::FILTERS] = $this->filtersElements;
         $data[self::LISTS] = array();
 
+        $this->layout()->setTemplate('ReportTool/layout');
         $this->layout()->setVariable("title", xlt("Encounter Report"));
         return $this->renderReport('reports_draw_table', $data, 'encounter-report','emergency-medicine/encounter-report/');
     }

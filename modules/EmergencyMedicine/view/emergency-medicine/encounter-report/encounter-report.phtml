@@ -1,8 +1,218 @@
-
-
 <?php echo $header; ?>
+
 <?php echo $this->$helper($data); ?>
+
 <style>
+    .dataTable {
+        padding-left: 5px;
+    }
+
+    #bureau {
+        position: relative;
+        min-width: 240px!important;
+        width: 30vw !important;
+        top: 58px;
+    }
+
+    @media (max-width:990px){
+        #bureau {
+            top: 0px;
+        }
+
+    }
+
+    .advance_filtering_down {
+        position: relative;
+        display: block;
+        top: 28px;
+        left: -30px;
+        padding-bottom: 30px;
+    }
+
+    .filter_action_down {
+        top: 28px;
+    }
+
+    .advance_filtering_up {
+        position: absolute;
+        top: 0px;
+        left: 140px;
+    }
+
+    .filter_action_up {
+        top: 0px;
+    }
+
+    .simple-select {
+        height: 30px !important;
+        margin-top: 0px;
+        border-radius: 0px;
+        border: 1px solid #A2A2A2 !important;
+    }
+
+    label[for=patient_name]{
+        display: block;
+    }
+
+    span.select2-selection.select2-selection--single {
+        margin-left: 0;
+    }
+
+    b[role=presentation] {
+        border-color: #565656 transparent transparent transparent;
+        border-style: solid;
+        border-width: 5px 3px 0px 3px;
+        height: 0;
+        left: 0;
+        margin-left: 5px;
+        margin-top: -4px;
+        position: absolute;
+        top: 50%;
+        width: 0;
+    }
+
+    .select2-selection {
+        height: 30px !important;
+        margin-top: 0px;
+        border-radius: 0px;
+        border: 1px solid #A2A2A2 !important;
+        background-color: white;
+    }
+
+    .select2-selection__rendered {
+        padding-right: 8px;
+        padding-left: 20px;
+        padding-top: 4px;
+    }
+
+    .select2-results {
+        max-height: 200px;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        padding: 0px 0px 0px 4px;
+        margin: 4px 4px 4px 0px;
+    }
+
+    div#filter_action {
+        min-width: 133px !important;
+        margin-bottom: 40px;
+    }
+
+
 </style>
+
 <script>
+
+
+    let filterInitialInfo;
+
+    //this function override the prev to hide the search bar
+    function getAccessMessageWithStatus(){
+        $(".alert-loader").click();
+        return "";
+    }
+
+    function goToPatientFile(event){
+        let pid=event.target.getAttribute("data");
+        topatient(pid);
+        return 1;
+    }
+
+    function goToEventDetails(event){
+        let pid=event.target.getAttribute("data-pid");
+        let eid=event.target.getAttribute("data");
+        let pathUrl = "<?php echo $GLOBALS['rootdir'] ?>/modules/zend_modules/public/rabies-incident/main?id="+eid;
+
+        parent.left_nav.loadFrame('', 'pat', pathUrl);
+        parent.activateTabByName('pat',true);
+        topatient(pid,true);
+        setTimeout(function(){top.RTop.location = pathUrl}, 3000);
+
+        return 1;
+    }
+    //set number of records in data table
+    pageLength=50;
+
+    $(document).ready(function(){
+
+
+        let info1txt='<?php echo xlt("Click on event date")."<br>".xlt("Will open event details screen")?>';
+        createTooltipster('incident_date',info1txt,80);
+
+        let info2txt='<?php echo xlt("Click on patient name")."<br>".xlt("will open patient file")?>';
+        createTooltipster('patient_name',info2txt,80);
+
+        $('#startFilter').off()
+            .on('click',function() {
+                    $(".dataTable").DataTable().ajax.reload();
+                }
+            );
+
+        $("#event_status").parent().parent().parent().removeClass('col-md-11').addClass("col-md-10")
+        $("#filter_action").removeClass('col-md-1').addClass("col-md-2")
+        filterInitialInfo=collectFilters();
+        let hideAdvanced=false;
+
+        $('#confirmation_type').prop('disabled', true);
+
+        $("input[name='event_by']:first").on("click",function(){
+            $('#confirmation_type').prop('disabled', true);
+        });
+
+        $("input[name='event_by']:last").on("click",function(){
+            $('#confirmation_type').prop('disabled', false);
+        });
+
+        $("#advance_filtering").on('click',function(e){
+            hideAdvanced=!hideAdvanced;
+            let selectToChange=$("#event_status,#patient_name,#from_date,#until_date").parent().parent();
+            let radioToChange=$("label[for='filter_by_date']").parent().parent();
+
+            if(hideAdvanced){
+
+                selectToChange.hide();
+                radioToChange.hide();
+                $("#filter_action").removeClass('filter_action_down').addClass('filter_action_up');
+                $("#advance_filtering").removeClass('advance_filtering_down').addClass('advance_filtering_up');
+                $('#from_date,#until_date').val('');
+                $('#event_status,#patient_name').val('-1');
+                $('#is_advance_filtering').val(0);
+            }else{
+                cleanFilters(filterInitialInfo);
+                $('#until_date').val(filterInitialInfo['until_date']);
+                $('#event_status').val(filterInitialInfo['event_status']);
+                $('#patient_name').val(filterInitialInfo['patient_name']);
+                $('#is_advance_filtering').val(1);
+                selectToChange.show();
+                radioToChange.show();
+                $("#filter_action").removeClass('filter_action_up ').addClass('filter_action_down');
+                $("#advance_filtering").removeClass('advance_filtering_up').addClass('advance_filtering_down');
+            }
+        });
+
+        $("#advance_filtering").click();
+        $("#until_date").after("<p id='date-message' style='display: none'> <small style='color: red;'><?php echo xlt('Must be later than starting date'); ?></small> </p>");
+        $('#from_date, #until_date').on('focus click change', function () {
+            $('#date-message').hide();
+        });
+
+        $("#clear").on("click",function(){
+            let advacedState= $("#is_advance_filtering").val();
+            cleanFilters(filterInitialInfo);
+            $("#is_advance_filtering").val(advacedState);
+        });
+
+    });
+
+
+    $("#patient_name").select2({
+        ajax: getPatientAjaxObject,
+        theme:'',
+        height:"28px",
+        <?php require($GLOBALS['srcdir'] . '/js/xl/select2.js.php'); ?>
+    });
+
+
 </script>
