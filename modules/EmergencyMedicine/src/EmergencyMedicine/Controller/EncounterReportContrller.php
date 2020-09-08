@@ -44,8 +44,8 @@ class EncounterReportContrller extends BaseController implements ReportInterface
         $data[self::FILTERS] = $this->filtersElements;
         $data[self::LISTS] = array();
 
-        $this->layout()->setTemplate('ReportTool/layout');
-        //$this->renderHeader('asd');
+        //$this->layout()->setTemplate('ReportTool/layout');
+        $this->renderHeader('asd');
 
         // set tab title
         $this->layout()->setVariable("title", xlt("Encounter Report"));
