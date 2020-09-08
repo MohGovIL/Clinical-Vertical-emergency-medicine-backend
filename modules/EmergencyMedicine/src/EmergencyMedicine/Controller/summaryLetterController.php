@@ -74,12 +74,12 @@ class summaryLetterController extends PdfBaseController
         $data['insulation'] = $this->getIsolationState();
         $data['insulation_instructions'] = $this->getIsolationInstructionsState();
         $data['nursing_anamnesis'] = $this->getNursingAnamnesisState();
+        $data['pregnant'] = $this->getPregnancyState();
         $data['sensitivities'] = implode(",",$this->getSensitivities());
         $data['background_diseases'] = implode(",",$this->getMedicalProblems());
         $data['chronic_medications'] = implode(",",$this->getMedicine());
         $data['constants_indicators'] = $this->getConstantVitals($this->postData['patient'],'exam',1,"date DESC");
         $data['variable_indicators'] =  $this->getVariantVitals($this->postData['patient'],'vital-signs',1,"date DESC");
-        $data['pregnant'] = $this->getPregnancyState();
         $data['findings'] =str_replace("\n","<br/>",
                                        str_replace("\r\n","<br/>",$this->getFindings()));
         $data['diagnostics'] =str_replace("\n","<br/>",
