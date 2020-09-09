@@ -40,8 +40,25 @@ class EncounterReportContrller extends BaseController implements ReportInterface
 
     public function indexAction()
     {
+        $facilities=array("all"=>"All","all2"=>"All2");
 
-        $this->initDefaultFilters();
+        $this->addSelectFilter('facility', 'Facility', $facilities, "all", 230, false);
+        //from date
+        $this->addInputFilter('from_date', 'From date', 120, oeFormatShortDate(date('Y-m-01')),true);
+        //to date
+        $this->addInputFilter('until_date', 'Until date', 120, oeFormatShortDate(),true);
+
+        /*
+        $doctorList = $this->AddSpecialFilters($doctorList, true, false, false);
+        $eventStatusList=$this->getListsTable()->getListForViewForm(self::STATUS_LIST,false,array(),true,true);
+        $eventStatusList = $this->AddSpecialFilters($eventStatusList, true, false, false);
+        $patientNames= $this->AddSpecialFilters($eventStatusList, true, false, false);
+
+        $this->addSelectFilter('attending_physician', 'Attending Physician', $doctorList, '-1', 240, false, false,'form-control simple-select');
+        $this->addSelectFilter('patient_name', 'Patient Name', $patientNames, '-1', 350, false, false,'form-control simple-select');
+        $this->addInputFilter('until_date', 'Until date', 120, oeFormatShortDate(date('Y-m-d')),false);
+        */
+
         $this->renderHeader(xl(self::REPORT_TITLE), array());
 
         $data = [];
