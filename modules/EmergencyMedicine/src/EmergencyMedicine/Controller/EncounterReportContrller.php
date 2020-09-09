@@ -68,13 +68,18 @@ class EncounterReportContrller extends BaseController implements ReportInterface
         $dataToProcedure = $this->processFilters($filters);
         $columns[] = array(self::DATA => '');
         $columns[] = array(self::DATA => '');
-        $result = $this->getData($dataToProcedure, $columns);
+
+
+        /*$result = $this->getData($dataToProcedure, $columns);
 
         foreach ($result['data'] as $key => $value) {
             // # in href causees refresh not to work
         }
 
         $result = json_encode($result);
+        */
+
+        $result='{"data": [{"Date": 1,"Patient name": "1","Id": "1","Insurance body": "1","Branch": "1","Service type": "1","Decision": "1","Release way": "1"}]}';
 
         die($result);
 
