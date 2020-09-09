@@ -102,6 +102,7 @@
             <?php echo xl($bodyData['reason_for_refferal']) ;?>
         </td>
     </tr>
+    <?php if($bodyData['pregnant'] && $bodyData['pregnant']!=""):?>
     <tr> <td class="tdLabel Label-Text">
             <?php echo xl("Pregnancy");?>
         </td>
@@ -109,6 +110,7 @@
             <?php echo xl($bodyData['pregnant']) ;?>
         </td>
     </tr>
+    <?php endif;?>
     <?php if($bodyData['findings'] && $bodyData['findings']!=""):?>
         <tr> <td class="tdLabel Label-Text">
             <?php echo xl("Findings");?>

@@ -83,17 +83,17 @@ class summaryLetterController extends PdfBaseController
 
 
 
-    private function getEmergencySummaryLetterData(){
+    private function getEmergencySummaryLetterData($patientData){
         $data = [];
         $reason_for_refferal = $this->getServiceTypeAndReasonCodeArray();
-        
+
         $data['reason_for_refferal'] = $reason_for_refferal['service_and_reason'];
         $data['reason_for_refferal_details'] = $reason_for_refferal['details'];
-        
+
         $data['insulation'] = $this->getIsolationState();
         $data['insulation_instructions'] = $this->getIsolationInstructionsState();
         $data['nursing_anamnesis'] = $this->getNursingAnamnesisState();
-        $data['pregnant'] = $this->getPregnancyState();
+        $data['pregnant'] = $this->getPregnancyState($patientData);
         $data['sensitivities'] = implode(",",$this->getSensitivities());
         $data['background_diseases'] = implode(",",$this->getMedicalProblems());
         $data['chronic_medications'] = implode(",",$this->getMedicine());
@@ -164,7 +164,7 @@ class summaryLetterController extends PdfBaseController
 
         $patientData=$this->getPatientInfo($postData['patient']);
         $doctorData=$this->getUserInfo($postData['owner']);
-        $bodyData = $this->getEmergencySummaryLetterData();
+        $bodyData = $this->getEmergencySummaryLetterData($patientData);
 
         $pdfSummaryBodyData = array(
             'clientReqData' => $postData,
