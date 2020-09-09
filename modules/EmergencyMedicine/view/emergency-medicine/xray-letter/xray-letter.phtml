@@ -69,11 +69,7 @@
         overflow-wrap: break-word;
 
     }
-    .position{
-        position:absolute;
-        margin-left:<?php echo $langDir==="rtl"?'0':'70%'?>;
-        margin-right:<?php echo $langDir==="rtl"?'70%':'0'?>;
-    }
+   
 </style>
 <main>
     <?php if ($clientReqData['name_of_letter'] && $clientReqData['name_of_letter']!==""):?>
@@ -152,12 +148,12 @@
     <?php endif;?>
     </tbody>
     </table>
-    <div class="position">
+    
     <?php
             $doctorData["langDir"]=$langDir;
             $doctorData["langCode"]=$langCode;
             echo $this->render('clinikal-api/pdf/doctor-signature.phtml',$doctorData);
     ?>
-    </div>
+    
 
 </main>
