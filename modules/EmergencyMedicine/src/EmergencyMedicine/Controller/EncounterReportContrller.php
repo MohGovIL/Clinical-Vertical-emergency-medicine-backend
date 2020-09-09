@@ -18,7 +18,7 @@ class EncounterReportContrller extends BaseController implements ReportInterface
     const REPORT_ID = "encounter-report";
     const REPORT_TITLE = "Encounter report";
     const REPORT_ROUTE = "encounter-report";
-    const TABLE_COLUMNS_NAME =array();
+    const TABLE_COLUMNS_NAME =array('one');
     //excel
 
     const REPORT_NAME = 'encounter_report_';
@@ -33,6 +33,7 @@ class EncounterReportContrller extends BaseController implements ReportInterface
 
     public function indexAction()
     {
+
         $this->renderHeader(xl(self::REPORT_TITLE), array());
         $data = [];
 
@@ -44,7 +45,10 @@ class EncounterReportContrller extends BaseController implements ReportInterface
         $data[self::FILTERS] = $this->filtersElements;
         $data[self::LISTS] = array();
 
+        $this->initDefaultFilters();
+
         $this->renderHeader('asd');
+
         $this->layout()->setTemplate('ReportTool/layout');
 
 

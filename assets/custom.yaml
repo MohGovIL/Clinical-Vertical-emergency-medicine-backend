@@ -30,21 +30,23 @@
 assets:
 # generic files
     sumoselect:
-        basePath: %webroot%/interface/modules/zend_modules/public/
+        basePath: "%webroot%/interface/modules/zend_modules/public/"
         script: js/generictools/sumoselect/jquery.sumoselect.js
         link: css/generictools/sumoselect/sumoselect.css
+        autoload: true
     timepicker:
-        basePath: %webroot%/interface/modules/zend_modules/public/
+        basePath: "%webroot%/interface/modules/zend_modules/public/"
         script: js/lib/jquery.timepicker.min.js
     tooltipster:
-        basePath: %webroot%/interface/modules/zend_modules/public/
+        basePath: "%webroot%/interface/modules/zend_modules/public/"
         script: /js/generictools/tooltipster.bundle.min.js
         link: /css/generictools/tooltipster.bundle.min.css
+        autoload: true
     validateJS:
-            basePath: %webroot%/library/js/vendors/validate/
+            basePath: "%webroot%/library/js/vendors/validate/"
             script: validate_modified.js
     validateJSExt:
-            basePath: %webroot%/library/js/vendors/validate/
+            basePath: "%webroot%/library/js/vendors/validate/"
             script: validate_extend.js
 # end generic files
 
