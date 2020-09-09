@@ -34,7 +34,9 @@ class EncounterReportContrller extends BaseController implements ReportInterface
     public function indexAction()
     {
 
+        $this->initDefaultFilters();
         $this->renderHeader(xl(self::REPORT_TITLE), array());
+
         $data = [];
 
         //processFilters must be exactly as name of columns define below
@@ -44,16 +46,9 @@ class EncounterReportContrller extends BaseController implements ReportInterface
         $data[self::ROUTE] = self::REPORT_ROUTE;
         $data[self::FILTERS] = $this->filtersElements;
         $data[self::LISTS] = array();
-
-        $this->initDefaultFilters();
-
-        $this->renderHeader('asd');
-
+        
         $this->layout()->setTemplate('ReportTool/layout');
-
-
-        // set tab title
-        $this->layout()->setVariable("title", xlt("Encounter Report"));
+        $this->layout()->setVariable("title", xlt("Encounter Report"));  // set tab title
 
         return $this->renderReport('reports_draw_table', $data, 'encounter-report','emergency-medicine/encounter-report/');
     }

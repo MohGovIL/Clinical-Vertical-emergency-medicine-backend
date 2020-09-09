@@ -108,41 +108,16 @@
 
     let filterInitialInfo;
 
-    //this function override the prev to hide the search bar
-    function getAccessMessageWithStatus(){
-        $(".alert-loader").click();
-        return "";
-    }
-
     function goToPatientFile(event){
         let pid=event.target.getAttribute("data");
         topatient(pid);
         return 1;
     }
 
-    function goToEventDetails(event){
-        let pid=event.target.getAttribute("data-pid");
-        let eid=event.target.getAttribute("data");
-        let pathUrl = "<?php echo $GLOBALS['rootdir'] ?>/modules/zend_modules/public/rabies-incident/main?id="+eid;
-
-        parent.left_nav.loadFrame('', 'pat', pathUrl);
-        parent.activateTabByName('pat',true);
-        topatient(pid,true);
-        setTimeout(function(){top.RTop.location = pathUrl}, 3000);
-
-        return 1;
-    }
     //set number of records in data table
     pageLength=50;
 
     $(document).ready(function(){
-
-
-        let info1txt='<?php echo xlt("Click on event date")."<br>".xlt("Will open event details screen")?>';
-        createTooltipster('incident_date',info1txt,80);
-
-        let info2txt='<?php echo xlt("Click on patient name")."<br>".xlt("will open patient file")?>';
-        createTooltipster('patient_name',info2txt,80);
 
         $('#startFilter').off()
             .on('click',function() {
@@ -150,69 +125,9 @@
                 }
             );
 
-        $("#event_status").parent().parent().parent().removeClass('col-md-11').addClass("col-md-10")
         $("#filter_action").removeClass('col-md-1').addClass("col-md-2")
         filterInitialInfo=collectFilters();
         let hideAdvanced=false;
-
-        $('#confirmation_type').prop('disabled', true);
-
-        $("input[name='event_by']:first").on("click",function(){
-            $('#confirmation_type').prop('disabled', true);
-        });
-
-        $("input[name='event_by']:last").on("click",function(){
-            $('#confirmation_type').prop('disabled', false);
-        });
-
-        $("#advance_filtering").on('click',function(e){
-            hideAdvanced=!hideAdvanced;
-            let selectToChange=$("#event_status,#patient_name,#from_date,#until_date").parent().parent();
-            let radioToChange=$("label[for='filter_by_date']").parent().parent();
-
-            if(hideAdvanced){
-
-                selectToChange.hide();
-                radioToChange.hide();
-                $("#filter_action").removeClass('filter_action_down').addClass('filter_action_up');
-                $("#advance_filtering").removeClass('advance_filtering_down').addClass('advance_filtering_up');
-                $('#from_date,#until_date').val('');
-                $('#event_status,#patient_name').val('-1');
-                $('#is_advance_filtering').val(0);
-            }else{
-                cleanFilters(filterInitialInfo);
-                $('#until_date').val(filterInitialInfo['until_date']);
-                $('#event_status').val(filterInitialInfo['event_status']);
-                $('#patient_name').val(filterInitialInfo['patient_name']);
-                $('#is_advance_filtering').val(1);
-                selectToChange.show();
-                radioToChange.show();
-                $("#filter_action").removeClass('filter_action_up ').addClass('filter_action_down');
-                $("#advance_filtering").removeClass('advance_filtering_up').addClass('advance_filtering_down');
-            }
-        });
-
-        $("#advance_filtering").click();
-        $("#until_date").after("<p id='date-message' style='display: none'> <small style='color: red;'><?php echo xlt('Must be later than starting date'); ?></small> </p>");
-        $('#from_date, #until_date').on('focus click change', function () {
-            $('#date-message').hide();
-        });
-
-        $("#clear").on("click",function(){
-            let advacedState= $("#is_advance_filtering").val();
-            cleanFilters(filterInitialInfo);
-            $("#is_advance_filtering").val(advacedState);
-        });
-
     });
-
-
-    $("#patient_name").select2({
-        ajax: getPatientAjaxObject,
-        theme:'',
-        height:"28px",
-        <?php require($GLOBALS['srcdir'] . '/js/xl/select2.js.php'); ?>
-    });
-
 
 </script>
