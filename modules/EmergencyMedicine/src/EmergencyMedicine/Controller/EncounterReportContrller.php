@@ -18,9 +18,16 @@ class EncounterReportContrller extends BaseController implements ReportInterface
     const REPORT_ID = "encounter-report";
     const REPORT_TITLE = "Encounter report";
     const REPORT_ROUTE = "encounter-report";
-    const TABLE_COLUMNS_NAME =array('one');
-    //excel
-
+    const TABLE_COLUMNS_NAME = array(
+        'Date',
+        'Patient name',
+        'Id',
+        'Insurance body',
+        'Branch',
+        'Service type',
+        'Decision',
+        'Release way',
+        );
     const REPORT_NAME = 'encounter_report_';
     const TAB_TITLE = 'EncounterReport';
     const FILE_NAME = 'encounter-report';
@@ -46,7 +53,7 @@ class EncounterReportContrller extends BaseController implements ReportInterface
         $data[self::ROUTE] = self::REPORT_ROUTE;
         $data[self::FILTERS] = $this->filtersElements;
         $data[self::LISTS] = array();
-        
+
         $this->layout()->setTemplate('ReportTool/layout');
         $this->layout()->setVariable("title", xlt("Encounter Report"));  // set tab title
 
