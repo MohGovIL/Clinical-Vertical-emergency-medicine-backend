@@ -92,6 +92,12 @@
     ?>
     <br/>
     <br/>
-
+    <div style="page-break-inside:avoid;" >
+        <?php
+        $doctorData["langDir"]=$langDir;
+        $doctorData["langCode"]=$langCode;
+        echo $this->render('clinikal-api/pdf/doctor-signature.phtml',$doctorData);
+        ?>
+    </div>
 
 </main>
