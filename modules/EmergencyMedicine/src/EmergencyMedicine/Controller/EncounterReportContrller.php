@@ -17,7 +17,7 @@ class EncounterReportContrller extends BaseController implements ReportInterface
     const PROCEDURE_NAME = 'EncounterReport';
     const REPORT_ID = "encounter-report";
     const REPORT_TITLE = "Encounter report";
-    const REPORT_ROUTE = "encounter-report";
+    const REPORT_ROUTE = "EncounterReport";
     const TABLE_COLUMNS_NAME = array(
         'Date',
         'Patient name',
