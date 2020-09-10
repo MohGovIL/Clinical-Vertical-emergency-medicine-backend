@@ -75,7 +75,7 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         $hmoList=array();
 
 
-        $l=$this->fhirSearch($this->container,self::ORGANIZATION,self::BRANCH_SEARCH);
+        //$l=$this->fhirSearch($this->container,self::ORGANIZATION,self::BRANCH_SEARCH);
 
         $facilities=array("all"=>"All","all2"=>"All2");
 
