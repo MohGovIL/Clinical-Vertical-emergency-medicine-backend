@@ -10,9 +10,9 @@ use ReportTool\Model\CustomDB;
 use GenericTools\Controller\GenericToolsController;
 use GenericTools\Model\RegistryTable;
 
-use ReportTool\Controller\BaseController;
+use ReportTool\Controller\BaseController as ReportBase;
 
-class EncounterReportContrller extends BaseController implements ReportInterface
+class EncounterReportContrller extends ReportBase implements ReportInterface
 {
     const PROCEDURE_NAME = 'EncounterReport';
     const REPORT_ID = "encounter-report";
@@ -32,6 +32,35 @@ class EncounterReportContrller extends BaseController implements ReportInterface
     const TAB_TITLE = 'EncounterReport';
     const FILE_NAME = 'encounter-report';
 
+    /*************************future FHIR search trait ***********************************/
+
+    const ORGANIZATION = "Organization";
+    const BRANCH_SEARCH = array (
+        'REWRITE_COMMAND' => 'fhir/v4/Organization',
+        'ARGUMENTS' => array ( 'type' => array (
+         0 => array (
+                    'value' => '11',
+                    'operator' => NULL,
+                    'modifier' => 'exact',
+         ),
+    ),),
+     'PARAMETERS_FOR_SEARCH_RESULT' => array (),
+     'PARAMETERS_FOR_ALL_RESOURCES' => array (),
+     'POST_PARSED_JSON' => array (),
+    );
+
+    public function fhirSearch($container,$FHIRElement,$bodyParams)
+    {
+        $strategy = "FhirAPI\FhirRestApiBuilder\Parts\Strategy\StrategyElement\\$FHIRElement\\$FHIRElement";
+        $params = ['paramsFromBody' => $bodyParams,'paramsFromUrl'=>array(),'container' => $container];
+        $obj = new $strategy($params);
+        $search = $obj->search();
+        return $search;
+    }
+    /***********************************************************************/
+
+    public $container = null;
+
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container, self::PROCEDURE_NAME);
@@ -40,9 +69,22 @@ class EncounterReportContrller extends BaseController implements ReportInterface
 
     public function indexAction()
     {
+
+        $branchList=array();
+        $serviceTypeList=array();
+        $hmoList=array();
+
+
+        $l=$this->fhirSearch($this->container,self::ORGANIZATION,self::BRANCH_SEARCH);
+
         $facilities=array("all"=>"All","all2"=>"All2");
 
-        $this->addSelectFilter('facility', 'Facility', $facilities, "all", 230, false);
+        $this->addSelectFilter('branch_name', 'Branch name', $branchList, "all", 230, false);
+
+        $this->addSelectFilter('service_type', 'Service Type', $serviceTypeList, "all", 230, false);
+
+        $this->addSelectFilter('hmo', 'HMO', $hmoList, "all", 230, false);
+
         //from date
         $this->addInputFilter('from_date', 'From date', 120, oeFormatShortDate(date('Y-m-01')),true);
         //to date
