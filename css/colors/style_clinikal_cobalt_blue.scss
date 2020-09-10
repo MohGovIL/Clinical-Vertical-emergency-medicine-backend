@@ -13,7 +13,8 @@ $paler: #f3f7fb;
 $midnightblue: #2f2f7d;
 $white: #fff;
 
-@import "utilities/default_variables";
+// for latest openemr version
+//@import "utilities/default_variables";
 // Enables responsive text for Bootstrap
 $enable-responsive-font-sizes: true;
 // Import Bootstrap 4 SCSS Files before doing anything
