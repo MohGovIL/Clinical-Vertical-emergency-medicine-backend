@@ -27,35 +27,81 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         'Service type',
         'Decision',
         'Release way',
-        );
+    );
     const REPORT_NAME = 'encounter_report_';
     const TAB_TITLE = 'EncounterReport';
     const FILE_NAME = 'encounter-report';
 
     /*************************future FHIR search trait ***********************************/
-
     const ORGANIZATION = "Organization";
-    const BRANCH_SEARCH = array (
+    const BRANCH_SEARCH = array(
         'REWRITE_COMMAND' => 'fhir/v4/Organization',
-        'ARGUMENTS' => array ( 'type' => array (
-         0 => array (
+        'ARGUMENTS' => array(
+            'type' => array(
+                0 => array(
                     'value' => '11',
-                    'operator' => NULL,
+                    'operator' => null,
                     'modifier' => 'exact',
-         ),
-    ),),
-     'PARAMETERS_FOR_SEARCH_RESULT' => array (),
-     'PARAMETERS_FOR_ALL_RESOURCES' => array (),
-     'POST_PARSED_JSON' => array (),
+                ),
+            ),
+        )
     );
 
-    public function fhirSearch($container,$FHIRElement,$bodyParams)
+    const HMO_SEARCH = array(
+        'REWRITE_COMMAND' => 'fhir/v4/Organization',
+        'ARGUMENTS' => array(
+            'type' => array(
+                0 => array(
+                    'value' => '71',
+                    'operator' => null,
+                    'modifier' => 'exact',
+                ),
+            ),
+        )
+    );
+
+    public function fhirSearch($container, $FHIRElement, $bodyParams)
     {
         $strategy = "FhirAPI\FhirRestApiBuilder\Parts\Strategy\StrategyElement\\$FHIRElement\\$FHIRElement";
-        $params = ['paramsFromBody' => $bodyParams,'paramsFromUrl'=>array(),'container' => $container];
+        $params = ['paramsFromBody' => $bodyParams, 'paramsFromUrl' => array(), 'container' => $container];
         $obj = new $strategy($params);
         $search = $obj->search();
         return $search;
+    }
+
+    public function extractFhirElmFromSearch($bundle, $FHIRElementName)
+    {
+        $fhirElmCollection = array();
+        $entries = $bundle->getEntry();
+        foreach ($entries as $key => $value) {
+            $FHIRElmOBJ = $value->getResource();
+            if (is_object($FHIRElmOBJ) && $FHIRElmOBJ->get_fhirElementName() === $FHIRElementName) {
+                $fhirElmCollection[] = $FHIRElmOBJ;
+            }
+        }
+        return $fhirElmCollection;
+    }
+
+    public function getBranchNames()
+    {
+        $branchList = array();
+        $searchForBranch = $this->fhirSearch($this->container, self::ORGANIZATION, self::BRANCH_SEARCH);
+        $searchElm = $this->extractFhirElmFromSearch($searchForBranch, self::ORGANIZATION);
+        foreach ($searchElm as $key => $value) {
+            $branchList[$value->getId()->getValue()] = $value->getName()->getValue();
+        }
+        return $branchList;
+    }
+
+    public function getHmoNames()
+    {
+        $hmoList = array();
+        $searchForBranch = $this->fhirSearch($this->container, self::ORGANIZATION, self::HMO_SEARCH);
+        $searchElm = $this->extractFhirElmFromSearch($searchForBranch, self::ORGANIZATION);
+        foreach ($searchElm as $key => $value) {
+            $hmoList[$value->getId()->getValue()] = $value->getName()->getValue();
+        }
+        return $hmoList;
     }
     /***********************************************************************/
 
@@ -70,14 +116,12 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
     public function indexAction()
     {
 
-        $branchList=array();
-        $serviceTypeList=array();
-        $hmoList=array();
 
+        $serviceTypeList = array();
 
-        //$l=$this->fhirSearch($this->container,self::ORGANIZATION,self::BRANCH_SEARCH);
+        $branchList = $this->getBranchNames();
+        $hmoList = $this->getHmoNames();
 
-        $facilities=array("all"=>"All","all2"=>"All2");
 
         $this->addSelectFilter('branch_name', 'Branch name', $branchList, "all", 230, false);
 
@@ -86,9 +130,9 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         $this->addSelectFilter('hmo', 'HMO', $hmoList, "all", 230, false);
 
         //from date
-        $this->addInputFilter('from_date', 'From date', 120, oeFormatShortDate(date('Y-m-01')),true);
+        $this->addInputFilter('from_date', 'From date', 120, oeFormatShortDate(date('Y-m-01')), true);
         //to date
-        $this->addInputFilter('until_date', 'Until date', 120, oeFormatShortDate(),true);
+        $this->addInputFilter('until_date', 'Until date', 120, oeFormatShortDate(), true);
 
         /*
         $doctorList = $this->AddSpecialFilters($doctorList, true, false, false);
@@ -116,7 +160,7 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         $this->layout()->setTemplate('ReportTool/layout');
         $this->layout()->setVariable("title", xlt("Encounter Report"));  // set tab title
 
-        return $this->renderReport('reports_draw_table', $data, 'encounter-report','emergency-medicine/encounter-report/');
+        return $this->renderReport('reports_draw_table', $data, 'encounter-report', 'emergency-medicine/encounter-report/');
     }
 
     public function getDataAjaxAction()
@@ -138,7 +182,7 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         $result = json_encode($result);
         */
 
-        $result='{"data": [{"Date": 1,"Patient name": "1","Id": "1","Insurance body": "1","Branch": "1","Service type": "1","Decision": "1","Release way": "1"}]}';
+        $result = '{"data": [{"Date": 1,"Patient name": "1","Id": "1","Insurance body": "1","Branch": "1","Service type": "1","Decision": "1","Release way": "1"}]}';
 
         die($result);
 
