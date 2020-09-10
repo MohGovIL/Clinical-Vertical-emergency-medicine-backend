@@ -502,3 +502,11 @@ INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`, `aco_s
 DELETE FROM `categories_seq`;
 INSERT INTO `categories_seq` (`id`) VALUES('8');
 #EndIf
+
+#IfNotRow2D questionnaires_schemas form_name medical_admission_questionnaire question Sensitivities
+INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
+VALUES
+('5', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Sensitivities'),
+('6', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Background diseases'),
+('7', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Chronic medications');
+#EndIf
