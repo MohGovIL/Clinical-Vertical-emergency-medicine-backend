@@ -24,7 +24,6 @@
     }
     .Label-Text {
 
-        opacity: 0.6;
         font-family: OpenSansHebrew;
         font-size: 14px;
         font-weight: normal;
@@ -32,10 +31,8 @@
         font-style: normal;
         line-height: 1.8;
         letter-spacing: normal;
-        text-align: right;
+        text-align: <?php echo $langDir === "rtl"?'right':'left'?>;
         color: #1e2132;
-        margin-left:<?php echo $langDir === "rtl"?'100px':'0'?>;
-        margin-right:<?php echo $langDir === "rtl"?'0':'100px'?>;
         vertical-align: top;
     }
     }
@@ -49,8 +46,7 @@
         letter-spacing: normal;
         text-align: right;
         color: #000b40;
-        margin-left:<?php echo $langDir === "rtl"?'100px':'0'?>;
-        margin-right:<?php echo $langDir === "rtl"?'0':'100px'?>;
+        vertical-align: top;
 
     }
     .position_content{
@@ -68,6 +64,8 @@
         word-wrap: break-word;
         overflow-wrap: break-word;
 
+        float:<?php echo $langDir === "ltr"?'left':'right'?>;
+        text-align:<?php echo $langDir === "ltr"?'left':'right'?>;
     }
    
 </style>
