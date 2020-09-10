@@ -1,8 +1,7 @@
 <style>
-    li {list-style-type: circle;}
     .leftO{
-        float:<?php echo $langDir === "rtl"?'left':'right'?>;
-        text-align:<?php echo $langDir === "rtl"?'left':'right'?>;
+        float:left !important;
+        text-align:left !important;
     }
     .letterName {
         text-align: center;
@@ -281,10 +280,10 @@ function parseSimpleContext($title , $context){
         <td class="tdLabel Label-Text">
             <?php echo xl("Recommendations for medications");?>
         </td>
-        <td dir="ltr"    class="leftO Input-text">
+        <td dir="ltr"  class="  leftO Input-text">
             <ul>
                 <?php foreach( $bodyData['recommendations_for_medications'] as $drug):?>
-                    <li ><?php echo $drug['drug'];?></li>
+                    <li dir="ltr"  ><?php echo $drug['drug'];?></li>
                 <?php endforeach;?>
             </ul>
         </td>
@@ -292,37 +291,28 @@ function parseSimpleContext($title , $context){
 
     <?php parseSimpleContext("Decision on release",$bodyData['decision_on_release']);?>
 
+
     <tr>
         <td class="tdLabel Label-Text">
             <?php echo xl("Release date");?>
         </td>
-    <td>
-        <table>
-            <tbody>
-
-    <tr>
-
-        <td  dir='ltr' class="tdContext Input-text">
-            <?php echo xl("Date") ;?>
-        </td>
-        <td  dir='ltr' class="tdContext Input-text">
-            <?php echo $bodyData['release_date']['day'] ;?>
-        </td>
-    </tr>
-    <tr>
-
-        <td  dir='ltr' class="tdContext Input-text">
-            <?php echo xl("Hour") ;?>
-        </td>
-        <td  dir='ltr' class="tdContext Input-text">
-            <?php echo $bodyData['release_date']['hour'] ;?>
+        <td>
+            <table>
+                <tbody>
+                <tr>
+                    <td class=" LableTableBody-text-3"><?php echo xl("Date");?></td>
+                    <td class=" LableTableBody-text-9"><?php echo $bodyData['release_date']['day'];?></td>
+                </tr>
+                <tr>
+                    <td class=" LableTableBody-text-3"><?php echo xl("Hour");?></td>
+                    <td class=" LableTableBody-text-9"><?php echo $bodyData['release_date']['hour'];?></td>
+                </tr>
+                </tbody>
+            </table>
         </td>
     </tr>
 
-            </tbody>
-        </table>
-    </td>
-    </tr>
+
     <?php parseSimpleContext("Evacuation way",$bodyData['evacuation_way']);?>
     <?php parseSimpleContext("Sick leave",$bodyData['sick_leave']. " ". xl("Days"));?>
 

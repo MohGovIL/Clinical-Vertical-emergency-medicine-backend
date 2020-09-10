@@ -70,7 +70,7 @@ class summaryLetterController extends PdfBaseController
     }
 
     public function getReleaseDate(){
-        return  ['day'=>date('Y-m-d'),"hour"=>date('H:i')];
+        return  ['day'=>date('d/m/Y'),"hour"=>date('H:i')];
     }
 
     public function getEvacuationWay(){
