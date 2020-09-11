@@ -20,6 +20,7 @@
 use EmergencyMedicine\Controller\xrayLetterController;
 use EmergencyMedicine\Controller\summaryLetterController;
 use EmergencyMedicine\Controller\prescriptionLetterController;
+use EmergencyMedicine\Controller\EncounterReportContrller;
 use Interop\Container\ContainerInterface;
 
 return array(
@@ -30,6 +31,9 @@ return array(
         'factories' => [
             xrayLetterController::class => function (ContainerInterface $container, $requestedName) {
                 return new xrayLetterController($container);
+            },
+            EncounterReportContrller::class => function (ContainerInterface $container, $requestedName) {
+                return new EncounterReportContrller($container);
             },
             summaryLetterController::class => function (ContainerInterface $container, $requestedName) {
                 return new summaryLetterController($container);
@@ -45,7 +49,6 @@ return array(
      */
     'router' => array(
         'routes' => array(
-
             /****************************************************************/
             'xray_letter' => array(
                 'type'    => 'segment',
@@ -57,6 +60,21 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => xrayLetterController::class,
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+
+            'encounter_report' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/encounter-report[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'method'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => EncounterReportContrller::class,
                         'action'     => 'index',
                     ),
                 ),

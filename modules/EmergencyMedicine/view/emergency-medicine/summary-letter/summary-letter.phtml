@@ -178,12 +178,16 @@ function parseSimpleContext($title , $context){
     <?php parseSimpleContext("Sensitivities",$bodyData['sensitivities']);?>
     <?php parseSimpleContext("Background diseases",$bodyData['background_diseases']);?>
     <?php parseSimpleContext("Chronic medications",$bodyData['chronic_medications']);?>
-    <?php parseSimpleContext("Constant indicators",$bodyData['constants_indicators']['columns']['height']." - ".$bodyData['constants_indicators']['rows'][0]['height'][2]." ".$bodyData['constants_indicators']['rows'][0]['height'][1]);?>
-    <?php parseSimpleContext("",$bodyData['constants_indicators']['columns']['weight']." - ".$bodyData['constants_indicators']['rows'][0]['weight'][2]." ".$bodyData['constants_indicators']['rows'][0]['weight'][1]);?>
+    <?php if($bodyData['constants_indicators']['rows'][0]['height'][2] && $bodyData['constants_indicators']['rows'][0]['height'][2] !="" && $bodyData['constants_indicators']['rows'][0]['weight'][2] && $bodyData['constants_indicators']['rows'][0]['weight'][2]!="") {
+            parseSimpleContext("Constant indicators",$bodyData['constants_indicators']['columns']['height']." - ".$bodyData['constants_indicators']['rows'][0]['height'][2]." ".$bodyData['constants_indicators']['rows'][0]['height'][1]);
+            parseSimpleContext("",$bodyData['constants_indicators']['columns']['weight']." - ".$bodyData['constants_indicators']['rows'][0]['weight'][2]." ".$bodyData['constants_indicators']['rows'][0]['weight'][1]);
+    }
+    ?>
+
 
     </tr>
 
-
+    <?php if($bodyData['variable_indicators']['rows'] && sizeof($bodyData['variable_indicators']['rows'])>0):?>
     <tr>
         <td class="tdLabel Label-Text"><?php echo xl("Variable indicators");?></td>
         <td class="tdContext ">
@@ -221,6 +225,8 @@ function parseSimpleContext($title , $context){
             </table>
         </td>
     </tr>
+    <?php endif;?>
+    <?php if($bodyData['service_requests'] && sizeof($bodyData['service_requests'])>0):?>
     <tr>
         <td class="tdLabel Label-Text"><?php echo xl("Tests and treatments performed");?></td>
         <td>
@@ -269,13 +275,14 @@ function parseSimpleContext($title , $context){
 
         </td>
     </tr>
-
+    <?php endif;?>
     <?php parseSimpleContext("Findings",$bodyData['findings']);?>
     <?php parseSimpleContext("Diagnosis",$bodyData['diagnostics']);?>
     <?php parseSimpleContext("Treatment details",$bodyData['treatment_details']);?>
     <?php parseSimpleContext("Recommendations on release",$bodyData['recommendations_on_release']);?>
 
 
+    <?php  if($bodyData['recommendations_for_medications'] && sizeof($bodyData['recommendations_for_medications'])>0):?>
     <tr>
         <td class="tdLabel Label-Text">
             <?php echo xl("Recommendations for medications");?>
@@ -288,6 +295,7 @@ function parseSimpleContext($title , $context){
             </ul>
         </td>
     </tr>
+    <?php endif;?>
 
     <?php parseSimpleContext("Decision on release",$bodyData['decision_on_release']);?>
 
@@ -314,7 +322,7 @@ function parseSimpleContext($title , $context){
 
 
     <?php parseSimpleContext("Evacuation way",$bodyData['evacuation_way']);?>
-    <?php parseSimpleContext("Sick leave",$bodyData['sick_leave']. " ". xl("Days"));?>
+    <?php parseSimpleContext("Sick leave",$bodyData['sick_leave'] && $bodyData['sick_leave'] != "" ? $bodyData['sick_leave']. " ". xl("Days"):"");?>
 
 
 

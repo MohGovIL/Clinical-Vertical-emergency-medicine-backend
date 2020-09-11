@@ -490,7 +490,6 @@ INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_
 ('BK Diseases', 9921, 9921, 12, 'BK Diseases', '', 1, 0, 1, 0, 1, 'Background Diseases', 0, 1, 0, 1, 1, 0);
 #EndIf
 
-
 #IfRow2D list_options list_id clinikal_enc_statuses option_id arrived
 UPDATE `list_options` SET `title` = 'Arrived' WHERE `list_options`.`list_id` = 'clinikal_enc_statuses' AND `list_options`.`option_id` = 'arrived';
 #EndIf
@@ -507,4 +506,12 @@ INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`, `aco_s
 
 DELETE FROM `categories_seq`;
 INSERT INTO `categories_seq` (`id`) VALUES('8');
+#EndIf
+
+#IfNotRow2D questionnaires_schemas form_name medical_admission_questionnaire question Sensitivities
+INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
+VALUES
+('5', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Sensitivities'),
+('6', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Background diseases'),
+('7', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Chronic medications');
 #EndIf
