@@ -34,6 +34,8 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
 
     /*************************future FHIR search trait ***********************************/
     const ORGANIZATION = "Organization";
+    const HEALTHCARE_SERVICE = "HealthcareService";
+
     const BRANCH_SEARCH = array(
         'REWRITE_COMMAND' => 'fhir/v4/Organization',
         'ARGUMENTS' => array(
@@ -46,7 +48,6 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
             ),
         )
     );
-
     const HMO_SEARCH = array(
         'REWRITE_COMMAND' => 'fhir/v4/Organization',
         'ARGUMENTS' => array(
@@ -60,6 +61,21 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         )
     );
 
+    const HC_Service_SEARCH = array(
+        'REWRITE_COMMAND' => 'fhir/v4/HealthcareService',
+        'ARGUMENTS' => array(
+            'organization' => array(
+                0 => array(
+                    'value' => '16',
+                    'operator' => null,
+                    'modifier' => 'exact',
+                ),
+            ),
+        )
+    );
+
+    const SERVICE_TYPES_SEARCH = array(0 => "service_types", 1 => '$expand');
+
     public function fhirSearch($container, $FHIRElement, $bodyParams)
     {
         $strategy = "FhirAPI\FhirRestApiBuilder\Parts\Strategy\StrategyElement\\$FHIRElement\\$FHIRElement";
@@ -68,6 +84,29 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         $search = $obj->search();
         return $search;
     }
+
+    public function getValueSet($container, $name, $paramsFromUrl = array(), $bodyParams = array())
+    {
+        $strategy = "FhirAPI\FhirRestApiBuilder\Parts\Strategy\StrategyElement\\ValueSet\\ValueSet";
+        $params = ['paramsFromBody' => $bodyParams, 'paramsFromUrl' => $paramsFromUrl, 'container' => $container];
+        $obj = new $strategy($params);
+        $valueSet = $obj->read();
+        $codes = $this->getCodeArrayFromValueSet($valueSet);
+        return $codes;
+    }
+
+    public function getCodeArrayFromValueSet($valueSet)
+    {
+        $codes = array();
+        if (method_exists($valueSet, 'get_fhirElementName') && $valueSet->get_fhirElementName() === "ValueSet") {
+            $contains = $valueSet->getExpansion()->getContains();
+            foreach ($contains as $index => $codeInfo) {
+                $codes[$codeInfo->getCode()->getValue()] = xlt($codeInfo->getDisplay()->getValue());
+            }
+        }
+        return $codes;
+    }
+
 
     public function extractFhirElmFromSearch($bundle, $FHIRElementName)
     {
@@ -103,6 +142,20 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         }
         return $hmoList;
     }
+
+    public function getHealthcareServiceNames()
+    {
+        $HealthCareServiceList = array();
+        $searchForHCS = $this->fhirSearch($this->container, self::HEALTHCARE_SERVICE, self::HC_Service_SEARCH);
+        $searchElm = $this->extractFhirElmFromSearch($searchForHCS, self::HEALTHCARE_SERVICE);
+        foreach ($searchElm as $key => $value) {
+            $code = $value->getType()[0]->getCoding()[0]->getCode()->getValue();
+            $name = $value->getName()->getValue();
+            $HealthCareServiceList[$code] = $name;
+        }
+        return $HealthCareServiceList;
+    }
+
     /***********************************************************************/
 
     public $container = null;
@@ -115,19 +168,36 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
 
     public function indexAction()
     {
-
-
         $serviceTypeList = array();
-
         $branchList = $this->getBranchNames();
         $hmoList = $this->getHmoNames();
 
+        if (count($branchList) <= 1) {
 
-        $this->addSelectFilter('branch_name', 'Branch name', $branchList, "all", 230, false,false);
+            if (count($branchList) === 1) {
 
-        $this->addSelectFilter('service_type', 'Service Type', $serviceTypeList, "all", 230, false,false);
+                $serviceTypeList = $this->getHealthcareServiceNames();
 
-        $this->addSelectFilter('hmo', 'HMO', $hmoList, "all", 230, false,false);
+            } else {
+                $serviceTypeList['all'] = xlt('All');
+            }
+
+            if (empty($branchList)) {
+                $branchList['all'] = xlt('All');
+            }
+            $this->addSelectFilter('branch_name', 'Branch name', $branchList, array_key_first($branchList), 230, false, false);
+            $this->addSelectFilter('service_type', 'Service Type', $serviceTypeList, array_key_first($serviceTypeList), 230, false, false);
+
+        } else {
+            $branchList['all'] = xlt('All');
+            $this->addSelectFilter('branch_name', 'Branch name', $branchList, "all", 230, false, false);
+            $serviceTypeList = $this->getValueSet($this->container, self::SERVICE_TYPES_SEARCH[0], self::SERVICE_TYPES_SEARCH);
+            $serviceTypeList['all'] = xlt('All');
+            $this->addSelectFilter('service_type', 'Service Type', $serviceTypeList, "all", 230, false, false);
+        }
+
+        $hmoList['all'] = xlt('All');
+        $this->addSelectFilter('hmo', 'HMO', $hmoList, "all", 230, false, false);
 
         //from date
         $this->addInputFilter('from_date', 'From date', 120, oeFormatShortDate(date('Y-m-01')), true);

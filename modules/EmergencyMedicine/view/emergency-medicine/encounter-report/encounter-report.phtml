@@ -3,7 +3,11 @@
 <?php echo $this->$helper($data); ?>
 
 <style>
-
+    .datepicker {
+        max-width: 240px;
+        height: 37px !important;
+    }
+    
     div#filter_action {
         padding-top: 12px;
     }
@@ -128,6 +132,8 @@
 
     $(document).ready(function(){
 
+        filterInitialInfo=collectFilters();
+
         $('#startFilter').off()
             .on('click',function() {
                     $(".dataTable").DataTable().ajax.reload();
@@ -135,8 +141,8 @@
             );
 
         $("#filter_action").removeClass('col-md-1').addClass("col-md-2")
-        filterInitialInfo=collectFilters();
-        let hideAdvanced=false;
+
+
     });
 
 </script>
