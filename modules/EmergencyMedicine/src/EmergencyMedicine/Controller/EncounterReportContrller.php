@@ -123,11 +123,11 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         $hmoList = $this->getHmoNames();
 
 
-        $this->addSelectFilter('branch_name', 'Branch name', $branchList, "all", 230, false);
+        $this->addSelectFilter('branch_name', 'Branch name', $branchList, "all", 230, false,false);
 
-        $this->addSelectFilter('service_type', 'Service Type', $serviceTypeList, "all", 230, false);
+        $this->addSelectFilter('service_type', 'Service Type', $serviceTypeList, "all", 230, false,false);
 
-        $this->addSelectFilter('hmo', 'HMO', $hmoList, "all", 230, false);
+        $this->addSelectFilter('hmo', 'HMO', $hmoList, "all", 230, false,false);
 
         //from date
         $this->addInputFilter('from_date', 'From date', 120, oeFormatShortDate(date('Y-m-01')), true);

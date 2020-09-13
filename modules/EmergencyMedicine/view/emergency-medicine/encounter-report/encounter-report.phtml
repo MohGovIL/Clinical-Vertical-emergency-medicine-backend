@@ -4,6 +4,113 @@
 
 <style>
 
+    div#filter_action {
+        padding-top: 12px;
+    }
+
+    .row{
+        width: 100%;
+    }
+    #until_date{
+        margin-top: 0px !important;
+    }
+    #bureau {
+        position: relative;
+        min-width: 240px!important;
+        width: 30vw !important;
+        top: 58px;
+    }
+
+    @media (max-width:990px){
+        #bureau {
+            top: 0px;
+        }
+
+    }
+
+    .advance_filtering_down {
+        position: relative;
+        display: block;
+        top: 28px;
+        left: -30px;
+        padding-bottom: 30px;
+    }
+
+    .filter_action_down {
+        top: 28px;
+    }
+
+    .advance_filtering_up {
+        position: absolute;
+        top: 0px;
+        left: 140px;
+    }
+
+    .filter_action_up {
+        top: 0px;
+    }
+
+    .simple-select {
+        height: 30px !important;
+        margin-top: 0px;
+        border-radius: 0px;
+        border: 1px solid #A2A2A2 !important;
+    }
+
+    label[for=patient_name]{
+        display: block;
+    }
+
+    span.select2-selection.select2-selection--single {
+        margin-left: 0;
+    }
+
+    b[role=presentation] {
+        border-color: #565656 transparent transparent transparent;
+        border-style: solid;
+        border-width: 5px 3px 0px 3px;
+        height: 0;
+        left: 0;
+        margin-left: 5px;
+        margin-top: -4px;
+        position: absolute;
+        top: 50%;
+        width: 0;
+    }
+
+    .select2-selection {
+        height: 30px !important;
+        margin-top: 0px;
+        border-radius: 0px;
+        border: 1px solid #A2A2A2 !important;
+        background-color: white;
+    }
+
+    .select2-selection__rendered {
+        padding-right: 8px;
+        padding-left: 20px;
+        padding-top: 4px;
+    }
+
+    .select2-results {
+        max-height: 200px;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        padding: 0px 0px 0px 4px;
+        margin: 4px 4px 4px 0px;
+    }
+
+    div#filter_action {
+        min-width: 133px !important;
+        margin-bottom: 40px;
+    }
+    .dataTable {
+        padding-left: 5px;
+    }
+
+
 </style>
 
 <script>
