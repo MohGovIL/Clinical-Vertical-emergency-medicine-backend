@@ -19,15 +19,17 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
     const REPORT_TITLE = "Encounter report";
     const REPORT_ROUTE = "EncounterReport";
     const TABLE_COLUMNS_NAME = array(
-        'Date',
-        'Patient name',
-        'Id',
-        'Insurance body',
-        'Branch',
-        'Service type',
-        'Decision',
-        'Release way',
+        'encounter_date',
+        'patient_name',
+        'id',
+        'insurance_body',
+        'branch',
+        'service_type',
+        'decision',
+        'release_way',
     );
+
+
     const REPORT_NAME = 'encounter_report_';
     const TAB_TITLE = 'EncounterReport';
     const FILE_NAME = 'encounter-report';
@@ -242,18 +244,13 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         $columns[] = array(self::DATA => '');
         $columns[] = array(self::DATA => '');
 
-
-        /*$result = $this->getData($dataToProcedure, $columns);
+        $result = $this->getData($dataToProcedure, $columns);
 
         foreach ($result['data'] as $key => $value) {
             // # in href causees refresh not to work
         }
 
         $result = json_encode($result);
-        */
-
-        $result = '{"data": [{"Date": 1,"Patient name": "1","Id": "1","Insurance body": "1","Branch": "1","Service type": "1","Decision": "1","Release way": "1"}]}';
-
         die($result);
 
     }
@@ -285,8 +282,20 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         $filters = $this->normalizedGenericFilters($filters);
         extract($filters);
         $currentUserId = $_SESSION['authUserID'];
+
+        $branch_name = "'{$branch_name}'";
+        $service_type = "'{$service_type}'";
+        $hmo = "'{$hmo}'";
+
         $filtersToProcedure = array(
             $currentUserId,
+            $branch_name,
+            $service_type,
+            $hmo,
+            $from_date,
+            $until_date,
+            $offset,
+            $limit,
         );
         return $filtersToProcedure;
     }
