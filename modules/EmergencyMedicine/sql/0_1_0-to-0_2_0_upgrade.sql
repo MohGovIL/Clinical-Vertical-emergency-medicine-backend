@@ -510,3 +510,11 @@ VALUES
 ('6', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Background diseases'),
 ('7', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Chronic medications');
 #EndIf
+
+#IfNotRow2D categories name Referral id 8
+INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`, `aco_spec`) VALUES
+('8', 'Prescriptions', '', '1', '14', '15', 'patients|docs');
+
+DELETE FROM `categories_seq`;
+INSERT INTO `categories_seq` (`id`) VALUES('9');
+#EndIf

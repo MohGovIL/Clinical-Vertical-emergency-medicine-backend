@@ -77,10 +77,11 @@ INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`, `aco_s
 ('4', 'Referral for X-ray', '', '1', '5', '10', 'patients|docs'),
 ('5', 'Summary letter', '', '1', '6', '7', 'patients|docs'),
 ('6', 'Other', '', '1', '11', '18', 'patients|docs'),
-('7', 'Patient Photo', '', '1', '12', '13', 'patients|docs');
+('7', 'Patient Photo', '', '1', '12', '13', 'patients|docs'),
+('8', 'Prescriptions', '', '1', '14', '15', 'patients|docs');
 
 DELETE FROM `categories_seq`;
-INSERT INTO `categories_seq` (`id`) VALUES('8');
+INSERT INTO `categories_seq` (`id`) VALUES('9');
 
 CREATE TABLE form_medical_admission_questionnaire(
     id bigint(20) NOT NULL AUTO_INCREMENT,
