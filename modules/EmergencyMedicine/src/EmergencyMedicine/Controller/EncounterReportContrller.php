@@ -23,7 +23,7 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         'patient_name',
         'id',
         'insurance_body',
-        'branch',
+        'branch_name',
         'service_type',
         'decision',
         'release_way',
@@ -33,6 +33,7 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
     const REPORT_NAME = 'encounter_report_';
     const TAB_TITLE = 'EncounterReport';
     const FILE_NAME = 'encounter-report';
+    const ALL_NUM = -1;
 
     /*************************future FHIR search trait ***********************************/
     const ORGANIZATION = "Organization";
@@ -181,25 +182,25 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
                 $serviceTypeList = $this->getHealthcareServiceNames();
 
             } else {
-                $serviceTypeList['all'] = xlt('All');
+                $serviceTypeList[self::ALL_NUM] = xlt('All');
             }
 
             if (empty($branchList)) {
-                $branchList['all'] = xlt('All');
+                $branchList[self::ALL_NUM] = xlt('All');
             }
             $this->addSelectFilter('branch_name', 'Branch name', $branchList, array_key_first($branchList), 230, false, false);
-            $this->addSelectFilter('service_type', 'Service Type', $serviceTypeList, array_key_first($serviceTypeList), 230, false, false);
+            $this->addSelectFilter('service_type', 'Service type', $serviceTypeList, array_key_first($serviceTypeList), 230, false, false);
 
         } else {
-            $branchList['all'] = xlt('All');
-            $this->addSelectFilter('branch_name', 'Branch name', $branchList, "all", 230, false, false);
+            $branchList[self::ALL_NUM] = xlt('All');
+            $this->addSelectFilter('branch_name', 'Branch name', $branchList, self::ALL_NUM, 230, false, false);
             $serviceTypeList = $this->getValueSet($this->container, self::SERVICE_TYPES_SEARCH[0], self::SERVICE_TYPES_SEARCH);
-            $serviceTypeList['all'] = xlt('All');
-            $this->addSelectFilter('service_type', 'Service Type', $serviceTypeList, "all", 230, false, false);
+            $serviceTypeList[self::ALL_NUM] = xlt('All');
+            $this->addSelectFilter('service_type', 'Service type', $serviceTypeList, self::ALL_NUM, 230, false, false);
         }
 
-        $hmoList['all'] = xlt('All');
-        $this->addSelectFilter('hmo', 'HMO', $hmoList, "all", 230, false, false);
+        $hmoList[self::ALL_NUM] = xlt('All');
+        $this->addSelectFilter('hmo', 'HMO', $hmoList, self::ALL_NUM, 230, false, false);
 
         //from date
         $this->addInputFilter('from_date', 'From date', 120, oeFormatShortDate(date('Y-m-01')), true);
