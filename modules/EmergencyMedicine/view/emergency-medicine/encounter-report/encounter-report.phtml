@@ -140,7 +140,17 @@
                 }
             );
 
-        $("#filter_action").removeClass('col-md-1').addClass("col-md-2")
+        $("#filter_action").removeClass('col-md-1').addClass("col-md-2");
+
+        $("#clear").on("click",function(){
+            let advacedState= $("#is_advance_filtering").val();
+            cleanFilters(filterInitialInfo);
+            $("#is_advance_filtering").val(advacedState);
+           });
+
+        $("#branch_name").on('focus click change', function () {
+           $('#service_type').val("-1");
+        });
 
 
     });

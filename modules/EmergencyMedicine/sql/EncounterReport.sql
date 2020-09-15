@@ -21,8 +21,8 @@ begin
     ifnull(fpd.name,'') as insurance_body,
     ifnull(ffe.name,'') as branch_name,
     GetHebTitle(GetOptionTitle('clinikal_service_types', fe.service_type)) as service_type,
-    ifnull(darqd.answer,'') as decision,
-    ifnull(darqr.answer,'') as release_way
+    ifnull(darqd.answer,'-') as decision,
+    ifnull(darqr.answer,'-') as release_way
 
    	from form_encounter fe
    	join patient_data pd on  fe.pid = pd.pid
