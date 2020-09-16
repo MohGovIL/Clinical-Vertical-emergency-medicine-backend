@@ -1,5 +1,5 @@
 -- setting for Isreali emergency medicine clinics
-REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew');
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew'),('gbl_time_zone', '0', 'Asia/Jerusalem');
 
 -- update menu for the admin user
 UPDATE `users` SET `main_menu_role` = 'clinikal.json' WHERE `users`.`id` = 1;

@@ -91,7 +91,7 @@
 --    behavior: can take a long time.
 
 -- setting for Isreali emergency medicine clinics
-REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew');
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew'),('gbl_time_zone', '0', 'Asia/Jerusalem');
 
 -- setting for client side app
 REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
