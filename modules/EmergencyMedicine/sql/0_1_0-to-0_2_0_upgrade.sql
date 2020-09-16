@@ -516,7 +516,7 @@ VALUES
 ('7', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Chronic medications');
 #EndIf
 
-#IfNotRow2D categories name Referral id 8
+#IfNotRow2D categories name Prescriptions id 8
 INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`, `aco_spec`) VALUES
 ('8', 'Prescriptions', '', '1', '14', '15', 'patients|docs');
 
