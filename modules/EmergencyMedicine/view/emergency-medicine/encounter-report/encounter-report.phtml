@@ -127,6 +127,23 @@
         return 1;
     }
 
+    function getServiceTypeList(filter) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: '<?php echo $this->basePath();?>' + '/EncounterReport/service-type-list-ajax',
+                type: 'POST',
+                dataType: "json",
+                data: filter,
+                success: function (data) {
+                    resolve(data)
+                },
+                error: function (error) {
+                    reject(error)
+                },
+            })
+        })
+    }
+
     //set number of records in data table
     pageLength=50;
 
@@ -148,8 +165,31 @@
             $("#is_advance_filtering").val(advacedState);
            });
 
-        $("#branch_name").on('focus click change', function () {
-           $('#service_type').val("-1");
+
+        $("#branch_name").on('change', function () {
+
+            let filterCurInfo =  collectFilters();
+            getServiceTypeList(filterCurInfo)
+                .then((data) => {
+                    let typesoobject = data.output;
+                    let serviceType =  $("#service_type");
+                    serviceType.find("option").remove();
+
+                    debugger;
+                    let numOfKeys =  Object.keys(typesoobject).length;
+                    $.each(typesoobject, function(index, title) {
+
+                        if( (numOfKeys > 1 && index == "-1") || numOfKeys == "1"){
+                            serviceType.append("<option selected='selected' value='"+index+"'>"+ title+ "</option>" );
+                        }else{
+                            serviceType.append("<option value='"+index+"'>"+ title+ "</option>" );
+                        }
+                    });
+                    
+                    $("#service_type")[0].sumo.reload();
+
+                })
+                .catch((error) => {console.log("error")})
         });
 
 

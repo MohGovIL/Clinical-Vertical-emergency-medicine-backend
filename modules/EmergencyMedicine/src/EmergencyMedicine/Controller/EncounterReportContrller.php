@@ -34,6 +34,7 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
     const TAB_TITLE = 'EncounterReport';
     const FILE_NAME = 'encounter-report';
     const ALL_NUM = -1;
+    const ALL_STRING = 'All';
 
     /*************************future FHIR search trait ***********************************/
     const ORGANIZATION = "Organization";
@@ -69,7 +70,7 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         'ARGUMENTS' => array(
             'organization' => array(
                 0 => array(
-                    'value' => '16',
+                    'value' => '0',
                     'operator' => null,
                     'modifier' => 'exact',
                 ),
@@ -146,10 +147,13 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         return $hmoList;
     }
 
-    public function getHealthcareServiceNames()
+    public function getHealthcareServiceNames($branchNum)
     {
         $HealthCareServiceList = array();
-        $searchForHCS = $this->fhirSearch($this->container, self::HEALTHCARE_SERVICE, self::HC_Service_SEARCH);
+
+        $serviceSerach = self::HC_Service_SEARCH;
+        $serviceSerach['ARGUMENTS']['organization'][0]['value'] = $branchNum;
+        $searchForHCS = $this->fhirSearch($this->container, self::HEALTHCARE_SERVICE, $serviceSerach);
         $searchElm = $this->extractFhirElmFromSearch($searchForHCS, self::HEALTHCARE_SERVICE);
         foreach ($searchElm as $key => $value) {
             $code = $value->getType()[0]->getCoding()[0]->getCode()->getValue();
@@ -179,7 +183,7 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
 
             if (count($branchList) === 1) {
 
-                $serviceTypeList = $this->getHealthcareServiceNames();
+                $serviceTypeList = $this->getHealthcareServiceNames(array_key_first($branchList));
 
             } else {
                 $serviceTypeList[self::ALL_NUM] = xlt('All');
@@ -306,6 +310,23 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         $result = array();
         //example
         //$result='{"results": [{"id": 1,"text": "Option 1"},{"id": 2,"text": "Option 2"}],"pagination": {"more": true}}';
+        return $this->ajaxOutPut($result, 200, 'success');
+    }
+
+    public function serviceTypeListAjaxAction()
+    {
+        $result = array();
+
+        if($_POST['branch_name']!=-1){
+            $result = $this->getHealthcareServiceNames($_POST['branch_name']);
+        }else{
+            $result = $this->getValueSet($this->container, self::SERVICE_TYPES_SEARCH[0], self::SERVICE_TYPES_SEARCH);
+        }
+
+        if(count($result)!==1){
+            $result[self::ALL_NUM] = xlt(self::ALL_STRING);
+        }
+
         return $this->ajaxOutPut($result, 200, 'success');
     }
 
