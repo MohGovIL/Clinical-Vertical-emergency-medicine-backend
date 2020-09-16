@@ -167,15 +167,12 @@
 
 
         $("#branch_name").on('change', function () {
-
             let filterCurInfo =  collectFilters();
             getServiceTypeList(filterCurInfo)
                 .then((data) => {
                     let typesoobject = data.output;
                     let serviceType =  $("#service_type");
                     serviceType.find("option").remove();
-
-                    debugger;
                     let numOfKeys =  Object.keys(typesoobject).length;
                     $.each(typesoobject, function(index, title) {
 
@@ -185,9 +182,7 @@
                             serviceType.append("<option value='"+index+"'>"+ title+ "</option>" );
                         }
                     });
-                    
                     $("#service_type")[0].sumo.reload();
-
                 })
                 .catch((error) => {console.log("error")})
         });
