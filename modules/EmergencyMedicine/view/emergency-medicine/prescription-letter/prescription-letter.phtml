@@ -24,6 +24,7 @@
     }
     .Label-Text {
 
+        opacity: 0.6;
         font-family: OpenSansHebrew;
         font-size: 14px;
         font-weight: normal;
@@ -31,8 +32,10 @@
         font-style: normal;
         line-height: 1.8;
         letter-spacing: normal;
-        text-align: <?php echo $langDir === "rtl"?'right':'left'?>;
+        text-align: right;
         color: #1e2132;
+        margin-left:<?php echo $langDir === "rtl"?'100px':'0'?>;
+        margin-right:<?php echo $langDir === "rtl"?'0':'100px'?>;
         vertical-align: top;
     }
     }
@@ -46,7 +49,8 @@
         letter-spacing: normal;
         text-align: right;
         color: #000b40;
-        vertical-align: top;
+        margin-left:<?php echo $langDir === "rtl"?'100px':'0'?>;
+        margin-right:<?php echo $langDir === "rtl"?'0':'100px'?>;
 
     }
     .position_content{
@@ -64,28 +68,13 @@
         word-wrap: break-word;
         overflow-wrap: break-word;
 
-        float:<?php echo $langDir === "ltr"?'left':'right'?>;
-        text-align:<?php echo $langDir === "ltr"?'left':'right'?>;
     }
-
+    .position{
+        position:absolute;
+        margin-left:<?php echo $langDir==="rtl"?'0':'70%'?>;
+        margin-right:<?php echo $langDir==="rtl"?'70%':'0'?>;
+    }
 </style>
-<?php
-function parseSimpleContext($title , $context){
-
-    if($context && $context!="") {
-        $title=xl($title);
-        $context=xl($context);
-        echo "<tr>
-            <td class='tdLabel Label-Text'>
-                $title
-            </td>
-            <td class='tdContext Input-text'>
-                $context
-            </td>
-          </tr>";
-    }
-}
-?>
 <main>
     <?php if ($clientReqData['name_of_letter'] && $clientReqData['name_of_letter']!==""):?>
     <div class="letterName" dir="<?php echo text($langDir); ?>" lang="<?php echo text($langCode); ?>">
@@ -103,33 +92,12 @@ function parseSimpleContext($title , $context){
     ?>
     <br/>
     <br/>
-    <table  style="page-break-inside:avoid;width:434px;"  class="position_content" dir="<?php echo text($langDir); ?>" lang="<?php echo text($langCode); ?>">
-    <tbody>
-    <?php parseSimpleContext("Reason for refferal",$bodyData['reason_for_refferal']);?>
-    <?php parseSimpleContext("Pregnancy",$bodyData['pregnant']);?>
-    <?php parseSimpleContext("Findings",$bodyData['findings']);?>
-    <?php parseSimpleContext("Diagnosis",$bodyData['diagnosis']);?>
-    <?php parseSimpleContext("X-Ray Type",$clientReqData['x_ray_type']);?>
-
-    <?php if($clientReqData['instructions'] && $clientReqData['instructions']!=""):?>
-    <tr dir="<?php echo text($langDir); ?>" lang="<?php echo text($langCode); ?>">
-        <td class="tdLabel Label-Text">
-
-        </td>
-        <td class="tdContext Input-text">
-           <?php echo str_replace("\n","<br/>",str_replace("\r\n","<br/>",$clientReqData['instructions']));?>
-        </td>
-    </tr>
-    <?php endif;?>
-    
-    </tbody>
-    </table>
-
-    <?php
-            $doctorData["langDir"]=$langDir;
-            $doctorData["langCode"]=$langCode;
-            echo $this->render('clinikal-api/pdf/doctor-signature.phtml',$doctorData);
-    ?>
-
+    <div style="page-break-inside:avoid;" >
+        <?php
+        $doctorData["langDir"]=$langDir;
+        $doctorData["langCode"]=$langCode;
+        echo $this->render('clinikal-api/pdf/doctor-signature.phtml',$doctorData);
+        ?>
+    </div>
 
 </main>

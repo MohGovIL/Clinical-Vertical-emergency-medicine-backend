@@ -13,21 +13,15 @@ use GenericTools\Model\ListsTable;
 use Interop\Container\ContainerInterface;
 use ClinikalAPI\Controller\PdfBaseController;
 
-class xrayLetterController extends PdfBaseController
+class prescriptionLetterController extends PdfBaseController
 {
-    /*  collect data from these orms
-        FormDiagnosisAndRecommendationsQuestionnaireMapTable
-        FormCommitmentQuestionnaireMapTable
-        FormMedicalAdmissionQuestionnaireMapTable*/
-    const CATEGORY = "4"; //Referral for X-ray
-    const BODY_PATH = 'emergency-medicine/xray-letter/xray-letter';
+    const CATEGORY = ""; //Referral for Summary
+    const BODY_PATH = ['emergency-medicine/prescription-letter/prescription-letter'];
 
 
 
     public $container = null;
-    public function getPregnancyState($patientData){
-        if($patientData['Gender']=="Male")
-            return "";
+    public function getPregnancyState(){
         //form_medical_admission_questionnaire.answer
         //where form_id =  encounter = <ENC_ID>, qid = 4 )
         return $this->getQData(4,'FormMedicalAdmissionQuestionnaireMapTable');
@@ -45,17 +39,14 @@ class xrayLetterController extends PdfBaseController
         return $this->getQData(1,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
     }
 
-    private function getEmergencyXrayLetterData($patientData){
+    private function getEmergencyXrayLetterData(){
         $data = [];
         $data['reason_for_refferal'] = $this->getServiceTypeAndReasonCode();
-        $data['pregnant'] = $this->getPregnancyState($patientData);
+        $data['pregnant'] = $this->getPregnancyState();
         $data['findings'] =str_replace("\n","<br/>",
                                        str_replace("\r\n","<br/>",$this->getFindings()));
         $data['diagnostics'] =str_replace("\n","<br/>",
                                        str_replace("\r\n","<br/>",$this->getDiagnostics()));
-
-       
-        
         return $data;
     }
     private function getXrayType(){
@@ -100,8 +91,7 @@ class xrayLetterController extends PdfBaseController
 
         $patientData=$this->getPatientInfo($postData['patient']);
         $doctorData=$this->getUserInfo($postData['owner']);
-        $bodyData = $this->getEmergencyXrayLetterData($patientData);
-       
+        $bodyData = $this->getEmergencyXrayLetterData();
 
         $pdfBodyData = array(
             'clientReqData' => $postData,
