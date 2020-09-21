@@ -181,7 +181,7 @@ class summaryLetterController extends PdfBaseController
             'bodyData'=>$bodyData
         );
         $pdfPrescriptionBodyData['clientReqData']['name_of_letter'] = "Prescription";
-        $fileName = "x_ray_patient_{$postData['patient']}_$date.pdf";
+        $fileName = "{$postData['letter_type']}_patient_{$postData['patient']}_$date.pdf";
 
         //create multi paged pdf usinf letter creator.
         $pdfEncoded = $this->createBase64Pdf($fileName,self::BODY_PATH, self::HEADER_PATH, self::FOOTER_PATH, $headerData, [$pdfSummaryBodyData,$pdfPrescriptionBodyData]);
