@@ -178,7 +178,7 @@ class summaryLetterController extends PdfBaseController
             'clientReqData' => $postData,
             'patientData'=>$patientData,
             'doctorData'=>$doctorData,
-            'bodyData'=>$bodyData
+            'bodyData'=>$bodyData['recommendations_for_medications']
         );
         $pdfPrescriptionBodyData['clientReqData']['name_of_letter'] = "Prescription";
         $fileName = "{$postData['letter_type']}_patient_{$postData['patient']}_$date.pdf";
