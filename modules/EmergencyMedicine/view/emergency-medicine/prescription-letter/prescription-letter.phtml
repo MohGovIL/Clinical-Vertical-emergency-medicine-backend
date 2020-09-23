@@ -74,12 +74,33 @@
         margin-left:<?php echo $langDir==="rtl"?'0':'70%'?>;
         margin-right:<?php echo $langDir==="rtl"?'70%':'0'?>;
     }
-    .RectangleTwo {
+    .RectangleThree {
     <?php echo $langDir==="rtl"?'margin-left:1%;':''?>;
     <?php echo $langDir!=="rtl"?'margin-right:1%;':''?>;
         width: 98%;
         border:1px solid gray;
+        padding:3px;
     }
+
+    .LableTableBody-text-3 {
+        font-family: OpenSansHebrew;
+        font-size: 12px;
+        color: #000b40;
+        width: (100/8)%;
+        vertical-align: top;
+        margin-right:0 20px 0 20px;
+        width:20%;
+    }
+    .LableTableBody-text-9 {
+        font-family: OpenSansHebrew;
+        font-size: 12px;
+        color: #000b40;
+        width: (100/8)%;
+        vertical-align: top;
+        margin-right:0 20px 0 20px;
+        width:80%;
+    }
+    
 </style>
 <?php
 function dateDifference($date_1 , $date_2 , $differenceFormat = '%d' )
@@ -111,20 +132,20 @@ function dateDifference($date_1 , $date_2 , $differenceFormat = '%d' )
     <br/>
     <br/>
     <?php foreach($bodyData['prescription'] as $medicine):?>
-    <table   class="RectangleTwo position_content" dir="<?php echo text($langDir); ?>" lang="<?php echo text($langCode); ?>">
+    <table   class="RectangleThree position_content" dir="<?php echo text($langDir); ?>" lang="<?php echo text($langCode); ?>">
         <tbody>
             <tr>
-                <td class="Label-Text"><?php echo xl("Drug name");?></td> <td class="input-Text"><?php echo $medicine['drug'];?></td>
+                <td class=" LableTableBody-text-3"><?php echo xl("Drug name");?></td> <td class=" LableTableBody-text-9"><?php echo $medicine['drug'];?></td>
             </tr>
             <tr>
-                <td class="Label-Text"><?php echo xl("Quantity");?></td> <td class="input-Text"><?php echo $medicine['dosage']." ".xl($bodyData['forms'][$medicine['form']]);?> </td>
+                <td class=" LableTableBody-text-3"><?php echo xl("Quantity");?></td> <td class=" LableTableBody-text-9"><?php echo $medicine['dosage']." ".xl($bodyData['forms'][$medicine['form']]);?> </td>
             </tr>
             <tr><?php $period =   str_replace("$", dateDifference($medicine['end_date'],$medicine['start_date']),xl("In Duration of $ Days"));?>
             <tr><?php $route =   $langDir=="ltr" ? "1 ".xl($bodyData['form'][$medicine['form']])." ".xl($bodyData['route'][$medicine['route']]): xl($bodyData['form'][$medicine['form']])." 1 ". xl($bodyData['route'][$medicine['route']]);?>
-                <td class="Label-Text"><?php echo xl("Instructions for use");?></td> <td class="input-Text"><?php echo $route." ,". $medicine['interval']." ".xl("A day")." (".$period.") ";?></td>
+                <td class=" LableTableBody-text-3"><?php echo xl("Instructions for use");?></td> <td class=" LableTableBody-text-9"><?php echo $route." ,". $medicine['interval']." ".xl("A day")." (".$period.") ";?></td>
             </tr>
             <tr>
-                <td class="Label-Text"><?php echo xl("Instructions");?></td> <td class="input-Text"><?php echo $medicine['note'];?></td>
+                <td class=" LableTableBody-text-3"><?php echo xl("Instructions");?></td> <td class=" LableTableBody-text-9"><?php echo $medicine['note'];?></td>
             </tr>
 
         </tbody>
