@@ -389,7 +389,7 @@ CREATE TABLE form_diagnosis_and_recommendations_questionnaire(
 );
 #EndIf
 
-#IfNotRow fhir_questionnaire directory form_diagnosis_and_recommendations_questionnaire
+#IfNotRow fhir_questionnaire directory diagnosis_and_recommendations_questionnaire
 INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALUES
 ('Diagnosis and recommendations questionnaire', 'diagnosis_and_recommendations_questionnaire', '1', 'encounters|notes');
 #EndIf
