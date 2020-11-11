@@ -17,48 +17,13 @@ class prescriptionLetterController extends PdfBaseController
 {
     const CATEGORY = ""; //Referral for Summary
     const BODY_PATH = ['emergency-medicine/prescription-letter/prescription-letter'];
-
-
-
     public $container = null;
-    public function getPregnancyState(){
-        //form_medical_admission_questionnaire.answer
-        //where form_id =  encounter = <ENC_ID>, qid = 4 )
-        return $this->getQData(4,'FormMedicalAdmissionQuestionnaireMapTable');
-    }
-
-    public function getFindings(){
-        //form_medical_admission_questionnaire.answer
-        //where form_id =  encounter = <ENC_ID>, qid = 2 )
-        return $this->getQData(2,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
-    }
-
-    public function getDiagnostics(){
-        //form_diagnosis_and_recommendations_questionnaire.answer
-        //where encounter = <ENC_ID>, qid = 1 )
-        return $this->getQData(1,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
-    }
-
-    private function getEmergencyXrayLetterData(){
-        $data = [];
-        $data['reason_for_refferal'] = $this->getServiceTypeAndReasonCode();
-        $data['pregnant'] = $this->getPregnancyState();
-        $data['findings'] =str_replace("\n","<br/>",
-                                       str_replace("\r\n","<br/>",$this->getFindings()));
-        $data['diagnostics'] =str_replace("\n","<br/>",
-                                       str_replace("\r\n","<br/>",$this->getDiagnostics()));
-        return $data;
-    }
-    private function getXrayType(){
-        $x_ray_type = $this->getTitleOfOptionFromListTable("x_ray_types",$this->postData['x_ray_type']);
-        $this->postData['x_ray_type'] = $x_ray_type;
-    }
     public function __construct(ContainerInterface $container, array $post = array())
     {
         parent::__construct($container);
         $this->container = $container;
         $this->setPostData($post);
-        $this->getXrayType();
+
     }
 
     public function setPostData(array $data)
@@ -84,23 +49,31 @@ class prescriptionLetterController extends PdfBaseController
         }
 
         $facilityInfo = $this->getFacilityInfo($postData['facility']);
-        $letterName = $postData['name_of_letter'];
+        $letterName = $this->postData['name_of_letter'];
         $headerData = array_merge($postData, $facilityInfo);
 
         $date = date('Y-m-d H:i:s');
 
         $patientData=$this->getPatientInfo($postData['patient']);
         $doctorData=$this->getUserInfo($postData['owner']);
-        $bodyData = $this->getEmergencyXrayLetterData();
+        $bodyData =  ["prescription"=>$this->getPrescriptions()];
 
+        $drug_form= $this->getDrugForm();
         $pdfBodyData = array(
             'clientReqData' => $postData,
             'patientData'=>$patientData,
             'doctorData'=>$doctorData,
-            'bodyData'=>$bodyData
+            'bodyData'=>[
+                "prescription"=>$bodyData['recommendations_for_medications'],
+                "route"=>$this->getDrugRoute(),
+                "interval"=>$this->getDrugInterval(),
+                "form"=>$drug_form,
+                "forms"=>$this->getDrugForms($drug_form),
+            ]
         );
+        
 
-        $fileName = "x_ray_patient_{$postData['patient']}_$date.pdf";
+        $fileName = "{$letterName}_{$postData['patient']}_$date.pdf";
 
         $pdfEncoded = $this->createBase64Pdf($fileName,self::BODY_PATH, self::HEADER_PATH, self::FOOTER_PATH, $headerData, $pdfBodyData);
 
