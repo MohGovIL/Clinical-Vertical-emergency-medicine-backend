@@ -229,12 +229,11 @@ INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`
 
 #IfNotTable form_medical_admission_questionnaire
 CREATE TABLE form_medical_admission_questionnaire(
-    id bigint(20) NOT NULL AUTO_INCREMENT,
-    encounter varchar(255) DEFAULT NULL,
+    encounter int(11) DEFAULT NULL,
     form_id bigint(20) NOT NULL,
     question_id int(11) NOT NULL,
     answer text,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`encounter`, `form_id`, `question_id`)
 );
 #EndIf
 
@@ -380,12 +379,11 @@ VALUES
 
 #IfNotTable form_diagnosis_and_recommendations_questionnaire
 CREATE TABLE form_diagnosis_and_recommendations_questionnaire(
-    id bigint(20) NOT NULL AUTO_INCREMENT,
-    encounter varchar(255) DEFAULT NULL,
+    encounter int(11) NOT NULL,
     form_id bigint(20) NOT NULL,
     question_id int(11) NOT NULL,
     answer text,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (encounter, form_id, question_id)
 );
 #EndIf
 

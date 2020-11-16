@@ -84,12 +84,11 @@ DELETE FROM `categories_seq`;
 INSERT INTO `categories_seq` (`id`) VALUES('9');
 
 CREATE TABLE form_medical_admission_questionnaire(
-    id bigint(20) NOT NULL AUTO_INCREMENT,
-    encounter varchar(255) DEFAULT NULL,
+    encounter int(11) DEFAULT NULL,
     form_id bigint(20) NOT NULL,
     question_id int(11) NOT NULL,
     answer text,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`encounter`, `form_id`, `question_id`)
 );
 
 INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALUES
@@ -290,12 +289,11 @@ INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
 
 
 CREATE TABLE form_diagnosis_and_recommendations_questionnaire(
-    id bigint(20) NOT NULL AUTO_INCREMENT,
-    encounter varchar(255) DEFAULT NULL,
+    encounter int(11) NOT NULL,
     form_id bigint(20) NOT NULL,
     question_id int(11) NOT NULL,
     answer text,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (encounter, form_id, question_id)
 );
 
 INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALUES

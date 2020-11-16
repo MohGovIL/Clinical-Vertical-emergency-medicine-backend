@@ -36,13 +36,13 @@ class xrayLetterController extends PdfBaseController
     public function getFindings(){
         //form_medical_admission_questionnaire.answer
         //where form_id =  encounter = <ENC_ID>, qid = 2 )
-        return $this->getQData(2,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
+        return $this->getQData(1,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
     }
 
     public function getDiagnostics(){
         //form_diagnosis_and_recommendations_questionnaire.answer
         //where encounter = <ENC_ID>, qid = 1 )
-        return $this->getQData(1,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
+        return $this->getQData(2,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
     }
 
     private function getEmergencyXrayLetterData($patientData){
@@ -51,11 +51,11 @@ class xrayLetterController extends PdfBaseController
         $data['pregnant'] = $this->getPregnancyState($patientData);
         $data['findings'] =str_replace("\n","<br/>",
                                        str_replace("\r\n","<br/>",$this->getFindings()));
-        $data['diagnostics'] =str_replace("\n","<br/>",
+        $data['diagnosis'] =str_replace("\n","<br/>",
                                        str_replace("\r\n","<br/>",$this->getDiagnostics()));
 
-       
-        
+
+
         return $data;
     }
     private function getXrayType(){
@@ -101,7 +101,7 @@ class xrayLetterController extends PdfBaseController
         $patientData=$this->getPatientInfo($postData['patient']);
         $doctorData=$this->getUserInfo($postData['owner']);
         $bodyData = $this->getEmergencyXrayLetterData($patientData);
-       
+
 
         $pdfBodyData = array(
             'clientReqData' => $postData,
