@@ -106,7 +106,7 @@ function parseSimpleContext($title , $context){
     <table  style="page-break-inside:avoid;width:434px;"  class="position_content" dir="<?php echo text($langDir); ?>" lang="<?php echo text($langCode); ?>">
     <tbody>
     <?php parseSimpleContext("Reason for refferal",$bodyData['reason_for_refferal']);?>
-    <?php parseSimpleContext("Pregnancy",$bodyData['pregnant']);?>
+    <?php parseSimpleContext("Pregnancy",$bodyData['pregnant'] ? xlt('Yes') : xlt('No'));?>
     <?php parseSimpleContext("Findings",$bodyData['findings']);?>
     <?php parseSimpleContext("Diagnosis",$bodyData['diagnosis']);?>
     <?php parseSimpleContext("X-Ray Type",$clientReqData['x_ray_type']);?>
@@ -121,7 +121,7 @@ function parseSimpleContext($title , $context){
         </td>
     </tr>
     <?php endif;?>
-    
+
     </tbody>
     </table>
 
