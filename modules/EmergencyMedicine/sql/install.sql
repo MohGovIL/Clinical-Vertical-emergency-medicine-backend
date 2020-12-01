@@ -1,5 +1,5 @@
 -- setting for Isreali emergency medicine clinics
-REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew');
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew'),('gbl_time_zone', '0', 'Asia/Jerusalem');
 
 -- update menu for the admin user
 UPDATE `users` SET `main_menu_role` = 'clinikal.json' WHERE `users`.`id` = 1;
@@ -77,18 +77,18 @@ INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`, `aco_s
 ('4', 'Referral for X-ray', '', '1', '5', '10', 'patients|docs'),
 ('5', 'Summary letter', '', '1', '6', '7', 'patients|docs'),
 ('6', 'Other', '', '1', '11', '18', 'patients|docs'),
-('7', 'Patient Photo', '', '1', '12', '13', 'patients|docs');
+('7', 'Patient Photo', '', '1', '12', '13', 'patients|docs'),
+('8', 'Prescriptions', '', '1', '14', '15', 'patients|docs');
 
 DELETE FROM `categories_seq`;
-INSERT INTO `categories_seq` (`id`) VALUES('8');
+INSERT INTO `categories_seq` (`id`) VALUES('9');
 
 CREATE TABLE form_medical_admission_questionnaire(
-    id bigint(20) NOT NULL AUTO_INCREMENT,
-    encounter varchar(255) DEFAULT NULL,
+    encounter int(11) DEFAULT NULL,
     form_id bigint(20) NOT NULL,
     question_id int(11) NOT NULL,
     answer text,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`encounter`, `form_id`, `question_id`)
 );
 
 INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALUES
@@ -289,12 +289,11 @@ INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
 
 
 CREATE TABLE form_diagnosis_and_recommendations_questionnaire(
-    id bigint(20) NOT NULL AUTO_INCREMENT,
-    encounter varchar(255) DEFAULT NULL,
+    encounter int(11) NOT NULL,
     form_id bigint(20) NOT NULL,
     question_id int(11) NOT NULL,
     answer text,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (encounter, form_id, question_id)
 );
 
 INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALUES
@@ -314,3 +313,6 @@ VALUES
 
 INSERT INTO `manage_templates_letters` (`id`, `letter_name`, `letter_class`, `letter_class_action`, `active`, `letter_post_json`) VALUES
 (1, 'letter_x_ray', 'EmergencyMedicine\\Controller\\xrayLetterController', 'pdf', 1, '\n{"facility": "required","encounter": "required","owner": "optional","patient": "optional"}');
+
+INSERT INTO `manage_templates_letters` (`letter_name`, `letter_class`, `letter_class_action`, `active`, `letter_post_json`) VALUES
+('summary_letter', 'EmergencyMedicine\\Controller\\summaryLetterController', 'pdf', '1', '{\"facility\": \"required\",\"encounter\": \"required\",\"owner\": \"optional\",\"patient\": \"optional\"}');

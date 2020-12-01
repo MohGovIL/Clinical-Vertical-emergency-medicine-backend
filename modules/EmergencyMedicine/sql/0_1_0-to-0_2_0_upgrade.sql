@@ -91,7 +91,7 @@
 --    behavior: can take a long time.
 
 -- setting for Isreali emergency medicine clinics
-REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew');
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew'),('gbl_time_zone', '0', 'Asia/Jerusalem');
 
 -- setting for client side app
 REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
@@ -229,12 +229,11 @@ INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`
 
 #IfNotTable form_medical_admission_questionnaire
 CREATE TABLE form_medical_admission_questionnaire(
-    id bigint(20) NOT NULL AUTO_INCREMENT,
-    encounter varchar(255) DEFAULT NULL,
+    encounter int(11) DEFAULT NULL,
     form_id bigint(20) NOT NULL,
     question_id int(11) NOT NULL,
     answer text,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`encounter`, `form_id`, `question_id`)
 );
 #EndIf
 
@@ -380,16 +379,15 @@ VALUES
 
 #IfNotTable form_diagnosis_and_recommendations_questionnaire
 CREATE TABLE form_diagnosis_and_recommendations_questionnaire(
-    id bigint(20) NOT NULL AUTO_INCREMENT,
-    encounter varchar(255) DEFAULT NULL,
+    encounter int(11) NOT NULL,
     form_id bigint(20) NOT NULL,
     question_id int(11) NOT NULL,
     answer text,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (encounter, form_id, question_id)
 );
 #EndIf
 
-#IfNotRow fhir_questionnaire directory form_diagnosis_and_recommendations_questionnaire
+#IfNotRow fhir_questionnaire directory diagnosis_and_recommendations_questionnaire
 INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALUES
 ('Diagnosis and recommendations questionnaire', 'diagnosis_and_recommendations_questionnaire', '1', 'encounters|notes');
 #EndIf
@@ -469,6 +467,11 @@ INSERT INTO `manage_templates_letters` (`id`, `letter_name`, `letter_class`, `le
 (1, 'letter_x_ray', 'EmergencyMedicine\\Controller\\xrayLetterController', 'pdf', 1, '\n{"facility": "required","encounter": "required","owner": "optional","patient": "optional"}');
 #EndIf
 
+#IfNotRow manage_templates_letters letter_name summary_letter
+INSERT INTO `manage_templates_letters` (`letter_name`, `letter_class`, `letter_class_action`, `active`, `letter_post_json`) VALUES
+('summary_letter', 'EmergencyMedicine\\Controller\\summaryLetterController', 'pdf', '1', '{\"facility\": \"required\",\"encounter\": \"required\",\"owner\": \"optional\",\"patient\": \"optional\"}');
+#EndIf
+
 #IfNotRow2D code_types ct_key Sensitivities ct_id 9920
 DELETE FROM `code_types` WHERE  ct_id="9920";
 INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_mask`, `ct_fee`, `ct_rel`, `ct_nofs`, `ct_diag`, `ct_active`, `ct_label`, `ct_external`, `ct_claim`, `ct_proc`, `ct_term`, `ct_problem`, `ct_drug`) VALUES
@@ -509,4 +512,12 @@ VALUES
 ('5', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Sensitivities'),
 ('6', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Background diseases'),
 ('7', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Chronic medications');
+#EndIf
+
+#IfNotRow2D categories name Prescriptions id 8
+INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`, `aco_spec`) VALUES
+('8', 'Prescriptions', '', '1', '14', '15', 'patients|docs');
+
+DELETE FROM `categories_seq`;
+INSERT INTO `categories_seq` (`id`) VALUES('9');
 #EndIf

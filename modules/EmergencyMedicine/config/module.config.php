@@ -18,6 +18,8 @@
  */
 
 use EmergencyMedicine\Controller\xrayLetterController;
+use EmergencyMedicine\Controller\summaryLetterController;
+use EmergencyMedicine\Controller\prescriptionLetterController;
 use EmergencyMedicine\Controller\EncounterReportContrller;
 use Interop\Container\ContainerInterface;
 
@@ -32,6 +34,12 @@ return array(
             },
             EncounterReportContrller::class => function (ContainerInterface $container, $requestedName) {
                 return new EncounterReportContrller($container);
+            },
+            summaryLetterController::class => function (ContainerInterface $container, $requestedName) {
+                return new summaryLetterController($container);
+            },
+            prescriptionLetterController::class => function (ContainerInterface $container, $requestedName) {
+                return new prescriptionLetterController($container);
             },
         ],
     ),
@@ -67,6 +75,34 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => EncounterReportContrller::class,
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'summary_letter' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/summary-letter[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'method'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' =>  summaryLetterController::class,
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'prescription_letter' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/prescription-letter[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'method'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => prescriptionLetterController::class,
                         'action'     => 'index',
                     ),
                 ),
