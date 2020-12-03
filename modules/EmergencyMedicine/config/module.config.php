@@ -65,10 +65,10 @@ return array(
                 ),
             ),
 
-            'encounter_report' => array(
+            'EncounterReport' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/encounter-report[/:action][/:id]',
+                    'route'    => '/EncounterReport[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'method'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -119,12 +119,15 @@ return array(
         'template_path_stack' => array(
             'EmergencyMedicine' => __DIR__ . '/../view',
         ),
-        /*
+
         'template_map' => array(
+            'ReportTool/layout' => __DIR__ . '/../../../../clinikal-backend/modules/ReportTool/view/layout/layout.phtml',
+            /*
             'PatientVaccines/layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'PatientVaccines/layout/print' => __DIR__ . '/../view/layout/print.phtml',
+            */
         )
-        */
+
 
     ),
 );
