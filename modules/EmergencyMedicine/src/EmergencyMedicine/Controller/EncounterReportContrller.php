@@ -5,6 +5,7 @@ namespace EmergencyMedicine\Controller;
 use FhirAPI\FhirRestApiBuilder\Parts\ErrorCodes;
 use Interop\Container\ContainerInterface;
 use ClinikalAPI\Controller\PdfBaseController;
+use OpenEMR\Common\Acl\AclMain;
 use ReportTool\Controller\ReportInterface;
 use ReportTool\Model\CustomDB;
 use GenericTools\Controller\GenericToolsController;
@@ -170,6 +171,10 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container, self::PROCEDURE_NAME);
+        if(!AclMain::aclCheckCore('client_app', 'EncountersReport',false,'view')){
+            exit('Access denied');
+        }
+
         $this->container = $container;
     }
 
@@ -207,7 +212,7 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         $this->addSelectFilter('hmo', 'HMO', $hmoList, self::ALL_NUM, 230, false, false);
 
         //from date
-        $this->addInputFilter('from_date', 'From date', 120, oeFormatShortDate(date('Y-m-01')), true);
+        $this->addInputFilter('from_date', 'From date', 120, oeFormatShortDate(date('Y-m-d', strtotime('yesterday'))), true);
         //to date
         $this->addInputFilter('until_date', 'Until date', 120, oeFormatShortDate(), true);
 
@@ -262,12 +267,29 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
 
     public function excelAction()
     {
+        $this->procedureName = 'EncounterReportExetended';
         $filters = array();
         $columns = array();
-        $settings = $this->pdfDefaultSettings();
+        $settings = $this->ExtendedReportSettings();
         extract($settings);
         $dataToProcedure = $this->processFilters($filters);
+
         $this->generateExcel($dataToProcedure, $columns, self::FILE_NAME, self::TAB_TITLE);
+    }
+
+    public function ExtendedReportSettings()
+    {
+
+        $filters = (array)json_decode($this->params()->fromQuery(self::FILTERS));
+        $filters['offset'] = 0;
+        $filters['limit'] = self::MAX_ROW_FOR_PDF;
+        $filters['facility'] = implode(',', $filters['facility']);
+        $columns = $this->buildExtendedColumns();
+
+        $settings = array('filters' => $filters, 'columns' => $columns);
+
+        return $settings;
+
     }
 
     public function pdfAction()
@@ -328,6 +350,48 @@ class EncounterReportContrller extends ReportBase implements ReportInterface
         }
 
         return $this->ajaxOutPut($result, 200, 'success');
+    }
+
+
+    private function buildExtendedColumns() {
+        $columns = [];
+        $extendedColumns = array(
+          array('encounter_date', 'Encounter date'),
+          array('first_name', 'First Name'),
+          array('last_name', 'Last Name'),
+          array('type_id', 'Id type'),
+          array('id', 'SS'),
+          array('insurance_body', 'HMO'),
+          array('branch_name', 'Branch'),
+          array('service_type', 'Service Type'),
+          array('decision', 'Decision'),
+          array('release_way', 'Evacuation way'),
+          array('reason_titles', 'Reason for refferal'),
+          array('doc_name', "Doctor's name"),
+          array('doc_number', 'Doctor number'),
+          array('payment_way', 'Payment method'),
+          array('payment_amount', "Payment's amount"),
+          array('reception_num', 'Receipt number'),
+          array('birth_date', 'Patient Date Of Birth'),
+          array('phone_cell', 'Patient phone'),
+          array('city', 'City Name'),
+          array('street', 'Street'),
+          array('house_num', 'House number'),
+          array('postal_code', 'Postal Code')
+        );
+        foreach ($extendedColumns as $item)
+        {
+            $columns[] = $this->addToColumns($item[0],$item[1]);
+        }
+        return $columns;
+    }
+
+    private function addToColumns($name, $title, $data = null) {
+        return  array(
+            'name' => $name,
+            'data' => is_null($data) ? $name : $data,
+            'title' => xl($title)
+        );
     }
 
 }

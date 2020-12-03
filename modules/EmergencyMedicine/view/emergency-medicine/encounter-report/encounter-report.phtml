@@ -1,5 +1,9 @@
 <?php echo $header; ?>
 
+<div id="export_container" style=" margin-top: 26px;">
+    <button id="createExcel"><?php echo xlt('Export Excel'); ?></button>
+</div>
+
 <?php echo $this->$helper($data); ?>
 
 <style>
@@ -187,6 +191,20 @@
                 .catch((error) => {console.log("error")})
         });
 
+      function exportReport(type){
+        $(".dataTable").DataTable().ajax.reload(function(){
+          let filters = collectFilters();
+          let title =  ('<h3>'+$("#title").find('h3').text()+'</h3>'+$("#report_info").text()) ;
+          let columns = [];
+          $.each(columnsFields,function(e){columns[$(this)[0]['name']]=$(this)[0]['title'] });
+          window.open("<?php echo $data['route']; ?>/" + type + "?filters="+JSON.stringify(filters)+"&title="+title+"&columns="+JSON.stringify(columnsFields));
+        });
+      }
+
+
+      $("#createExcel").on("click",function(){
+        exportReport('excel');
+      });
 
     });
 
