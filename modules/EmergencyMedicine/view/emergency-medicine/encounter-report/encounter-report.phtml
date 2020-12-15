@@ -1,0 +1,211 @@
+<?php echo $header; ?>
+
+<div id="export_container" style=" margin-top: 26px;">
+    <button id="createExcel"><?php echo xlt('Export Excel'); ?></button>
+</div>
+
+<?php echo $this->$helper($data); ?>
+
+<style>
+    .datepicker {
+        max-width: 240px;
+        height: 37px !important;
+    }
+
+    div#filter_action {
+        padding-top: 12px;
+    }
+
+    .row{
+        width: 100%;
+    }
+    #until_date{
+        margin-top: 0px !important;
+    }
+    #bureau {
+        position: relative;
+        min-width: 240px!important;
+        width: 30vw !important;
+        top: 58px;
+    }
+
+    @media (max-width:990px){
+        #bureau {
+            top: 0px;
+        }
+
+    }
+
+    .advance_filtering_down {
+        position: relative;
+        display: block;
+        top: 28px;
+        left: -30px;
+        padding-bottom: 30px;
+    }
+
+    .filter_action_down {
+        top: 28px;
+    }
+
+    .advance_filtering_up {
+        position: absolute;
+        top: 0px;
+        left: 140px;
+    }
+
+    .filter_action_up {
+        top: 0px;
+    }
+
+    .simple-select {
+        height: 30px !important;
+        margin-top: 0px;
+        border-radius: 0px;
+        border: 1px solid #A2A2A2 !important;
+    }
+
+    label[for=patient_name]{
+        display: block;
+    }
+
+    span.select2-selection.select2-selection--single {
+        margin-left: 0;
+    }
+
+    b[role=presentation] {
+        border-color: #565656 transparent transparent transparent;
+        border-style: solid;
+        border-width: 5px 3px 0px 3px;
+        height: 0;
+        left: 0;
+        margin-left: 5px;
+        margin-top: -4px;
+        position: absolute;
+        top: 50%;
+        width: 0;
+    }
+
+    .select2-selection {
+        height: 30px !important;
+        margin-top: 0px;
+        border-radius: 0px;
+        border: 1px solid #A2A2A2 !important;
+        background-color: white;
+    }
+
+    .select2-selection__rendered {
+        padding-right: 8px;
+        padding-left: 20px;
+        padding-top: 4px;
+    }
+
+    .select2-results {
+        max-height: 200px;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        padding: 0px 0px 0px 4px;
+        margin: 4px 4px 4px 0px;
+    }
+
+    div#filter_action {
+        min-width: 133px !important;
+        margin-bottom: 40px;
+    }
+    .dataTable {
+        padding-left: 5px;
+    }
+
+
+</style>
+
+<script>
+
+    let filterInitialInfo;
+
+    function goToPatientFile(event){
+        let pid=event.target.getAttribute("data");
+        topatient(pid);
+        return 1;
+    }
+
+    function getServiceTypeList(filter) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: '<?php echo $this->basePath();?>' + '/EncounterReport/service-type-list-ajax',
+                type: 'POST',
+                dataType: "json",
+                data: filter,
+                success: function (data) {
+                    resolve(data)
+                },
+                error: function (error) {
+                    reject(error)
+                },
+            })
+        })
+    }
+
+    //set number of records in data table
+    pageLength=50;
+
+    $(document).ready(function(){
+
+        filterInitialInfo=collectFilters();
+
+        $('#startFilter').off()
+            .on('click',function() {
+                    $(".dataTable").DataTable().ajax.reload();
+                }
+            );
+
+        $("#filter_action").removeClass('col-md-1').addClass("col-md-2");
+
+        $("#clear").on("click",function(){
+            let advacedState= $("#is_advance_filtering").val();
+            cleanFilters(filterInitialInfo);
+            $("#is_advance_filtering").val(advacedState);
+           });
+
+
+        $("#branch_name").on('change', function () {
+            let filterCurInfo =  collectFilters();
+            getServiceTypeList(filterCurInfo)
+                .then((data) => {
+                    let typesoobject = data.output;
+                    let serviceType =  $("#service_type");
+                    serviceType.find("option").remove();
+                    let numOfKeys =  Object.keys(typesoobject).length;
+                    $.each(typesoobject, function(index, title) {
+
+                        if( (numOfKeys > 1 && index == "-1") || numOfKeys == "1"){
+                            serviceType.append("<option selected='selected' value='"+index+"'>"+ title+ "</option>" );
+                        }else{
+                            serviceType.append("<option value='"+index+"'>"+ title+ "</option>" );
+                        }
+                    });
+                    $("#service_type")[0].sumo.reload();
+                })
+                .catch((error) => {console.log("error")})
+        });
+
+      function exportReport(type){
+        $(".dataTable").DataTable().ajax.reload(function(){
+          let filters = collectFilters();
+          let title =  ('<h3>'+$("#title").find('h3').text()+'</h3>'+$("#report_info").text()) ;
+          let columns = [];
+          $.each(columnsFields,function(e){columns[$(this)[0]['name']]=$(this)[0]['title'] });
+          window.open("<?php echo $data['route']; ?>/" + type + "?filters="+JSON.stringify(filters)+"&title="+title+"&columns="+JSON.stringify(columnsFields));
+        });
+      }
+
+
+      $("#createExcel").on("click",function(){
+        exportReport('excel');
+      });
+
+    });
+
+</script>
