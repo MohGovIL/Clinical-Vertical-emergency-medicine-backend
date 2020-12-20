@@ -521,3 +521,116 @@ INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`, `aco_s
 DELETE FROM `categories_seq`;
 INSERT INTO `categories_seq` (`id`) VALUES('9');
 #EndIf
+
+
+drop procedure if exists `EncounterReport` ;
+
+#SpecialSql
+create procedure EncounterReport(
+    in p_current_user int,
+    in p_branch_name int,
+    in p_service_type int,
+    in p_hmo int,
+    in p_from_date datetime,
+    in p_to_date datetime,
+    in p_offset int,
+    in p_limit int
+)
+begin
+	select
+	count(*) over (partition by null) as count,
+    FormatDate(fe.date) as encounter_date,
+    concat(pd.lname, ' ', pd.fname) as patient_name,
+    ifnull(pd.ss,'') as id,
+    ifnull(fpd.name,'') as insurance_body,
+    ifnull(ffe.name,'') as branch_name,
+    GetHebTitle(GetOptionTitle('clinikal_service_types', fe.service_type)) as service_type,
+    ifnull(darqd.answer,'-') as decision,
+    ifnull(darqr.answer,'-') as release_way
+
+   	from form_encounter fe
+   	join patient_data pd on  fe.pid = pd.pid
+   	join facility ffe on  fe.facility_id = ffe.id
+   	join facility fpd on  pd.mh_insurance_organiz = fpd.id
+   	left join form_diagnosis_and_recommendations_questionnaire darqd on (darqd.encounter = fe.id and darqd.question_id=5)
+    left join form_diagnosis_and_recommendations_questionnaire darqr on (darqr.encounter = fe.id and darqr.question_id=6)
+
+    where (
+     (p_branch_name = -1  OR  p_branch_name = ffe.id) AND
+     (p_service_type = -1 OR  p_service_type = fe.service_type) AND
+     (p_hmo = -1          OR  p_hmo = fpd.id) AND
+     (fe.date BETWEEN p_from_date AND p_to_date)
+
+    )
+	limit p_limit offset p_offset ;
+end;
+#EndSpecialSql
+
+
+drop procedure if exists `EncounterReportExetended` ;
+#SpecialSql
+create procedure EncounterReportExetended(
+    in p_current_user int,
+    in p_branch_name int,
+    in p_service_type int,
+    in p_hmo int,
+    in p_from_date datetime,
+    in p_to_date datetime,
+    in p_offset int,
+    in p_limit int
+)
+begin
+	select
+	count(*) over (partition by null) as count,
+	-- extra columns and different order then regular encounter report
+    FormatDate(fe.date) as encounter_date,
+    pd.fname as first_name,
+    pd.lname as last_name,
+    GetHebTitle(GetOptionTitle('userlist3', pd.mh_type_id)) as type_id,
+    ifnull(pd.ss,'') as id,
+    ifnull(fpd.name,'') as insurance_body,
+    ifnull(ffe.name,'') as branch_name,
+    GetHebTitle(GetOptionTitle('clinikal_service_types', fe.service_type)) as service_type,
+    ifnull(darqd.answer,'-') as decision,
+    ifnull(darqr.answer,'-') as release_way,
+    GROUP_CONCAT(GetHebTitle(GetOptionTitle('clinikal_reason_codes', er.reason_code))) AS reason_titles,
+    concat(us.lname, ' ', us.fname) as doc_name,
+    ifnull(us.state_license_number, '') as doc_number,
+    ifnull(GetHebTitle(cques2.answer),'-') as payment_way,
+    ifnull(cques1.answer,'-') as payment_amount,
+    ifnull(cques3.answer,'-') as reception_num,
+    FormatDate(pd.DOB) as birth_date,
+    pd.phone_cell as phone_cell,
+    GetHebTitle(GetOptionTitle('mh_cities', pd.city)) as city,
+    GetHebTitle(GetOptionTitle('mh_streets', pd.street)) as street,
+    pd.mh_house_no as house_num,
+    pd.postal_code as postal_code
+
+   	from form_encounter fe
+   	join patient_data pd on  fe.pid = pd.pid
+   	join facility ffe on  fe.facility_id = ffe.id
+   	join facility fpd on  pd.mh_insurance_organiz = fpd.id
+   	left join questionnaire_response qres on (qres.encounter = fe.id and qres.form_name = 'diagnosis_and_recommendations_questionnaire')
+   	left join users us on qres.update_by = us.id
+   	left join form_diagnosis_and_recommendations_questionnaire darqd on (darqd.encounter = fe.id and darqd.question_id=5)
+    left join form_diagnosis_and_recommendations_questionnaire darqr on (darqr.encounter = fe.id and darqr.question_id=6)
+    -- join more tables for extended reports
+    left join encounter_reasoncode_map as er on er.eid = fe.id
+    left join form_commitment_questionnaire cques1 on (cques1.encounter = fe.id and cques1.question_id=6)
+    left join form_commitment_questionnaire cques2 on (cques2.encounter = fe.id and cques2.question_id=7)
+    left join form_commitment_questionnaire cques3 on (cques3.encounter = fe.id and cques3.question_id=8)
+
+    where (
+     (p_branch_name = -1  OR  p_branch_name = ffe.id) AND
+     (p_service_type = -1 OR  p_service_type = fe.service_type) AND
+     (p_hmo = -1          OR  p_hmo = fpd.id) AND
+     (fe.date BETWEEN p_from_date AND p_to_date)
+
+    )
+
+    group by fe.id
+
+	limit p_limit offset p_offset ;
+end;
+#EndSpecialSql
+
