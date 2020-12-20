@@ -1,8 +1,8 @@
 -- setting for Isreali emergency medicine clinics
-REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew');
+REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES ('date_display_format', '0', '2'),('language_default', '0', 'Hebrew'),('gbl_time_zone', '0', 'Asia/Jerusalem');
 
 -- update menu for the admin user
-UPDATE `users` SET `main_menu_role` = 'clinikal' WHERE `users`.`id` = 1;
+UPDATE `users` SET `main_menu_role` = 'clinikal-emergency.json' WHERE `users`.`id` = 1;
 
 -- setting for client side app
 INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
@@ -34,7 +34,7 @@ VALUES
 DELETE FROM `list_options` WHERE `list_id` = 'clinikal_enc_statuses';
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`) VALUES
 ('clinikal_enc_statuses', 'planned', 'Planned', 10, 0, 0, '', '', '', 0, 0, 1, '', 1),
-('clinikal_enc_statuses', 'arrived', 'Admitted', 20, 0, 0, '', '', '', 0, 0, 1, '', 1),
+('clinikal_enc_statuses', 'arrived', 'Arrived', 20, 0, 0, '', '', '', 0, 0, 1, '', 1),
 ('clinikal_enc_statuses', 'triaged', 'Triaged', 30, 0, 0, '', '', '', 0, 0, 1, '', 1),
 ('clinikal_enc_statuses', 'in-progress', 'In Progress', 40, 0, 0, '', '', '', 0, 0, 1, '', 1),
 ('clinikal_enc_statuses', 'finished', 'Finished', 60, 0, 0, '', '', '', 0, 0, 1, '', 1),
@@ -70,48 +70,25 @@ ALTER TABLE facility AUTO_INCREMENT = 17;
 
 
 -- --------------------------------------------------------
+DELETE FROM categories WHERE id > 1;
+INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`, `aco_spec`) VALUES
+('2', 'Commitment', '', '1', '1', '2', 'patients|docs'),
+('3', 'Referral', '', '1', '3', '4', 'patients|docs'),
+('4', 'Referral for X-ray', '', '1', '5', '10', 'patients|docs'),
+('5', 'Summary letter', '', '1', '6', '7', 'patients|docs'),
+('6', 'Other', '', '1', '11', '18', 'patients|docs'),
+('7', 'Patient Photo', '', '1', '12', '13', 'patients|docs'),
+('8', 'Prescriptions', '', '1', '14', '15', 'patients|docs');
 
-UPDATE `categories` SET `name` = 'HPatient Photograph', `lft` = '105', `rght` = '106' WHERE `id` = '4';
-UPDATE `categories` SET `name` = 'EMedical Record', `lft` = '101', `rght` = '102' WHERE `id` = '2';
-UPDATE `categories` SET `rght` = '271' WHERE `id` = '1';
-UPDATE `categories` SET `name` = 'FLab Report', `lft` = '103', `rght` = '104' WHERE `id` = '3';
-
-DELETE FROM `categories` WHERE `id` = '19';
-DELETE FROM `categories` WHERE `id` = '22';
-DELETE FROM `categories` WHERE `id` = '15';
-DELETE FROM `categories` WHERE `id` = '14';
-DELETE FROM `categories` WHERE `id` = '11';
-DELETE FROM `categories` WHERE `id` = '21';
-DELETE FROM `categories` WHERE `id` = '25';
-DELETE FROM `categories` WHERE `id` = '20';
-DELETE FROM `categories` WHERE `id` = '27';
-DELETE FROM `categories` WHERE `id` = '6';
-DELETE FROM `categories` WHERE `id` = '12';
-DELETE FROM `categories` WHERE `id` = '24';
-DELETE FROM `categories` WHERE `id` = '9';
-DELETE FROM `categories` WHERE `id` = '10';
-DELETE FROM `categories` WHERE `id` = '5';
-DELETE FROM `categories` WHERE `id` = '8';
-DELETE FROM `categories` WHERE `id` = '16';
-DELETE FROM `categories` WHERE `id` = '17';
-DELETE FROM `categories` WHERE `id` = '18';
-DELETE FROM `categories` WHERE `id` = '13';
-DELETE FROM `categories` WHERE `id` = '28';
-DELETE FROM `categories` WHERE `id` = '7';
-DELETE FROM `categories` WHERE `id` = '29';
-DELETE FROM `categories` WHERE `id` = '26';
-DELETE FROM `categories` WHERE `id` = '23';
-
-DELETE FROM `categories_seq` WHERE `id` = '29';
+DELETE FROM `categories_seq`;
 INSERT INTO `categories_seq` (`id`) VALUES('9');
 
 CREATE TABLE form_medical_admission_questionnaire(
-    id bigint(20) NOT NULL AUTO_INCREMENT,
-    encounter varchar(255) DEFAULT NULL,
+    encounter int(11) DEFAULT NULL,
     form_id bigint(20) NOT NULL,
     question_id int(11) NOT NULL,
     answer text,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`encounter`, `form_id`, `question_id`)
 );
 
 INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALUES
@@ -123,7 +100,10 @@ VALUES
 ('1', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Insulation required'),
 ('2', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'string', 'Insulation instructions'),
 ('3', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'string', 'Nursing anamnesis'),
-('4', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Pregnancy');
+('4', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Pregnancy'),
+('5', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Sensitivities'),
+('6', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Background diseases'),
+('7', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Chronic medications');
 
 
 /* INSERT LISTS*/
@@ -231,8 +211,6 @@ VALUES ('reason_codes_1', 'Emergency Medicine Reason Codes');
 INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
 VALUES ('reason_codes_1', 'clinikal_reason_codes', 'Filter', '1');
 
-ALTER TABLE `fhir_value_set_systems` MODIFY COLUMN `type` ENUM('All', 'Partial', 'Exclude', 'Filter', 'Codes') NOT NULL AFTER `system`;
-
 INSERT INTO `fhir_value_sets` (`id`, `title`)
 VALUES ('sensitivities', 'Sensitivities');
 
@@ -311,12 +289,11 @@ INSERT INTO `fhir_value_set_codes` (`vss_id`, `code`) VALUES
 
 
 CREATE TABLE form_diagnosis_and_recommendations_questionnaire(
-    id bigint(20) NOT NULL AUTO_INCREMENT,
-    encounter varchar(255) DEFAULT NULL,
+    encounter int(11) NOT NULL,
     form_id bigint(20) NOT NULL,
     question_id int(11) NOT NULL,
     answer text,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (encounter, form_id, question_id)
 );
 
 INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALUES
@@ -332,3 +309,118 @@ VALUES
 ('5', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Decision'),
 ('6', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Evacuation way'),
 ('7', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'integer', 'Sick leave');
+
+
+INSERT INTO `manage_templates_letters` (`id`, `letter_name`, `letter_class`, `letter_class_action`, `active`, `letter_post_json`) VALUES
+(1, 'letter_x_ray', 'EmergencyMedicine\\Controller\\xrayLetterController', 'pdf', 1, '\n{"facility": "required","encounter": "required","owner": "optional","patient": "optional"}');
+
+INSERT INTO `manage_templates_letters` (`letter_name`, `letter_class`, `letter_class_action`, `active`, `letter_post_json`) VALUES
+('summary_letter', 'EmergencyMedicine\\Controller\\summaryLetterController', 'pdf', '1', '{\"facility\": \"required\",\"encounter\": \"required\",\"owner\": \"optional\",\"patient\": \"optional\"}');
+
+#SpecialSql
+create procedure EncounterReport(
+    in p_current_user int,
+    in p_branch_name int,
+    in p_service_type int,
+    in p_hmo int,
+    in p_from_date datetime,
+    in p_to_date datetime,
+    in p_offset int,
+    in p_limit int
+)
+begin
+	select
+	count(*) over (partition by null) as count,
+    FormatDate(fe.date) as encounter_date,
+    concat(pd.lname, ' ', pd.fname) as patient_name,
+    ifnull(pd.ss,'') as id,
+    ifnull(fpd.name,'') as insurance_body,
+    ifnull(ffe.name,'') as branch_name,
+    GetHebTitle(GetOptionTitle('clinikal_service_types', fe.service_type)) as service_type,
+    ifnull(darqd.answer,'-') as decision,
+    ifnull(darqr.answer,'-') as release_way
+
+   	from form_encounter fe
+   	join patient_data pd on  fe.pid = pd.pid
+   	join facility ffe on  fe.facility_id = ffe.id
+   	join facility fpd on  pd.mh_insurance_organiz = fpd.id
+   	left join form_diagnosis_and_recommendations_questionnaire darqd on (darqd.encounter = fe.id and darqd.question_id=5)
+    left join form_diagnosis_and_recommendations_questionnaire darqr on (darqr.encounter = fe.id and darqr.question_id=6)
+
+    where (
+     (p_branch_name = -1  OR  p_branch_name = ffe.id) AND
+     (p_service_type = -1 OR  p_service_type = fe.service_type) AND
+     (p_hmo = -1          OR  p_hmo = fpd.id) AND
+     (fe.date BETWEEN p_from_date AND p_to_date)
+
+    )
+	limit p_limit offset p_offset ;
+end;
+#EndSpecialSql
+
+#SpecialSql
+create procedure EncounterReportExetended(
+    in p_current_user int,
+    in p_branch_name int,
+    in p_service_type int,
+    in p_hmo int,
+    in p_from_date datetime,
+    in p_to_date datetime,
+    in p_offset int,
+    in p_limit int
+)
+begin
+	select
+	count(*) over (partition by null) as count,
+	-- extra columns and different order then regular encounter report
+    FormatDate(fe.date) as encounter_date,
+    pd.fname as first_name,
+    pd.lname as last_name,
+    GetHebTitle(GetOptionTitle('userlist3', pd.mh_type_id)) as type_id,
+    ifnull(pd.ss,'') as id,
+    ifnull(fpd.name,'') as insurance_body,
+    ifnull(ffe.name,'') as branch_name,
+    GetHebTitle(GetOptionTitle('clinikal_service_types', fe.service_type)) as service_type,
+    ifnull(darqd.answer,'-') as decision,
+    ifnull(darqr.answer,'-') as release_way,
+    GROUP_CONCAT(GetHebTitle(GetOptionTitle('clinikal_reason_codes', er.reason_code))) AS reason_titles,
+    concat(us.lname, ' ', us.fname) as doc_name,
+    ifnull(us.state_license_number, '') as doc_number,
+    ifnull(GetHebTitle(cques2.answer),'-') as payment_way,
+    ifnull(cques1.answer,'-') as payment_amount,
+    ifnull(cques3.answer,'-') as reception_num,
+    FormatDate(pd.DOB) as birth_date,
+    pd.phone_cell as phone_cell,
+    GetHebTitle(GetOptionTitle('mh_cities', pd.city)) as city,
+    GetHebTitle(GetOptionTitle('mh_streets', pd.street)) as street,
+    pd.mh_house_no as house_num,
+    pd.postal_code as postal_code
+
+   	from form_encounter fe
+   	join patient_data pd on  fe.pid = pd.pid
+   	join facility ffe on  fe.facility_id = ffe.id
+   	join facility fpd on  pd.mh_insurance_organiz = fpd.id
+   	left join questionnaire_response qres on (qres.encounter = fe.id and qres.form_name = 'diagnosis_and_recommendations_questionnaire')
+   	left join users us on qres.update_by = us.id
+   	left join form_diagnosis_and_recommendations_questionnaire darqd on (darqd.encounter = fe.id and darqd.question_id=5)
+    left join form_diagnosis_and_recommendations_questionnaire darqr on (darqr.encounter = fe.id and darqr.question_id=6)
+    -- join more tables for extended reports
+    left join encounter_reasoncode_map as er on er.eid = fe.id
+    left join form_commitment_questionnaire cques1 on (cques1.encounter = fe.id and cques1.question_id=6)
+    left join form_commitment_questionnaire cques2 on (cques2.encounter = fe.id and cques2.question_id=7)
+    left join form_commitment_questionnaire cques3 on (cques3.encounter = fe.id and cques3.question_id=8)
+
+    where (
+     (p_branch_name = -1  OR  p_branch_name = ffe.id) AND
+     (p_service_type = -1 OR  p_service_type = fe.service_type) AND
+     (p_hmo = -1          OR  p_hmo = fpd.id) AND
+     (fe.date BETWEEN p_from_date AND p_to_date)
+
+    )
+
+    group by fe.id
+
+	limit p_limit offset p_offset ;
+end;
+#EndSpecialSql
+
