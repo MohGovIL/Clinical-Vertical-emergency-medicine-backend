@@ -13,7 +13,7 @@ This ability is caused by using a system of roles and privileges for each profes
 To get started and documentation at https://clinikal-documentation.readthedocs.io/
 
 ### Emergency-medicine-beckend
-The product composed of a few component, Server-side modules and client-side application. 
+The product composed of a few component, Server-side modules and client-side application.   
 This repository completes the backend (server-side) layer for emergency medicine centers and contains dedicated modules, settings, roles, forms and reports.  
 Main contents:  
 * Backend code for three forms for Emergency centers:  
