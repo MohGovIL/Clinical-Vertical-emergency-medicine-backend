@@ -178,10 +178,15 @@ function parseSimpleContext($title , $context){
     <?php parseSimpleContext("Sensitivities",$bodyData['sensitivities']);?>
     <?php parseSimpleContext("Background diseases",$bodyData['background_diseases']);?>
     <?php parseSimpleContext("Chronic medications",$bodyData['chronic_medications']);?>
-    <?php if($bodyData['constants_indicators']['rows'][0]['height'][2] && $bodyData['constants_indicators']['rows'][0]['height'][2] !="" && $bodyData['constants_indicators']['rows'][0]['weight'][2] && $bodyData['constants_indicators']['rows'][0]['weight'][2]!="") {
+    <?php
+        $existHight = false;
+        if ($bodyData['constants_indicators']['rows'][0]['height'][2] && $bodyData['constants_indicators']['rows'][0]['height'][2] !="" && $bodyData['constants_indicators']['rows'][0]['height'][2] !="-" ) {
+            $existHight = true;
             parseSimpleContext("Constant indicators",$bodyData['constants_indicators']['columns']['height']." - ".$bodyData['constants_indicators']['rows'][0]['height'][2]." ".$bodyData['constants_indicators']['rows'][0]['height'][1]);
-            parseSimpleContext("",$bodyData['constants_indicators']['columns']['weight']." - ".$bodyData['constants_indicators']['rows'][0]['weight'][2]." ".$bodyData['constants_indicators']['rows'][0]['weight'][1]);
-    }
+        }
+        if ($bodyData['constants_indicators']['rows'][0]['weight'][2] && $bodyData['constants_indicators']['rows'][0]['weight'][2]!="" && $bodyData['constants_indicators']['rows'][0]['weight'][2]!="-") {
+            parseSimpleContext(!$existHight ? "Constant indicators" : "",$bodyData['constants_indicators']['columns']['weight']." - ".$bodyData['constants_indicators']['rows'][0]['weight'][2]." ".$bodyData['constants_indicators']['rows'][0]['weight'][1]);
+        }
     ?>
 
 
