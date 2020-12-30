@@ -174,7 +174,7 @@ function parseSimpleContext($title , $context){
     <?php parseSimpleContext("Insulation",$bodyData['insulation']=="1"?"Yes":"No");?>
     <?php parseSimpleContext("Insulation instruction",$bodyData['insulation_instructions']);?>
     <?php parseSimpleContext("Nursing anamnesis",$bodyData['nursing_anamnesis']);?>
-    <?php parseSimpleContext("Pregnancy",$bodyData['pregnant']);?>
+    <?php parseSimpleContext("Pregnancy",$bodyData['pregnant'] ? xlt('Yes'): xlt('No'));?>
     <?php parseSimpleContext("Sensitivities",$bodyData['sensitivities']);?>
     <?php parseSimpleContext("Background diseases",$bodyData['background_diseases']);?>
     <?php parseSimpleContext("Chronic medications",$bodyData['chronic_medications']);?>
