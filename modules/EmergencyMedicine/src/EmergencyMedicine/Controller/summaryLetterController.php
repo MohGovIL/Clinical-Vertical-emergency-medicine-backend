@@ -16,9 +16,6 @@ use ClinikalAPI\Controller\PdfBaseController;
 class summaryLetterController extends PdfBaseController
 {
     const CATEGORY = "5"; //Referral for Summary
-    const BODY_PATH = ['emergency-medicine/summary-letter/summary-letter','emergency-medicine/prescription-letter/prescription-letter'];
-
-
 
     public $container = null;
     public function getIsolationState(){
@@ -149,6 +146,7 @@ class summaryLetterController extends PdfBaseController
 
         $postData = $this->getPostData();
 
+
         $configData = $this->createConfigData($postData, self::PDF_MINE_TYPE, self::CATEGORY);
 
         if (empty($configData)) {
@@ -174,23 +172,35 @@ class summaryLetterController extends PdfBaseController
         );
 
         $drug_form= $this->getDrugForm();
-        $pdfPrescriptionBodyData = array(
-            'clientReqData' => $postData,
-            'patientData'=>$patientData,
-            'doctorData'=>$doctorData,
-            'bodyData'=>[
-                "prescription"=>$bodyData['recommendations_for_medications'],
-                "route"=>$this->getDrugRoute(),
-                "interval"=>$this->getDrugInterval(),
-                "form"=>$drug_form,
-                "forms"=>$this->getDrugForms($drug_form),
-            ]
-        );
+
+
+        $bodyPath= ['emergency-medicine/summary-letter/summary-letter'];
+        $bodyParsedData = [$pdfSummaryBodyData];
+
+        if(!empty($bodyData['recommendations_for_medications'])) {
+            // attach prescriotion
+            $bodyPath[] = 'emergency-medicine/prescription-letter/prescription-letter';
+
+            $pdfPrescriptionBodyData = array(
+                'clientReqData' => $postData,
+                'patientData'=>$patientData,
+                'doctorData'=>$doctorData,
+                'bodyData'=>[
+                    "prescription"=>$bodyData['recommendations_for_medications'],
+                    "route"=>$this->getDrugRoute(),
+                    "interval"=>$this->getDrugInterval(),
+                    "form"=>$drug_form,
+                    "forms"=>$this->getDrugForms($drug_form),
+                ]
+            );
+            $bodyParsedData[] = $pdfPrescriptionBodyData;
+        }
+
         $pdfPrescriptionBodyData['clientReqData']['name_of_letter'] = "Prescription";
         $fileName = "{$postData['letter_type']}_patient_{$postData['patient']}_$date.pdf";
 
         //create multi paged pdf usinf letter creator.
-        $pdfEncoded = $this->createBase64Pdf($fileName,self::BODY_PATH, self::HEADER_PATH, self::FOOTER_PATH, $headerData, [$pdfSummaryBodyData,$pdfPrescriptionBodyData]);
+        $pdfEncoded = $this->createBase64Pdf($fileName,$bodyPath, self::HEADER_PATH, self::FOOTER_PATH, $headerData,$bodyParsedData);
 
         $storageSave = $this->saveDocToStorage($pdfEncoded, $fileName, $date);  //timestamp is added later
 
