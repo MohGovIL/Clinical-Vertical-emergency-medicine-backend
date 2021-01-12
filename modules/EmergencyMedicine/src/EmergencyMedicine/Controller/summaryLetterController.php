@@ -161,7 +161,7 @@ class summaryLetterController extends PdfBaseController
         $date = date('Y-m-d H:i:s');
 
         $patientData=$this->getPatientInfo($postData['patient']);
-        $doctorData=$this->getUserInfo($postData['owner']);
+        $doctorData=$this->getUserInfo($this->getQuestionareUpdatedUser($this->postData['encounter'],'diagnosis_and_recommendations_questionnaire'));
         $bodyData = $this->getEmergencySummaryLetterData($patientData);
 
         $pdfSummaryBodyData = array(
