@@ -94,8 +94,8 @@ class summaryLetterController extends PdfBaseController
         $data['sensitivities'] = implode(",",$this->getSensitivities());
         $data['background_diseases'] = implode(",",$this->getMedicalProblems());
         $data['chronic_medications'] = implode(",",$this->getMedicine());
-        $data['constants_indicators'] = $this->getConstantVitals($this->postData['patient'],'exam',1,"date DESC");
-        $data['variable_indicators'] =  $this->getVariantVitals($this->postData['patient'],'vital-signs',1,"date DESC");
+        $data['constants_indicators'] = $this->getConstantVitals($this->postData['encounter'],$this->postData['patient'],'exam',1,"date DESC");
+        $data['variable_indicators'] =  $this->getVariantVitals($this->postData['encounter'],$this->postData['patient'],'vital-signs',1,"date DESC");
         $data['findings'] =str_replace("\n","<br/>",
                                        str_replace("\r\n","<br/>",$this->getFindings()));
         $data['diagnostics'] =str_replace("\n","<br/>",
@@ -180,7 +180,7 @@ class summaryLetterController extends PdfBaseController
         if(!empty($bodyData['recommendations_for_medications'])) {
             // attach prescriotion
             $bodyPath[] = 'emergency-medicine/prescription-letter/prescription-letter';
-
+            $postData['name_of_letter'] = 'Prescription';
             $pdfPrescriptionBodyData = array(
                 'clientReqData' => $postData,
                 'patientData'=>$patientData,
