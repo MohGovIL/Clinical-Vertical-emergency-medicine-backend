@@ -55,7 +55,7 @@ class prescriptionLetterController extends PdfBaseController
         $date = date('Y-m-d H:i:s');
 
         $patientData=$this->getPatientInfo($postData['patient']);
-        $doctorData=$this->getUserInfo($postData['owner']);
+        $doctorData=$this->getUserInfo($this->getQuestionareUpdatedUser($this->postData['encounter'],'diagnosis_and_recommendations_questionnaire'));
         $bodyData =  ["prescription"=>$this->getPrescriptions()];
 
         $drug_form= $this->getDrugForm();
@@ -71,7 +71,7 @@ class prescriptionLetterController extends PdfBaseController
                 "forms"=>$this->getDrugForms($drug_form),
             ]
         );
-        
+
 
         $fileName = "{$letterName}_{$postData['patient']}_$date.pdf";
 
