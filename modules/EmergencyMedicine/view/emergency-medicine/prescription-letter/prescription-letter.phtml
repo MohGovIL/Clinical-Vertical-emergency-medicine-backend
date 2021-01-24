@@ -141,8 +141,8 @@ function dateDifference($date_1 , $date_2 , $differenceFormat = '%d' )
                 <td class=" LableTableBody-text-3"><?php echo xl("Quantity");?></td> <td class=" LableTableBody-text-9"><?php echo $medicine['dosage']." ".xl($bodyData['forms'][$medicine['form']]);?> </td>
             </tr>
             <tr><?php $period =   str_replace("$", dateDifference($medicine['end_date'],$medicine['start_date']),xl("In Duration of $ Days"));?>
-            <tr><?php $route =   $langDir=="ltr" ? "1 ".xl($bodyData['form'][$medicine['form']])." ".xl($bodyData['route'][$medicine['route']]): xl($bodyData['form'][$medicine['form']])." 1 ". xl($bodyData['route'][$medicine['route']]);?>
-                <td class=" LableTableBody-text-3"><?php echo xl("Instructions for use");?></td> <td class=" LableTableBody-text-9"><?php echo $route.", ". xl($bodyData['interval'][$medicine['interval']]).", ".$period;?></td>
+            <tr><?php $route =  $medicine['route'] !== '5' /*other*/ ? xl($bodyData['route'][$medicine['route']]) .", " : '';?>
+                <td class=" LableTableBody-text-3"><?php echo xl("Instructions for use");?></td> <td class=" LableTableBody-text-9"><?php echo $route . xl($bodyData['interval'][$medicine['interval']]).", ".$period;?></td>
             </tr>
             <tr>
                 <td class=" LableTableBody-text-3"><?php echo xl("Instructions");?></td> <td class=" LableTableBody-text-9"><?php echo $medicine['note'];?></td>
