@@ -172,14 +172,12 @@ INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`
 
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
 ('lists', 'x_ray_types', 'X-Ray Types', 0, 1,''),
-('x_ray_types', 'dehydration', 'Chest', 10, 1,''),
-('x_ray_types', 'inhalation', 'Palm', 20, 1,''),
-('x_ray_types', 'laboratory_tests', 'sole', 30, 1,''),
-('x_ray_types', 'bandage', 'Shoulder', 40, 1,''),
-('x_ray_types', 'taking_metrics', 'Neck', 50, 1,''),
-('x_ray_types', 'fluid_infusion', 'Ankle', 60, 1,'');
-
-
+('x_ray_types', 'chest', 'Chest', 10, 1,''),
+('x_ray_types', 'palm', 'Palm', 20, 1,''),
+('x_ray_types', 'sole', 'sole', 30, 1,''),
+('x_ray_types', 'shoulder', 'Shoulder', 40, 1,''),
+('x_ray_types', 'neck', 'Neck', 50, 1,''),
+('x_ray_types', 'ankle', 'Ankle', 60, 1,'');
 
 INSERT INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`,`component_name`)
 VALUES
@@ -428,7 +426,7 @@ INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`, 
 ('clinikal_form_fields_templates', 'nursing_anamnesis', 'Nursing anamnesis', 10, 1, 'medical_admission'),
 ('clinikal_form_fields_templates', 'templates_x_ray', 'Instructions for x-ray', 10, 1, 'tests_and_treatments'),
 ('clinikal_form_fields_templates', 'templates_providing_medicine', 'Instructions for providing medicine', 10, 1, 'tests_and_treatments'),
-('clinikal_form_fields_templates', 'templates_dehydration', 'Instructions for dehydration', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'templates_dehydration', 'Instructions for EKG', 10, 1, 'tests_and_treatments'),
 ('clinikal_form_fields_templates', 'templates_inhalation', 'Instructions for inhalation', 10, 1, 'tests_and_treatments'),
 ('clinikal_form_fields_templates', 'templates_laboratory_tests', 'Instructions for laboratory tests', 10, 1, 'tests_and_treatments'),
 ('clinikal_form_fields_templates', 'templates_bandage', 'Instructions for bandage', 10, 1, 'tests_and_treatment'),
@@ -438,4 +436,4 @@ INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`, 
 ('clinikal_form_fields_templates', 'diagnosis_details', 'Diagnosis details', 10, 1, 'diagnosis_and_recommendations'),
 ('clinikal_form_fields_templates', 'treatment_details', 'Treatment details', 10, 1, 'diagnosis_and_recommendations'),
 ('clinikal_form_fields_templates', 'instructions_further_treatment', 'Instructions further treatment', 10, 1, 'diagnosis_and_recommendations'),
-('clinikal_form_fields_templates', 'instructions_drug', 'Instructions drug', 10, 1, 'diagnosis_and_recommendations');
+('clinikal_form_fields_templates', 'instructions_drug', 'Instructions for providing medicine', 10, 1, 'diagnosis_and_recommendations');
