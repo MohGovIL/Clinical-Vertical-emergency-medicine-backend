@@ -523,7 +523,7 @@
                 ]
             },
             {
-                "label": "Templetes managment",
+                "label": "Templates management",
                 "menu_id": "adm0",
                 "target": "pat",
                 "url": "/interface/modules/zend_modules/public/templates-management",
