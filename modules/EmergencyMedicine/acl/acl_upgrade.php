@@ -200,16 +200,20 @@ return $ACL_UPGRADE = array(
         AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'fhir_api', 'FHIR API', 'medicationrequest','MedicationRequest', 'write');
         AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'fhir_api', 'FHIR API', 'servicerequest','ServiceRequest', 'write');
     },
-    '2.0.0' => function() {
+    '1.1.0' => function ()
+    {
         $admin_write = AclExtended::getAclIdNumber('Administrators', 'write');
-        $emergency_clinic_manager_write =AclExtended::addNewACL('Emergency manager', 'emergency_clinic_manager', 'write', 'Things that emergency clinic manager can modify');
-        $emergency_clinic_manager_view =AclExtended::addNewACL('Emergency manager', 'emergency_clinic_manager', 'view', 'Things that emergency clinic manager can read but not modify');
-        $emergency_receptionist_write =AclExtended::addNewACL('Emergency receptionist', 'emergency_receptionist', 'write', 'Things that emergency receptionist can modify');
-        $emergency_receptionist_view =AclExtended::addNewACL('Emergency receptionist', 'emergency_receptionist', 'view', 'Things that emergency receptionist can read but not modify');
-        $emergency_nurse_write =AclExtended::addNewACL('Emergency nurse', 'emergency_nurse', 'write', 'Things that emergency nurse can modify');
-        $emergency_nurse_view =AclExtended::addNewACL('Emergency nurse', 'emergency_nurse', 'view', 'Things that emergency nurse can read but not modify');
-        $emergency_doctor_write =AclExtended::addNewACL('Emergency doctor', 'emergency_doctor', 'write', 'Things that emergency doctor can modify');
-        $emergency_doctor_view =AclExtended::addNewACL('Emergency doctor', 'emergency_doctor', 'view', 'Things that emergency doctor can read but not modify');
+        $emergency_clinic_manager_write = AclExtended::addNewACL('Emergency manager', 'emergency_clinic_manager', 'write', 'Things that emergency clinic manager can modify');
+        $emergency_clinic_manager_view = AclExtended::addNewACL('Emergency manager', 'emergency_clinic_manager', 'view', 'Things that emergency clinic manager can read but not modify');
+        $emergency_receptionist_write = AclExtended::addNewACL('Emergency receptionist', 'emergency_receptionist', 'write', 'Things that emergency receptionist can modify');
+        $emergency_receptionist_view = AclExtended::addNewACL('Emergency receptionist', 'emergency_receptionist', 'view', 'Things that emergency receptionist can read but not modify');
+        $emergency_nurse_write = AclExtended::addNewACL('Emergency nurse', 'emergency_nurse', 'write', 'Things that emergency nurse can modify');
+        $emergency_nurse_view = AclExtended::addNewACL('Emergency nurse', 'emergency_nurse', 'view', 'Things that emergency nurse can read but not modify');
+        $emergency_doctor_write = AclExtended::addNewACL('Emergency doctor', 'emergency_doctor', 'write', 'Things that emergency doctor can modify');
+        $emergency_doctor_view = AclExtended::addNewACL('Emergency doctor', 'emergency_doctor', 'view', 'Things that emergency doctor can read but not modify');
+
+        AclExtended::addObjectAcl('client_app', 'Client Application', 'AddNewTreatmentInstruction','Adding new treatment instruction');
+        AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'AddNewTreatmentInstruction','Adding new treatment instruction', 'write');
 
         AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'ManageTemplates','Manage Templates', 'write');
         AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'menus', 'Menus', 'modle','Modules', 'write');
