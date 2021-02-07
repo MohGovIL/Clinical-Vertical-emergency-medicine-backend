@@ -214,6 +214,10 @@ return $ACL_UPGRADE = array(
 
         AclExtended::addObjectAcl('client_app', 'Client Application', 'AddNewTreatmentInstruction','Adding new treatment instruction');
         AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'AddNewTreatmentInstruction','Adding new treatment instruction', 'write');
+
+        AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'ManageTemplates','Manage Templates', 'write');
+        AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'menus', 'Menus', 'modle','Modules', 'write');
+
     }
 );
 

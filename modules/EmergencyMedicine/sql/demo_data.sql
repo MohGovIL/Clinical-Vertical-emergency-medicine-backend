@@ -33,3 +33,21 @@ UPDATE `fhir_healthcare_services` SET `providedBy` = '16' WHERE `fhir_healthcare
 UPDATE `fhir_healthcare_services` SET `providedBy` = '17' WHERE `fhir_healthcare_services`.`id` = 5;
 
 --  IN THE TEST DEV - UNTIL HERE!!!
+
+-- for the fields that use templets in the test installation. can be changed in every clinic.
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`, `notes`) VALUES
+('clinikal_form_fields_templates', 'nursing_anamnesis', 'Nursing anamnesis', 10, 1, 'medical_admission'),
+('clinikal_form_fields_templates', 'templates_x_ray', 'Instructions for x-ray', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'templates_providing_medicine', 'Instructions for providing medicine', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'templates_dehydration', 'Instructions for EKG', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'templates_inhalation', 'Instructions for inhalation', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'templates_laboratory_tests', 'Instructions for laboratory tests', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'templates_bandage', 'Instructions for bandage', 10, 1, 'tests_and_treatment'),
+('clinikal_form_fields_templates', 'templates_taking_metrics', 'Instructions for taking metrics', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'templates_fluid_infusion', 'Instructions for fluid infusion', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'findings_details', 'Findings details', 10, 1, 'diagnosis_and_recommendations'),
+('clinikal_form_fields_templates', 'diagnosis_details', 'Diagnosis details', 10, 1, 'diagnosis_and_recommendations'),
+('clinikal_form_fields_templates', 'treatment_details', 'Treatment details', 10, 1, 'diagnosis_and_recommendations'),
+('clinikal_form_fields_templates', 'instructions_further_treatment', 'Instructions further treatment', 10, 1, 'diagnosis_and_recommendations'),
+('clinikal_form_fields_templates', 'instructions_drug', 'Instructions for providing medicine', 10, 1, 'diagnosis_and_recommendations');
+

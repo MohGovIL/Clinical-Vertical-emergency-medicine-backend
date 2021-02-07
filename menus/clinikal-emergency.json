@@ -523,6 +523,18 @@
                 ]
             },
             {
+                "label": "Templates management",
+                "menu_id": "adm0",
+                "target": "pat",
+                "url": "/interface/modules/zend_modules/public/templates-management",
+                "children": [],
+                "requirement": 0,
+                "acl_req": [
+                    "client_app",
+                    "ManageTemplates"
+                ]
+            },
+            {
                 "label": "Importdata",
                 "icon": "fa-caret-right",
                 "children": [
