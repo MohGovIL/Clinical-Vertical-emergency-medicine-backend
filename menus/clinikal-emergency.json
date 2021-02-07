@@ -530,8 +530,8 @@
                 "children": [],
                 "requirement": 0,
                 "acl_req": [
-                    "",
-                    ""
+                    "client_app",
+                    "ManageTemplates"
                 ]
             },
             {
