@@ -90,3 +90,10 @@
 --    arguments: constant_name english hebrew
 --    behavior: can take a long time.
 
+
+#IfNotRow2D list_options list_id clinikal_enc_secondary_statuses option_id during_treatment
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, `subtype`, `edit_options`)
+VALUES
+('clinikal_enc_secondary_statuses', 'during_treatment', 'During treatment', 40, 0, 0, '', 'In Progress', '', 0, 0, 1, '', 1);
+#EndIf
+
