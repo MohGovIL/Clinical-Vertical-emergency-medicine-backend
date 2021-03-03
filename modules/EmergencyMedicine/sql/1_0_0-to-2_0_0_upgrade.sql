@@ -97,3 +97,6 @@ VALUES
 ('clinikal_enc_secondary_statuses', 'during_treatment', 'During treatment', 40, 0, 0, '', 'In Progress', '', 0, 0, 1, '', 1);
 #EndIf
 
+#IfNotRow2D fhir_value_sets id gender language he
+UPDATE fhir_value_sets SET language = 'he' where id NOT IN ('drugs_list','details_providing_medicine');
+#EndIf
