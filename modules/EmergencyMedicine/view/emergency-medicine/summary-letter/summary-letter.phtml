@@ -171,8 +171,11 @@ function parseSimpleContext($title , $context){
 
     <?php parseSimpleContext("Reason for refferal",$bodyData['reason_for_refferal']);?>
     <?php parseSimpleContext("Detail",$bodyData['reason_for_refferal_details']);?>
-    <?php parseSimpleContext("Insulation",$bodyData['insulation']=="1"?"Yes":"No");?>
-    <?php parseSimpleContext("Insulation instruction",$bodyData['insulation_instructions']);?>
+    <?php if (!$GLOBALS['clinikal_forms_hide_insulation']) : ?>
+        <?php parseSimpleContext("Insulation",$bodyData['insulation']=="1"?"Yes":"No");?>
+        <?php parseSimpleContext("Insulation instruction",$bodyData['insulation_instructions']);?>
+    <?php endIf; ?>
+
     <?php parseSimpleContext("Nursing anamnesis",$bodyData['nursing_anamnesis']);?>
     <?php
         if ($patientData['Gender'] === 'Female') {
@@ -286,9 +289,22 @@ function parseSimpleContext($title , $context){
         </td>
     </tr>
     <?php endif;?>
-    <?php parseSimpleContext("Findings",$bodyData['findings']);?>
-    <?php parseSimpleContext("Diagnosis",$bodyData['diagnostics']);?>
-    <?php parseSimpleContext("Treatment details",$bodyData['treatment_details']);?>
+    <?php parseSimpleContext("Medical anamnesis",$bodyData['findings']);?>
+    <?php parseSimpleContext("Physical examination",$bodyData['diagnostics']);?>
+    <?php  if($bodyData['diagnosis'] && sizeof($bodyData['diagnosis'])>0):?>
+        <tr>
+            <td class="tdLabel Label-Text">
+                <?php echo xl("Diagnosis");?>
+            </td>
+            <td dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>"  class="  <?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'leftO' : ''?> Input-text">
+                <ul>
+                    <?php foreach( $bodyData['diagnosis'] as $drug):?>
+                        <li dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>"  ><?php echo text($drug['code']) . ' : ' .  text($drug['title']);?></li>
+                    <?php endforeach;?>
+                </ul>
+            </td>
+        </tr>
+    <?php endif;?>
     <?php parseSimpleContext("Recommendations on release",$bodyData['recommendations_on_release']);?>
 
 
