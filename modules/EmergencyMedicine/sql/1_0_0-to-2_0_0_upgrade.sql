@@ -100,3 +100,23 @@ VALUES
 #IfNotRow2D fhir_value_sets id gender language he
 UPDATE fhir_value_sets SET language = 'he' where id NOT IN ('drugs_list','details_providing_medicine');
 #EndIf
+
+/* changes in the Diagnosis and recommendations form */
+#IfNotRow2D questionnaires_schemas  form_name diagnosis_and_recommendations_questionnaire qid 8
+UPDATE questionnaires_schemas SET  question = 'Medical Anamnesis' WHERE qid = '1';
+UPDATE questionnaires_schemas SET  question = 'Physical Examination' WHERE qid = '2';
+
+INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
+VALUES
+('8', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Diagnisis');
+#EndIf
+
+#IfNotRow2D list_options list_id clinikal_form_fields_templates option_id medical_anamnesis
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`, `notes`) VALUES
+('clinikal_form_fields_templates', 'medical_anamnesis', 'Medical Anamnesis', 10, 1, 'diagnosis_and_recommendations'),
+('clinikal_form_fields_templates', 'physical_examination', 'Physical Examination', 10, 1, 'diagnosis_and_recommendations');
+
+DELETE FROM list_options WHERE list_id = 'clinikal_form_fields_templates' AND option_id = 'findings_details';
+DELETE FROM list_options WHERE list_id = 'clinikal_form_fields_templates' AND option_id = 'diagnosis_details';
+DELETE FROM list_options WHERE list_id = 'clinikal_form_fields_templates' AND option_id = 'treatment_details';
+#EndIf
