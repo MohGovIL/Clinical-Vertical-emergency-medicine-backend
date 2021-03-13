@@ -349,9 +349,9 @@ function parseSimpleContext($title , $context){
 
     <?php parseSimpleContext("Evacuation way",$bodyData['evacuation_way']);?>
     <?php parseSimpleContext("Sick leave",$bodyData['sick_leave'] && $bodyData['sick_leave'] != "" ? $bodyData['sick_leave']. " ". xl("Days"):"");?>
-
-
-
+    <?php if (isset($GLOBALS['summery_letter_general_instructions']) && !empty($GLOBALS['summery_letter_general_instructions'])): ?>
+        <?php parseSimpleContext("General instructions",text($GLOBALS['summery_letter_general_instructions']));?>
+    <?php endif; ?>
     </tbody>
     </table>
 
