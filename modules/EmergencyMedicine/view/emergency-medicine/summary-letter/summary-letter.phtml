@@ -296,10 +296,10 @@ function parseSimpleContext($title , $context){
             <td class="tdLabel Label-Text">
                 <?php echo xl("Diagnosis");?>
             </td>
-            <td dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>"  class="  <?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'leftO' : ''?> Input-text">
+            <td  class="Input-text">
                 <ul>
                     <?php foreach( $bodyData['diagnosis'] as $drug):?>
-                        <li dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>"  ><?php echo text($drug['code']) . ' : ' .  text($drug['title']);?></li>
+                        <div dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>" ><?php echo text($drug['code']) . ' : ' .  text($drug['title']);?></div>
                     <?php endforeach;?>
                 </ul>
             </td>
@@ -313,10 +313,10 @@ function parseSimpleContext($title , $context){
         <td class="tdLabel Label-Text">
             <?php echo xl("Recommendations for medications");?>
         </td>
-        <td dir="ltr"  class="  leftO Input-text">
+        <td dir="ltr"  class="Input-text">
             <ul>
                 <?php foreach( $bodyData['recommendations_for_medications'] as $drug):?>
-                    <li dir="ltr"  ><?php echo $drug['drug'];?></li>
+                    <div dir="ltr"  ><?php echo $drug['drug'];?></div>
                 <?php endforeach;?>
             </ul>
         </td>
