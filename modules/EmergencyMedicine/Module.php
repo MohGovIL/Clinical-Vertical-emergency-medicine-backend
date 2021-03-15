@@ -112,12 +112,12 @@ class Module {
     public function addCustomGlobals(GlobalsInitializedEvent $event)
     {
         /*******************************************************************/
-        $setting = new GlobalSetting("medical admission form - hide insulation input", 'bool', 0, "When checked insulation field is hidden in the medical admission form");
+        $setting = new GlobalSetting(xlt("medical admission form - hide insulation input"), 'bool', 0, xlt("When checked insulation field is hidden in the medical admission form"));
         $event->getGlobalsService()->appendToSection("clinikal settings", "clinikal_forms_hide_insulation", $setting);
         /*******************************************************************/
 
         /*******************************************************************/
-        $setting = new GlobalSetting("Summery letter - general instructions", 'text', '', "Constant statement is shown as general instructions in the summary letter");
+        $setting = new GlobalSetting(xlt("Summery letter - general instructions"), 'text', '', xlt("Constant statement is shown as general instructions in the summary letter"));
         $event->getGlobalsService()->appendToSection("clinikal settings", "summery_letter_general_instructions", $setting);
         /*******************************************************************/
     }
