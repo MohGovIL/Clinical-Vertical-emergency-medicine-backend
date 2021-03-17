@@ -115,6 +115,10 @@ class Module {
         $setting = new GlobalSetting("medical admission form - hide insulation input", 'bool', 0, "When checked, hide insulation in all the medical admission form");
         $event->getGlobalsService()->appendToSection("clinikal settings", "clinikal_forms_hide_insulation", $setting);
         /*******************************************************************/
+        /*******************************************************************/
+        $setting = new GlobalSetting("Medical admission form - Medical Background Comments", 'bool', 0, "When checked, Medical Background Comments field is shown");
+        $event->getGlobalsService()->appendToSection("clinikal settings", "clinikal_forms_medical_background_comments", $setting);
+        /*******************************************************************/
     }
 
 }

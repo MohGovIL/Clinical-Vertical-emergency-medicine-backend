@@ -100,3 +100,10 @@ VALUES
 #IfNotRow2D fhir_value_sets id gender language he
 UPDATE fhir_value_sets SET language = 'he' where id NOT IN ('drugs_list','details_providing_medicine');
 #EndIf
+
+
+#IfNotRow2D questionnaires_schemas form_name medical_admission_questionnaire qid 8
+INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
+VALUES
+('8', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'string', 'Medical Background Comments');
+#EndIf
