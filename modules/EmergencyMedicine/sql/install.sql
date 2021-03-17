@@ -302,13 +302,14 @@ INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALU
 
 INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
 VALUES
-('1', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Findings details'),
-('2', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Diagnosis details'),
+('1', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Medical Anamnesis'),
+('2', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Physical Examination'),
 ('3', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Treatment details'),
 ('4', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Instructions for further treatment'),
 ('5', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Decision'),
 ('6', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Evacuation way'),
-('7', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'integer', 'Sick leave');
+('7', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'integer', 'Sick leave'),
+('8', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Diagnisis');
 
 
 INSERT INTO `manage_templates_letters` (`id`, `letter_name`, `letter_class`, `letter_class_action`, `active`, `letter_post_json`) VALUES
@@ -434,8 +435,7 @@ INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`, 
 ('clinikal_form_fields_templates', 'templates_bandage', 'Instructions for bandage', 10, 1, 'tests_and_treatment'),
 ('clinikal_form_fields_templates', 'templates_taking_metrics', 'Instructions for taking metrics', 10, 1, 'tests_and_treatments'),
 ('clinikal_form_fields_templates', 'templates_fluid_infusion', 'Instructions for fluid infusion', 10, 1, 'tests_and_treatments'),
-('clinikal_form_fields_templates', 'findings_details', 'Findings details', 10, 1, 'diagnosis_and_recommendations'),
-('clinikal_form_fields_templates', 'diagnosis_details', 'Diagnosis details', 10, 1, 'diagnosis_and_recommendations'),
-('clinikal_form_fields_templates', 'treatment_details', 'Treatment details', 10, 1, 'diagnosis_and_recommendations'),
+('clinikal_form_fields_templates', 'medical_anamnesis', 'Medical Anamnesis', 10, 1, 'diagnosis_and_recommendations'),
+('clinikal_form_fields_templates', 'physical_examination', 'Physical Examination', 10, 1, 'diagnosis_and_recommendations'),
 ('clinikal_form_fields_templates', 'instructions_further_treatment', 'Instructions further treatment', 10, 1, 'diagnosis_and_recommendations'),
 ('clinikal_form_fields_templates', 'instructions_drug', 'Instructions for providing medicine', 10, 1, 'diagnosis_and_recommendations');

@@ -6,10 +6,12 @@ namespace EmergencyMedicine\Controller;
 
 use ClinikalAPI\Model\GetTemplatesServiceTable;
 use FhirAPI\FhirRestApiBuilder\Parts\ErrorCodes;
+use FhirAPI\FhirRestApiBuilder\Parts\Strategy\StrategyElement\ValueSet\ValueSet;
 use GenericTools\Model\FormEncounterTable;
 use GenericTools\Model\Lists;
 use GenericTools\Model\ListsOpenEmrTable;
 use GenericTools\Model\ListsTable;
+use GenericTools\Model\ValueSetsTable;
 use Interop\Container\ContainerInterface;
 use ClinikalAPI\Controller\PdfBaseController;
 
@@ -18,6 +20,19 @@ class summaryLetterController extends PdfBaseController
     const CATEGORY = "5"; //Referral for Summary
 
     public $container = null;
+    public $FhirValueSet;
+
+    public function __construct(ContainerInterface $container, array $post = array())
+    {
+        parent::__construct($container);
+        $this->container = $container;
+        $this->setPostData($post);
+        $this->getXrayType();
+        $valueSetParams = array('paramsFromUrl' => array(), 'paramsFromBody' => array(), 'container' => $this->container);
+        $this->FhirValueSet = new ValueSet($valueSetParams);
+    }
+
+
     public function getIsolationState(){
         //form_medical_admission_questionnaire.answer
         //where form_id =  encounter = <ENC_ID>, qid = 4 )
@@ -52,6 +67,38 @@ class summaryLetterController extends PdfBaseController
         //where encounter = <ENC_ID>, qid = 1 )
         return $this->getQData(1,'FormDiagnosisAndRecommendationsQuestionnaireMapTable');
     }
+
+    public function getDiagnosis(){
+        //form_diagnosis_and_recommendations_questionnaire.answer
+        //where encounter = <ENC_ID>, qid = 1 )
+        $codes = explode('|',$this->getQData(8,'FormDiagnosisAndRecommendationsQuestionnaireMapTable'));
+        $titles = [];
+        foreach ($codes as $code) {
+            $titles[] = [
+                'code' => $code,
+                'title' => $this->getValueSetTitle('bk_diseases', $code)
+            ];
+        }
+        return $titles;
+    }
+
+    public function getDiagnosisListLang() {
+        $valuesetTable = $this->container->get(ValueSetsTable::class);
+        return $valuesetTable->getValueSetInfo('bk_diseases')['language'];
+
+    }
+
+    public function getValueSetTitle($listName,$value,$operations='$expand')
+    {
+        $this->FhirValueSet->setOperations(array($operations));
+        $this->FhirValueSet->setParamsFromUrl(array($listName));
+        $this->FhirValueSet->setParamsFromBody(array('PARAMETERS_FOR_SEARCH_RESULT'=>array ('filter' => array (0 => array ('value' => $value, 'operator' => '=',),),)));
+        $ValueSetRez = $this->FhirValueSet->read();
+        $expansion=$ValueSetRez->getExpansion();
+        //$display=$expansion['contains'][0]['display']->getValue();
+        return $expansion->getContains()[0]->getDisplay()->getValue();
+    }
+
     public function getTreatmentDetails(){
         //form_diagnosis_and_recommendations_questionnaire.answer
         //where encounter = <ENC_ID>, qid = 1 )
@@ -100,6 +147,8 @@ class summaryLetterController extends PdfBaseController
                                        str_replace("\r\n","<br/>",$this->getFindings()));
         $data['diagnostics'] =str_replace("\n","<br/>",
                                        str_replace("\r\n","<br/>",$this->getDiagnostics()));
+        $data['diagnosis'] = $this->getDiagnosis();
+        $data['diagnosisListLage'] = $this->getDiagnosisListLang();
         $data['treatment_details'] =str_replace("\n","<br/>",
             str_replace("\r\n","<br/>",$this->getTreatmentDetails()));
         $data['recommendations_on_release'] =str_replace("\n","<br/>",
@@ -121,14 +170,6 @@ class summaryLetterController extends PdfBaseController
     private function getXrayType(){
         $x_ray_type = $this->getTitleOfOptionFromListTable("x_ray_types",$this->postData['x_ray_type']);
         $this->postData['x_ray_type'] = $x_ray_type;
-    }
-
-    public function __construct(ContainerInterface $container, array $post = array())
-    {
-        parent::__construct($container);
-        $this->container = $container;
-        $this->setPostData($post);
-        $this->getXrayType();
     }
 
     public function setPostData(array $data)
