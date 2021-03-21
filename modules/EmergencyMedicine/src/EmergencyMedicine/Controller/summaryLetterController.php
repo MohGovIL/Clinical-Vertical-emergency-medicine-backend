@@ -56,6 +56,12 @@ class summaryLetterController extends PdfBaseController
         return $this->getQData(4,'FormMedicalAdmissionQuestionnaireMapTable');
     }
 
+    public function getMedicalHostoryComment(){
+        //form_medical_admission_questionnaire.answer
+        //where form_id =  encounter = <ENC_ID>, qid = 4 )
+        return $this->getQData(8,'FormMedicalAdmissionQuestionnaireMapTable');
+    }
+
     public function getFindings(){
         //form_medical_admission_questionnaire.answer
         //where form_id =  encounter = <ENC_ID>, qid = 2 )
@@ -138,9 +144,10 @@ class summaryLetterController extends PdfBaseController
         $data['insulation_instructions'] = $this->getIsolationInstructionsState();
         $data['nursing_anamnesis'] = $this->getNursingAnamnesisState();
         $data['pregnant'] = $this->getPregnancyState($patientData);
-        $data['sensitivities'] = implode(",",$this->getSensitivities());
-        $data['background_diseases'] = implode(",",$this->getMedicalProblems());
-        $data['chronic_medications'] = implode(",",$this->getMedicine());
+        $data['sensitivities'] = $this->getSensitivities();
+        $data['background_diseases'] = $this->getMedicalProblems();
+        $data['chronic_medications'] = $this->getMedicine();
+        $data['medical_history_comment'] = $this->getMedicalHostoryComment();
         $data['constants_indicators'] = $this->getConstantVitals($this->postData['encounter'],$this->postData['patient'],'exam',1,"date DESC");
         $data['variable_indicators'] =  $this->getVariantVitals($this->postData['encounter'],$this->postData['patient'],'vital-signs',1,"date DESC");
         $data['findings'] =str_replace("\n","<br/>",

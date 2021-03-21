@@ -183,9 +183,52 @@ function parseSimpleContext($title , $context){
                 $bodyData['pregnant'] ? xlt('Yes') : xlt('No'));
         }
     ?>
-    <?php parseSimpleContext("Sensitivities",$bodyData['sensitivities']);?>
-    <?php parseSimpleContext("Background diseases",$bodyData['background_diseases']);?>
-    <?php parseSimpleContext("Chronic medications",$bodyData['chronic_medications']);?>
+    <?php  if($bodyData['sensitivities'] && sizeof($bodyData['sensitivities'])>0):?>
+        <tr>
+            <td class="tdLabel Label-Text">
+                <?php echo xl("Sensitivities");?>
+            </td>
+            <td  class="Input-text">
+                <ul>
+                    <?php foreach( $bodyData['sensitivities'] as $sensitivity):?>
+                        <div><?php echo text($sensitivity);?></div>
+                    <?php endforeach;?>
+                </ul>
+            </td>
+        </tr>
+    <?php endif;?>
+    <?php  if($bodyData['background_diseases'] && sizeof($bodyData['background_diseases'])>0):?>
+        <tr>
+            <td class="tdLabel Label-Text">
+                <?php echo xl("Background diseases");?>
+            </td>
+            <td  class="Input-text">
+                <ul>
+                    <?php foreach( $bodyData['background_diseases'] as $background_disease):?>
+                        <div dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>"><?php echo text($background_disease);?></div>
+                    <?php endforeach;?>
+                </ul>
+            </td>
+        </tr>
+    <?php endif;?>
+    <?php  if($bodyData['chronic_medications'] && sizeof($bodyData['chronic_medications'])>0):?>
+        <tr>
+            <td class="tdLabel Label-Text">
+                <?php echo xl("Chronic medications");?>
+            </td>
+            <td  class="Input-text">
+                <ul>
+                    <?php foreach( $bodyData['chronic_medications'] as $chronic_medication):?>
+                        <div dir="ltr"><?php echo text($chronic_medication);?></div>
+                    <?php endforeach;?>
+                </ul>
+            </td>
+        </tr>
+    <?php endif;?>
+    <?php parseSimpleContext("Medical Background Comments",$bodyData['medical_history_comment']);?>
+    <?php// parseSimpleContext("Sensitivities",$bodyData['sensitivities']);?>
+    <?php //parseSimpleContext("Background diseases",$bodyData['background_diseases']);?>
+    <?php// parseSimpleContext("Chronic medications",$bodyData['chronic_medications']);?>
     <?php
         $existHight = false;
         if ($bodyData['constants_indicators']['rows'][0]['height'][2] && $bodyData['constants_indicators']['rows'][0]['height'][2] !="" && $bodyData['constants_indicators']['rows'][0]['height'][2] !="-" ) {

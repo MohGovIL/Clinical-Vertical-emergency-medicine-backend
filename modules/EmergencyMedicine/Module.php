@@ -120,6 +120,10 @@ class Module {
         $setting = new GlobalSetting(xlt("Summery letter - general instructions"), 'text', '', xlt("Constant statement is shown as general instructions in the summary letter"));
         $event->getGlobalsService()->appendToSection("clinikal settings", "summery_letter_general_instructions", $setting);
         /*******************************************************************/
+        /*******************************************************************/
+        $setting = new GlobalSetting(xlt("Medical admission form - Medical Background Comments"), 'bool', 1, xlt("When checked, Medical Background Comments field is shown"));
+        $event->getGlobalsService()->appendToSection("clinikal settings", "clinikal_forms_medical_background_comments", $setting);
+        /*******************************************************************/
     }
 
 }

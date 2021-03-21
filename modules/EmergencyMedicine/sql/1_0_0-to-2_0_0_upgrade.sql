@@ -120,3 +120,10 @@ DELETE FROM list_options WHERE list_id = 'clinikal_form_fields_templates' AND op
 DELETE FROM list_options WHERE list_id = 'clinikal_form_fields_templates' AND option_id = 'diagnosis_details';
 DELETE FROM list_options WHERE list_id = 'clinikal_form_fields_templates' AND option_id = 'treatment_details';
 #EndIf
+
+
+#IfNotRow2D questionnaires_schemas form_name medical_admission_questionnaire qid 8
+INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
+VALUES
+('8', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'string', 'Medical Background Comments');
+#EndIf
