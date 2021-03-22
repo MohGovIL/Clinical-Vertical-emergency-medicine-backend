@@ -202,7 +202,7 @@ function parseSimpleContext($title , $context){
             <td class="tdLabel Label-Text">
                 <?php echo xl("Background diseases");?>
             </td>
-            <td  class="Input-text">
+            <td  dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>" class="Input-text <?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'leftO' : ''?>">
                 <ul>
                     <?php foreach( $bodyData['background_diseases'] as $background_disease):?>
                         <div dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>"><?php echo text($background_disease);?></div>
@@ -226,9 +226,6 @@ function parseSimpleContext($title , $context){
         </tr>
     <?php endif;?>
     <?php parseSimpleContext("Medical Background Comments",$bodyData['medical_history_comment']);?>
-    <?php// parseSimpleContext("Sensitivities",$bodyData['sensitivities']);?>
-    <?php //parseSimpleContext("Background diseases",$bodyData['background_diseases']);?>
-    <?php// parseSimpleContext("Chronic medications",$bodyData['chronic_medications']);?>
     <?php
         $existHight = false;
         if ($bodyData['constants_indicators']['rows'][0]['height'][2] && $bodyData['constants_indicators']['rows'][0]['height'][2] !="" && $bodyData['constants_indicators']['rows'][0]['height'][2] !="-" ) {
@@ -339,7 +336,7 @@ function parseSimpleContext($title , $context){
             <td class="tdLabel Label-Text">
                 <?php echo xl("Diagnosis");?>
             </td>
-            <td  class="Input-text">
+            <td dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>" class="Input-text <?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'leftO' : ''?>">
                 <ul>
                     <?php foreach( $bodyData['diagnosis'] as $drug):?>
                         <div dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>" ><?php echo text($drug['code']) . ' : ' .  text($drug['title']);?></div>
@@ -356,7 +353,7 @@ function parseSimpleContext($title , $context){
         <td class="tdLabel Label-Text">
             <?php echo xl("Recommendations for medications");?>
         </td>
-        <td dir="ltr"  class="Input-text">
+        <td dir="ltr"  class="Input-text leftO">
             <ul>
                 <?php foreach( $bodyData['recommendations_for_medications'] as $drug):?>
                     <div dir="ltr"  ><?php echo $drug['drug'];?></div>
