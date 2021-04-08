@@ -127,3 +127,11 @@ INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_t
 VALUES
 ('8', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'string', 'Medical Background Comments');
 #EndIf
+
+#IfNotRow2D fhir_value_sets id bk_diseases language en
+UPDATE fhir_value_sets SET language = 'en' where id = 'bk_diseases';
+#EndIf
+
+#IfNotRow2D fhir_value_set_systems vs_id bk_diseases system 9910
+UPDATE `fhir_value_set_systems` SET `system` = '9910' WHERE `vs_id` = 'bk_diseases';
+#EndIf
