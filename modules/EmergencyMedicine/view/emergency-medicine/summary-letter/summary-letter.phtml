@@ -185,13 +185,13 @@ function parseSimpleContext($title , $context){
     ?>
     <?php  if($bodyData['sensitivities'] && sizeof($bodyData['sensitivities'])>0):?>
         <tr>
-            <td class="tdLabel Label-Text">
+            <td class="tdLabel Label-Text ">
                 <?php echo xl("Sensitivities");?>
             </td>
-            <td  class="Input-text">
+            <td dir="<?php echo attr($langDir)?>"  class="Input-text <?php echo $langDir === 'ltr' ? 'leftO' : ''?>">
                 <ul>
                     <?php foreach( $bodyData['sensitivities'] as $sensitivity):?>
-                        <div><?php echo text($sensitivity);?></div>
+                        <div dir="<?php echo attr($langDir)?>" ><?php echo text($sensitivity);?></div>
                     <?php endforeach;?>
                 </ul>
             </td>
@@ -216,7 +216,7 @@ function parseSimpleContext($title , $context){
             <td class="tdLabel Label-Text">
                 <?php echo xl("Chronic medications");?>
             </td>
-            <td  class="Input-text">
+            <td  class="Input-text <?php echo $langDir === 'ltr' ? 'leftO' : ''?>">
                 <ul>
                     <?php foreach( $bodyData['chronic_medications'] as $chronic_medication):?>
                         <div dir="ltr"><?php echo text($chronic_medication);?></div>
