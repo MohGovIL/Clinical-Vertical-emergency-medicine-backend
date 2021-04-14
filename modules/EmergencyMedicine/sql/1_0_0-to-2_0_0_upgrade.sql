@@ -135,28 +135,3 @@ UPDATE fhir_value_sets SET language = 'en' where id = 'bk_diseases';
 #IfNotRow2D fhir_value_set_systems vs_id bk_diseases system 9910
 UPDATE `fhir_value_set_systems` SET `system` = '9910' WHERE `vs_id` = 'bk_diseases';
 #EndIf
-
-#IfNotRow3D lang_definitions cons_id 13842 lang_id 1 definition HMO
-REPLACE INTO lang_definitions (`cons_id`, `lang_id`, `definition`)
-VALUES
-(20116, 1, 'Waiting for discharge'),
-(16583, 1, 'Waiting for imaging'),
-(13273, 1, 'Encounter ended'),
-(13962, 1, 'Search patient'),
-(20083, 1, 'ID'),
-(15934, 1, 'ID'),
-(13578, 1, 'ID Number'),
-(13842, 1, 'HMO'),
-(13990, 1, 'Email'),
-(12309, 1, 'Day of Birth'),
-(13686, 1, 'Independently'),
-(8046, 1, 'Main complaint'),
-(15276, 1, 'Main complaint detalis'),
-(13792, 1, 'Is it urgent?'),
-(13735, 1, 'Is insulation required'),
-(15379, 1, 'Discharge home'),
-(16242, 1, 'Transfer to discharge'),
-(12014, 1, 'age'),
-(12013, 1, 'age'),
-(11150, 1, 'Encounters');
-#EndIf
