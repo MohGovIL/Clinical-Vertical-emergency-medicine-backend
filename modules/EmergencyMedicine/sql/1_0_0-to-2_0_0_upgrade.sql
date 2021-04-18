@@ -135,3 +135,47 @@ UPDATE fhir_value_sets SET language = 'en' where id = 'bk_diseases';
 #IfNotRow2D fhir_value_set_systems vs_id bk_diseases system 9910
 UPDATE `fhir_value_set_systems` SET `system` = '9910' WHERE `vs_id` = 'bk_diseases';
 #EndIf
+
+#IfNotRow2D lang_definitions lang_id 1 definition HMO
+INSERT INTO lang_definitions (`cons_id`, `lang_id`, `definition`)
+VALUES
+((SELECT cons_id FROM lang_constants where constant_name = 'Waiting for release'), 1, 'Waiting for discharge'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Waiting for xray'), 1, 'Waiting for imaging'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Finished visit'), 1, 'Encounter ended'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Locate patient'), 1, 'Search patient'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Teudat zehut'), 1, 'ID'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Teudat Zehut'), 1, 'ID'),
+((SELECT cons_id FROM lang_constants where constant_name = 'id number'), 1, 'ID Number'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Kupat Cholim'), 1, 'HMO'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Mail address'), 1, 'Email'),
+((SELECT cons_id FROM lang_constants where constant_name = 'birth day'), 1, 'Day of Birth'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Independent'), 1, 'Independently'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Reason for referral'), 1, 'Main complaint'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Reason for referral details'), 1, 'Main complaint details'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Is urgent?'), 1, 'Is it urgent?'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Insulation required'), 1, 'Is insulation required'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Release to home'), 1, 'Discharge home'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Transfer to release'), 1, 'Transfer to discharge'),
+((SELECT cons_id FROM lang_constants where constant_name = 'age{f}'), 1, 'Age'),
+((SELECT cons_id FROM lang_constants where constant_name = 'age{m}'), 1, 'Age'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Recommendation on release'), 1, 'Recommendation on discharge'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Recommendations on release'), 1, 'Recommendations on discharge'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Decision on release'), 1, 'Decision on discharge'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Reason for refferal'), 1, 'Main complaint'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Medical Admission'), 1, 'Nursing Admission'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Constant indicators'), 1, 'Constant Measurements'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Variable indicators'), 1, 'Variable Measurements'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Performed'), 1, 'Done'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Yet To be done'), 1, 'Pending'),
+((SELECT cons_id FROM lang_constants where constant_name = 'remark'), 1, 'Comment'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Please Note'), 1, 'Transfer to'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Please select whom to transfer the treatment before saving and closing'), 1, 'Please select the transfer destination before saving and closing'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Visits'), 1, 'Encounters');
+#EndI
+
+
+
+
+
+
+

@@ -329,8 +329,8 @@ function parseSimpleContext($title , $context){
         </td>
     </tr>
     <?php endif;?>
-    <?php parseSimpleContext("Medical anamnesis",$bodyData['findings']);?>
-    <?php parseSimpleContext("Physical examination",$bodyData['diagnostics']);?>
+    <?php parseSimpleContext("Medical anamnesis",$bodyData['diagnostics']);?>
+    <?php parseSimpleContext("Physical examination",$bodyData['findings']);?>
     <?php  if($bodyData['diagnosis'] && sizeof($bodyData['diagnosis'])>0):?>
         <tr>
             <td class="tdLabel Label-Text">
