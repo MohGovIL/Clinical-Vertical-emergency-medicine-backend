@@ -103,8 +103,8 @@ UPDATE fhir_value_sets SET language = 'he' where id NOT IN ('drugs_list','detail
 
 /* changes in the Diagnosis and recommendations form */
 #IfNotRow2D questionnaires_schemas  form_name diagnosis_and_recommendations_questionnaire qid 8
-UPDATE questionnaires_schemas SET  question = 'Medical anamnesis' WHERE qid = '1';
-UPDATE questionnaires_schemas SET  question = 'Physical examination' WHERE qid = '2';
+UPDATE questionnaires_schemas SET  question = 'Medical anamnesis' WHERE qid = '1' AND form_name = 'diagnosis_and_recommendations_questionnaire';
+UPDATE questionnaires_schemas SET  question = 'Physical examination' WHERE qid = '2' AND form_name = 'diagnosis_and_recommendations_questionnaire';
 
 INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
 VALUES
@@ -156,6 +156,14 @@ VALUES
 ((SELECT cons_id FROM lang_constants where constant_name = 'Insulation required'), 1, 'Is insulation required'),
 ((SELECT cons_id FROM lang_constants where constant_name = 'Release to home'), 1, 'Discharge home'),
 ((SELECT cons_id FROM lang_constants where constant_name = 'Transfer to release'), 1, 'Transfer to discharge'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Visits'), 1, 'Encounters');
+#EndIf
+
+
+
+#IfNotRow2D lang_definitions lang_id 1 definition Pending
+INSERT INTO lang_definitions (`cons_id`, `lang_id`, `definition`)
+VALUES
 ((SELECT cons_id FROM lang_constants where constant_name = 'age{f}'), 1, 'Age'),
 ((SELECT cons_id FROM lang_constants where constant_name = 'age{m}'), 1, 'Age'),
 ((SELECT cons_id FROM lang_constants where constant_name = 'Recommendation on release'), 1, 'Recommendation on discharge'),
@@ -169,9 +177,9 @@ VALUES
 ((SELECT cons_id FROM lang_constants where constant_name = 'Yet To be done'), 1, 'Pending'),
 ((SELECT cons_id FROM lang_constants where constant_name = 'remark'), 1, 'Comment'),
 ((SELECT cons_id FROM lang_constants where constant_name = 'Please Note'), 1, 'Transfer to'),
-((SELECT cons_id FROM lang_constants where constant_name = 'Please select whom to transfer the treatment before saving and closing'), 1, 'Please select the transfer destination before saving and closing'),
-((SELECT cons_id FROM lang_constants where constant_name = 'Visits'), 1, 'Encounters');
-#EndI
+((SELECT cons_id FROM lang_constants where constant_name = 'Please select whom to transfer the treatment before saving and closing'), 1, 'Please select the transfer destination before saving and closing');
+#EndIf
+
 
 
 
