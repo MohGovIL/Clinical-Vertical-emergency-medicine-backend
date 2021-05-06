@@ -169,6 +169,7 @@ function parseSimpleContext($title , $context){
     <table     class="RectangleTwo position_content" dir="<?php echo text($langDir); ?>" lang="<?php echo text($langCode); ?>">
     <tbody>
 
+    <?php parseSimpleContext("Date of admission", xlt('Date') . ': ' . oeFormatShortDate($bodyData['encounter_date']) . ' ' . xlt('Hour') . ': ' . oeFormatTime($bodyData['encounter_date']));?>
     <?php parseSimpleContext("Reason for refferal",$bodyData['reason_for_refferal']);?>
     <?php parseSimpleContext("Detail",$bodyData['reason_for_refferal_details']);?>
     <?php if (!$GLOBALS['clinikal_forms_hide_insulation']) : ?>
@@ -334,7 +335,7 @@ function parseSimpleContext($title , $context){
     <?php  if($bodyData['diagnosis'] && sizeof($bodyData['diagnosis'])>0):?>
         <tr>
             <td class="tdLabel Label-Text">
-                <?php echo xl("Diagnosis");?>
+                <?php echo xl("Suspected diagnostic");?>
             </td>
             <td dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>" class="Input-text <?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'leftO' : ''?>">
                 <ul>

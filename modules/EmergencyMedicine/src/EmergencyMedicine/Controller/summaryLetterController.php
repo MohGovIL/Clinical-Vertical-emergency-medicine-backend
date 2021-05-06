@@ -137,6 +137,7 @@ class summaryLetterController extends PdfBaseController
         $data = [];
         $reason_for_refferal = $this->getServiceTypeAndReasonCodeArray();
 
+        $data['encounter_date'] = $this->getEncounterStartDate($this->postData['encounter']);
         $data['reason_for_refferal'] = $reason_for_refferal['service_and_reason'];
         $data['reason_for_refferal_details'] = $reason_for_refferal['details'];
 
