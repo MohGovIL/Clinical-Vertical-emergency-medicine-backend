@@ -80,10 +80,13 @@ class summaryLetterController extends PdfBaseController
         $codes = explode('|',$this->getQData(8,'FormDiagnosisAndRecommendationsQuestionnaireMapTable'));
         $titles = [];
         foreach ($codes as $code) {
-            $titles[] = [
-                'code' => $code,
-                'title' => $this->getValueSetTitle('bk_diseases', $code)
-            ];
+            if (!empty($code)) {
+                $titles[] = [
+                    'code' => $code,
+                    'title' => $this->getValueSetTitle('bk_diseases', $code)
+                ];
+            }
+
         }
         return $titles;
     }
