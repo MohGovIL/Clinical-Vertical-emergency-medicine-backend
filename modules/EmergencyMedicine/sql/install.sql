@@ -103,7 +103,8 @@ VALUES
 ('4', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Pregnancy'),
 ('5', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Sensitivities'),
 ('6', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Background diseases'),
-('7', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Chronic medications');
+('7', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'boolean', 'Chronic medications'),
+('8', 'medical_admission_questionnaire','form_medical_admission_questionnaire', 'string', 'Medical Background Comments');
 
 
 /* INSERT LISTS*/
@@ -172,14 +173,12 @@ INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`
 
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
 ('lists', 'x_ray_types', 'X-Ray Types', 0, 1,''),
-('x_ray_types', 'dehydration', 'Chest', 10, 1,''),
-('x_ray_types', 'inhalation', 'Palm', 20, 1,''),
-('x_ray_types', 'laboratory_tests', 'sole', 30, 1,''),
-('x_ray_types', 'bandage', 'Shoulder', 40, 1,''),
-('x_ray_types', 'taking_metrics', 'Neck', 50, 1,''),
-('x_ray_types', 'fluid_infusion', 'Ankle', 60, 1,'');
-
-
+('x_ray_types', 'chest', 'Chest', 10, 1,''),
+('x_ray_types', 'palm', 'Palm', 20, 1,''),
+('x_ray_types', 'sole', 'sole', 30, 1,''),
+('x_ray_types', 'shoulder', 'Shoulder', 40, 1,''),
+('x_ray_types', 'neck', 'Neck', 50, 1,''),
+('x_ray_types', 'ankle', 'Ankle', 60, 1,'');
 
 INSERT INTO `registry` (`name`, `state`, `directory`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`, `patient_encounter`, `therapy_group_encounter`, `aco_spec`,`component_name`)
 VALUES
@@ -221,7 +220,7 @@ INSERT INTO `fhir_value_sets` (`id`, `title`)
 VALUES ('bk_diseases', 'BK Diseases');
 
 INSERT INTO `fhir_value_set_systems` (`vs_id`, `system`, `type`,`filter`)
-VALUES ('bk_diseases', '9921', 'Codes', NULL);
+VALUES ('bk_diseases', '9910', 'Codes', NULL);
 
 INSERT INTO `fhir_value_sets` (`id`, `title`)
 VALUES ('tests_and_treatments', 'Tests And Treatments');
@@ -248,7 +247,8 @@ VALUES
 ('clinikal_enc_secondary_statuses', 'waiting_for_nurse', 'Waiting for Nurse', 10, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1),
 ('clinikal_enc_secondary_statuses', 'waiting_for_doctor', 'Waiting for Doctor', 20, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1),
 ('clinikal_enc_secondary_statuses', 'waiting_for_xray', 'Waiting for X-ray', 30, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1),
-('clinikal_enc_secondary_statuses', 'waiting_for_release', 'Waiting for Release', 40, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1);
+('clinikal_enc_secondary_statuses', 'waiting_for_release', 'Waiting for Release', 40, 0, 0, '', 'In Progress ', '', 0, 0, 1, '', 1),
+('clinikal_enc_secondary_statuses', 'during_treatment', 'During treatment', 40, 0, 0, '', 'In Progress', '', 0, 0, 1, '', 1);
 
 
 -- More Valuesets
@@ -302,13 +302,14 @@ INSERT INTO `fhir_questionnaire` (`name`, `directory`, `state`, `aco_spec`) VALU
 
 INSERT INTO `questionnaires_schemas` (`qid`, `form_name`,`form_table`, `column_type`, `question`)
 VALUES
-('1', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Findings details'),
-('2', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Diagnosis details'),
+('1', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Medical Anamnesis'),
+('2', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Physical Examination'),
 ('3', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Treatment details'),
 ('4', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Instructions for further treatment'),
 ('5', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Decision'),
 ('6', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Evacuation way'),
-('7', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'integer', 'Sick leave');
+('7', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'integer', 'Sick leave'),
+('8', 'diagnosis_and_recommendations_questionnaire','form_diagnosis_and_recommendations_questionnaire', 'string', 'Diagnisis');
 
 
 INSERT INTO `manage_templates_letters` (`id`, `letter_name`, `letter_class`, `letter_class_action`, `active`, `letter_post_json`) VALUES
@@ -424,3 +425,54 @@ begin
 end;
 #EndSpecialSql
 
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`, `notes`) VALUES
+('clinikal_form_fields_templates', 'nursing_anamnesis', 'Nursing anamnesis', 10, 1, 'medical_admission'),
+('clinikal_form_fields_templates', 'templates_x_ray', 'Instructions for x-ray', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'templates_providing_medicine', 'Instructions for providing medicine', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'templates_dehydration', 'Instructions for EKG', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'templates_inhalation', 'Instructions for inhalation', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'templates_laboratory_tests', 'Instructions for laboratory tests', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'templates_bandage', 'Instructions for bandage', 10, 1, 'tests_and_treatment'),
+('clinikal_form_fields_templates', 'templates_taking_metrics', 'Instructions for taking metrics', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'templates_fluid_infusion', 'Instructions for fluid infusion', 10, 1, 'tests_and_treatments'),
+('clinikal_form_fields_templates', 'medical_anamnesis', 'Medical Anamnesis', 10, 1, 'diagnosis_and_recommendations'),
+('clinikal_form_fields_templates', 'physical_examination', 'Physical Examination', 10, 1, 'diagnosis_and_recommendations'),
+('clinikal_form_fields_templates', 'instructions_further_treatment', 'Instructions further treatment', 10, 1, 'diagnosis_and_recommendations'),
+('clinikal_form_fields_templates', 'instructions_drug', 'Instructions for providing medicine', 10, 1, 'diagnosis_and_recommendations');
+
+UPDATE fhir_value_sets SET language = 'he' where id NOT IN ('drugs_list','details_providing_medicine', 'bk_diseases');
+
+INSERT INTO lang_definitions (`cons_id`, `lang_id`, `definition`)
+VALUES
+((SELECT cons_id FROM lang_constants where constant_name = 'Waiting for release'), 1, 'Waiting for discharge'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Waiting for xray'), 1, 'Waiting for imaging'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Finished visit'), 1, 'Encounter ended'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Locate patient'), 1, 'Search patient'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Teudat zehut'), 1, 'ID'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Teudat Zehut'), 1, 'ID'),
+((SELECT cons_id FROM lang_constants where constant_name = 'id number'), 1, 'ID Number'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Kupat Cholim'), 1, 'HMO'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Mail address'), 1, 'Email'),
+((SELECT cons_id FROM lang_constants where constant_name = 'birth day'), 1, 'Day of Birth'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Independent'), 1, 'Independently'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Reason for referral'), 1, 'Main complaint'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Reason for referral details'), 1, 'Main complaint details'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Is urgent?'), 1, 'Is it urgent?'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Insulation required'), 1, 'Is insulation required'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Release to home'), 1, 'Discharge home'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Transfer to release'), 1, 'Transfer to discharge'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Visits'), 1, 'Encounters'),
+((SELECT cons_id FROM lang_constants where constant_name = 'age{f}'), 1, 'Age'),
+((SELECT cons_id FROM lang_constants where constant_name = 'age{m}'), 1, 'Age'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Recommendation on release'), 1, 'Recommendation on discharge'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Recommendations on release'), 1, 'Recommendations on discharge'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Decision on release'), 1, 'Decision on discharge'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Reason for refferal'), 1, 'Main complaint'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Medical Admission'), 1, 'Nursing Admission'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Constant indicators'), 1, 'Constant Measurements'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Variable indicators'), 1, 'Variable Measurements'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Performed'), 1, 'Done'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Yet To be done'), 1, 'Pending'),
+((SELECT cons_id FROM lang_constants where constant_name = 'remark'), 1, 'Comment'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Please Note'), 1, 'Transfer to'),
+((SELECT cons_id FROM lang_constants where constant_name = 'Please select whom to transfer the treatment before saving and closing'), 1, 'Please select the transfer destination before saving and closing');

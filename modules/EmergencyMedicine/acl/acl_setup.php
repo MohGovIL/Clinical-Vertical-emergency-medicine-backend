@@ -16,6 +16,7 @@ $emergency_doctor_view =AclExtended::addNewACL('Emergency doctor', 'emergency_do
 AclExtended::addObjectAcl('client_app', 'Client Application', 'MedicalAdmissionForm','Medical Admission Form');
 AclExtended::addObjectAcl('client_app', 'Client Application', 'TestsandTreatmentsForm','Tests and Treatments Form');
 AclExtended::addObjectAcl('client_app', 'Client Application', 'DiagnosisandRecommendationsForm','Diagnosis and Recommendations Form');
+AclExtended::addObjectAcl('client_app', 'Client Application', 'AddNewTreatmentInstruction','Adding new treatment instruction');
 AclExtended::addObjectAcl('client_app', 'Client Application', 'SummaryLetter','Summary Letter');
 AclExtended::addObjectAcl('client_app', 'Client Application', 'EncountersReport','Encounters Report');
 AclExtended::addObjectAcl('client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient');
@@ -47,6 +48,7 @@ AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'cli
 AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'client_app', 'Client Application', 'SummaryLetter','Summary Letter', 'view');
 AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'client_app', 'Client Application', 'EncountersReport','Encounters Report', 'view');
 AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient', 'write');
+AclExtended::updateAcl($emergency_clinic_manager_write, 'Emergency manager', 'client_app', 'Client Application', 'ManageTemplates','Manage Templates', 'write');
 AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'clinikal_api', 'Clinikal API', 'general_settings','General settings', 'view');
 AclExtended::updateAcl($emergency_clinic_manager_view, 'Emergency manager', 'clinikal_api', 'Clinikal API', 'lists','Lists', 'view');
 
@@ -171,6 +173,7 @@ AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app'
 AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'client_app', 'Client Application', 'SummaryLetter','Summary Letter', 'view');
 AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'client_app', 'Client Application', 'EncountersReport','Encounters Report', 'view');
 AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'UnidentifiedPatient','Unidentified Patient', 'write');
+AclExtended::updateAcl($emergency_doctor_write, 'Emergency doctor', 'client_app', 'Client Application', 'AddNewTreatmentInstruction','Adding new treatment instruction', 'write');
 
 AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'clinikal_api', 'Clinikal API', 'general_settings','General settings', 'view');
 AclExtended::updateAcl($emergency_doctor_view, 'Emergency doctor', 'clinikal_api', 'Clinikal API', 'lists','Lists', 'view');

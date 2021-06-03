@@ -22,7 +22,9 @@ namespace EmergencyMedicine;
 use Interop\Container\ContainerInterface;
 use Laminas\Db\ResultSet\ResultSet;
 use Laminas\Db\TableGateway\TableGateway as ZendTableGateway;
+use OpenEMR\Events\Globals\GlobalsInitializedEvent;
 use OpenEMR\Events\RestApiExtend\RestApiCreateEvent;
+use OpenEMR\Services\Globals\GlobalSetting;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\ModuleManager\ModuleManager;
@@ -91,6 +93,37 @@ class Module {
         );
     }
 
+    /**
+     * @param \Laminas\Mvc\MvcEvent $e
+     *
+     * Register our event listeners here
+     */
+    public function onBootstrap(MvcEvent $e)
+    {
+        // Get application service manager and get instance of event dispatcher
+        $serviceManager = $e->getApplication()->getServiceManager();
+        $oemrDispatcher = $serviceManager->get(EventDispatcherInterface::class);
+        $this->container = $serviceManager;
+        // listen for view events for routes in zend_modules
+        $oemrDispatcher->addListener(GlobalsInitializedEvent::EVENT_HANDLE, [$this, 'addCustomGlobals']);
+    }
 
+
+    public function addCustomGlobals(GlobalsInitializedEvent $event)
+    {
+        /*******************************************************************/
+        $setting = new GlobalSetting(xlt("medical admission form - hide insulation input"), 'bool', 0, xlt("When checked insulation field is hidden in the medical admission form"));
+        $event->getGlobalsService()->appendToSection("clinikal settings", "clinikal_forms_hide_insulation", $setting);
+        /*******************************************************************/
+
+        /*******************************************************************/
+        $setting = new GlobalSetting(xlt("Summery letter - general instructions"), 'text', '', xlt("Constant statement is shown as general instructions in the summary letter"));
+        $event->getGlobalsService()->appendToSection("clinikal settings", "summery_letter_general_instructions", $setting);
+        /*******************************************************************/
+        /*******************************************************************/
+        $setting = new GlobalSetting(xlt("Medical admission form - Medical Background Comments"), 'bool', 1, xlt("When checked, Medical Background Comments field is shown"));
+        $event->getGlobalsService()->appendToSection("clinikal settings", "clinikal_forms_medical_background_comments", $setting);
+        /*******************************************************************/
+    }
 
 }

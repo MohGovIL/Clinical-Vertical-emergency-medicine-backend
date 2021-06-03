@@ -344,12 +344,12 @@ VALUES ('details_x_ray', 'x_ray_types', 'All', NULL);
 #IfNotRow2D list_options list_id lists option_id x_ray_types
 INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `activity`,`notes`) VALUES
 ('lists', 'x_ray_types', 'X-Ray Types', 0, 1,''),
-('x_ray_types', 'dehydration', 'Chest', 10, 1,''),
-('x_ray_types', 'inhalation', 'Palm', 20, 1,''),
-('x_ray_types', 'laboratory_tests', 'sole', 30, 1,''),
-('x_ray_types', 'bandage', 'Shoulder', 40, 1,''),
-('x_ray_types', 'taking_metrics', 'Neck', 50, 1,''),
-('x_ray_types', 'fluid_infusion', 'Ankle', 60, 1,'');
+('x_ray_types', 'chest', 'Chest', 10, 1,''),
+('x_ray_types', 'palm', 'Palm', 20, 1,''),
+('x_ray_types', 'sole', 'sole', 30, 1,''),
+('x_ray_types', 'shoulder', 'Shoulder', 40, 1,''),
+('x_ray_types', 'neck', 'Neck', 50, 1,''),
+('x_ray_types', 'ankle', 'Ankle', 60, 1,'');
 #EndIf
 
 

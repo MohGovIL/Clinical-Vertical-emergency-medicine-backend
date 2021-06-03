@@ -169,19 +169,73 @@ function parseSimpleContext($title , $context){
     <table     class="RectangleTwo position_content" dir="<?php echo text($langDir); ?>" lang="<?php echo text($langCode); ?>">
     <tbody>
 
+    <?php parseSimpleContext("Date of admission", xlt('Date') . ': ' . oeFormatShortDate($bodyData['encounter_date']) . ' ' . xlt('Hour') . ': ' . oeFormatTime($bodyData['encounter_date']));?>
     <?php parseSimpleContext("Reason for refferal",$bodyData['reason_for_refferal']);?>
     <?php parseSimpleContext("Detail",$bodyData['reason_for_refferal_details']);?>
-    <?php parseSimpleContext("Insulation",$bodyData['insulation']=="1"?"Yes":"No");?>
-    <?php parseSimpleContext("Insulation instruction",$bodyData['insulation_instructions']);?>
+    <?php if (!$GLOBALS['clinikal_forms_hide_insulation']) : ?>
+        <?php parseSimpleContext("Insulation",$bodyData['insulation']=="1"?"Yes":"No");?>
+        <?php parseSimpleContext("Insulation instruction",$bodyData['insulation_instructions']);?>
+    <?php endIf; ?>
+
     <?php parseSimpleContext("Nursing anamnesis",$bodyData['nursing_anamnesis']);?>
-    <?php parseSimpleContext("Pregnancy",$bodyData['pregnant']);?>
-    <?php parseSimpleContext("Sensitivities",$bodyData['sensitivities']);?>
-    <?php parseSimpleContext("Background diseases",$bodyData['background_diseases']);?>
-    <?php parseSimpleContext("Chronic medications",$bodyData['chronic_medications']);?>
-    <?php if($bodyData['constants_indicators']['rows'][0]['height'][2] && $bodyData['constants_indicators']['rows'][0]['height'][2] !="" && $bodyData['constants_indicators']['rows'][0]['weight'][2] && $bodyData['constants_indicators']['rows'][0]['weight'][2]!="") {
+    <?php
+        if ($patientData['Gender'] === 'Female') {
+            parseSimpleContext("Pregnancy",
+                $bodyData['pregnant'] ? xlt('Yes') : xlt('No'));
+        }
+    ?>
+    <?php  if($bodyData['sensitivities'] && sizeof($bodyData['sensitivities'])>0):?>
+        <tr>
+            <td class="tdLabel Label-Text ">
+                <?php echo xl("Sensitivities");?>
+            </td>
+            <td dir="<?php echo attr($langDir)?>"  class="Input-text <?php echo $langDir === 'ltr' ? 'leftO' : ''?>">
+                <ul>
+                    <?php foreach( $bodyData['sensitivities'] as $sensitivity):?>
+                        <div dir="<?php echo attr($langDir)?>" ><?php echo text($sensitivity);?></div>
+                    <?php endforeach;?>
+                </ul>
+            </td>
+        </tr>
+    <?php endif;?>
+    <?php  if($bodyData['background_diseases'] && sizeof($bodyData['background_diseases'])>0):?>
+        <tr>
+            <td class="tdLabel Label-Text">
+                <?php echo xl("Background diseases");?>
+            </td>
+            <td  dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>" class="Input-text <?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'leftO' : ''?>">
+                <ul>
+                    <?php foreach( $bodyData['background_diseases'] as $background_disease):?>
+                        <div dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>"><?php echo text($background_disease);?></div>
+                    <?php endforeach;?>
+                </ul>
+            </td>
+        </tr>
+    <?php endif;?>
+    <?php  if($bodyData['chronic_medications'] && sizeof($bodyData['chronic_medications'])>0):?>
+        <tr>
+            <td class="tdLabel Label-Text">
+                <?php echo xl("Chronic medications");?>
+            </td>
+            <td  class="Input-text <?php echo $langDir === 'ltr' ? 'leftO' : ''?>">
+                <ul>
+                    <?php foreach( $bodyData['chronic_medications'] as $chronic_medication):?>
+                        <div dir="ltr"><?php echo text($chronic_medication);?></div>
+                    <?php endforeach;?>
+                </ul>
+            </td>
+        </tr>
+    <?php endif;?>
+    <?php parseSimpleContext("Medical Background Comments",$bodyData['medical_history_comment']);?>
+    <?php
+        $existHight = false;
+        if ($bodyData['constants_indicators']['rows'][0]['height'][2] && $bodyData['constants_indicators']['rows'][0]['height'][2] !="" && $bodyData['constants_indicators']['rows'][0]['height'][2] !="-" ) {
+            $existHight = true;
             parseSimpleContext("Constant indicators",$bodyData['constants_indicators']['columns']['height']." - ".$bodyData['constants_indicators']['rows'][0]['height'][2]." ".$bodyData['constants_indicators']['rows'][0]['height'][1]);
-            parseSimpleContext("",$bodyData['constants_indicators']['columns']['weight']." - ".$bodyData['constants_indicators']['rows'][0]['weight'][2]." ".$bodyData['constants_indicators']['rows'][0]['weight'][1]);
-    }
+        }
+        if ($bodyData['constants_indicators']['rows'][0]['weight'][2] && $bodyData['constants_indicators']['rows'][0]['weight'][2]!="" && $bodyData['constants_indicators']['rows'][0]['weight'][2]!="-") {
+            parseSimpleContext(!$existHight ? "Constant indicators" : "",$bodyData['constants_indicators']['columns']['weight']." - ".$bodyData['constants_indicators']['rows'][0]['weight'][2]." ".$bodyData['constants_indicators']['rows'][0]['weight'][1]);
+        }
     ?>
 
 
@@ -276,9 +330,22 @@ function parseSimpleContext($title , $context){
         </td>
     </tr>
     <?php endif;?>
-    <?php parseSimpleContext("Findings",$bodyData['findings']);?>
-    <?php parseSimpleContext("Diagnosis",$bodyData['diagnostics']);?>
-    <?php parseSimpleContext("Treatment details",$bodyData['treatment_details']);?>
+    <?php parseSimpleContext("Medical anamnesis",$bodyData['diagnostics']);?>
+    <?php parseSimpleContext("Physical examination",$bodyData['findings']);?>
+    <?php  if($bodyData['diagnosis'] && sizeof($bodyData['diagnosis'])>0):?>
+        <tr>
+            <td class="tdLabel Label-Text">
+                <?php echo xl("Suspected diagnostic");?>
+            </td>
+            <td dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>" class="Input-text <?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'leftO' : ''?>">
+                <ul>
+                    <?php foreach( $bodyData['diagnosis'] as $drug):?>
+                        <div dir="<?php echo $bodyData['diagnosisListLage'] !== 'he' ? 'ltr' : 'rtl'?>" ><?php echo text($drug['code']) . ' : ' .  text($drug['title']);?></div>
+                    <?php endforeach;?>
+                </ul>
+            </td>
+        </tr>
+    <?php endif;?>
     <?php parseSimpleContext("Recommendations on release",$bodyData['recommendations_on_release']);?>
 
 
@@ -287,10 +354,10 @@ function parseSimpleContext($title , $context){
         <td class="tdLabel Label-Text">
             <?php echo xl("Recommendations for medications");?>
         </td>
-        <td dir="ltr"  class="  leftO Input-text">
+        <td dir="ltr"  class="Input-text leftO">
             <ul>
                 <?php foreach( $bodyData['recommendations_for_medications'] as $drug):?>
-                    <li dir="ltr"  ><?php echo $drug['drug'];?></li>
+                    <div dir="ltr"  ><?php echo $drug['drug'];?></div>
                 <?php endforeach;?>
             </ul>
         </td>
@@ -323,9 +390,9 @@ function parseSimpleContext($title , $context){
 
     <?php parseSimpleContext("Evacuation way",$bodyData['evacuation_way']);?>
     <?php parseSimpleContext("Sick leave",$bodyData['sick_leave'] && $bodyData['sick_leave'] != "" ? $bodyData['sick_leave']. " ". xl("Days"):"");?>
-
-
-
+    <?php if (isset($GLOBALS['summery_letter_general_instructions']) && !empty($GLOBALS['summery_letter_general_instructions'])): ?>
+        <?php parseSimpleContext("General instructions",text($GLOBALS['summery_letter_general_instructions']));?>
+    <?php endif; ?>
     </tbody>
     </table>
 
